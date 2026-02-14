@@ -1,4 +1,4 @@
-name: "Infrastructure Deploy (Manual)"
+name: "Infrastructure Deploy"
 
 on:
   workflow_dispatch:
@@ -8,6 +8,10 @@ on:
         required: true
         type: boolean
         default: false
+  push:
+    branches: ["main"]
+    paths:
+      - "ops/infrastructure/**"
 
 concurrency:
   group: infrastructure-deploy-${{ github.ref }}
@@ -76,9 +80,9 @@ jobs:
             -var 'github_container_registry_pat=${{ secrets.GHCR_PAT }}'
 
       - name: Apply infrastructure
-        if: github.event.inputs.apply == 'true'
+        if: github.event_name == 'push' || github.event.inputs.apply == 'true'
         run: terraform apply -input=false -lock-timeout=5m "infrastructure_plan"
 
       - name: Skip apply (plan-only mode)
-        if: github.event.inputs.apply != 'true'
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.apply != 'true'
         run: echo "Apply skipped. Plan completed successfully."
