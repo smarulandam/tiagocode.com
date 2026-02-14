@@ -1,0 +1,61 @@
+name: Deploy Environment Setup
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: environment-setup-deploy-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Deploy environment setup
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ vars.AWS_REGION }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Create deployment bundle
+        id: bundle
+        run: |
+          bundle_name="env-${{ vars.TIAGOCODE_PROJECT_NAME }}-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}.zip"
+          cd ops/environment-setup
+          zip -qr "/tmp/${bundle_name}" .
+          echo "bundle_name=${bundle_name}" >> "$GITHUB_OUTPUT"
+
+      - name: Upload bundle and create CodeDeploy deployment
+        id: deploy
+        run: |
+          s3_bucket="${{ vars.TIAGOCODE_PROJECT_NAME }}-bucket"
+          s3_key="env-${{ vars.TIAGOCODE_PROJECT_NAME }}.com/${{ steps.bundle.outputs.bundle_name }}"
+
+          aws s3 cp "/tmp/${{ steps.bundle.outputs.bundle_name }}" "s3://${s3_bucket}/${s3_key}"
+
+          deployment_id=$(aws deploy create-deployment \
+            --application-name "${{ vars.TIAGOCODE_PROJECT_NAME }}-app" \
+            --deployment-group-name "${{ vars.TIAGOCODE_PROJECT_NAME }}-dg" \
+            --revision "{\"revisionType\":\"S3\",\"s3Location\":{\"bucket\":\"${s3_bucket}\",\"key\":\"${s3_key}\",\"bundleType\":\"zip\"}}" \
+            --description "Environment setup deployment ${GITHUB_SHA}" \
+            --query "deploymentId" \
+            --output text)
+
+          echo "deployment_id=${deployment_id}" >> "$GITHUB_OUTPUT"
+          echo "Created deployment: ${deployment_id}"
+
+      - name: Wait for CodeDeploy to finish
+        run: aws deploy wait deployment-successful --deployment-id "${{ steps.deploy.outputs.deployment_id }}"
