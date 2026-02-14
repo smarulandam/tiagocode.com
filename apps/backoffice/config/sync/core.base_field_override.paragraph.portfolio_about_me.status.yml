@@ -1,0 +1,22 @@
+uuid: c6dc641b-8f7d-400c-9d80-361e73198979
+langcode: en
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.portfolio_about_me
+id: paragraph.portfolio_about_me.status
+field_name: status
+entity_type: paragraph
+bundle: portfolio_about_me
+label: Published
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

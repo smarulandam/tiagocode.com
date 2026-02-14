@@ -1,0 +1,18 @@
+uuid: 76971d1a-5950-4749-a144-9178468bc099
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - rest_menu_items
+    - serialization
+id: rest_menu_item
+plugin_id: rest_menu_item
+granularity: resource
+configuration:
+  methods:
+    - GET
+  formats:
+    - json
+  authentication:
+    - basic_auth

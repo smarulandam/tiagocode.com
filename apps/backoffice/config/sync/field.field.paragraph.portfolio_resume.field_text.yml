@@ -1,0 +1,24 @@
+uuid: f70cd951-ab82-464c-9664-94a7edf51c4b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_text
+    - filter.format.full_html
+    - paragraphs.paragraphs_type.portfolio_resume
+  module:
+    - text
+id: paragraph.portfolio_resume.field_text
+field_name: field_text
+entity_type: paragraph
+bundle: portfolio_resume
+label: Text
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - full_html
+field_type: text_long

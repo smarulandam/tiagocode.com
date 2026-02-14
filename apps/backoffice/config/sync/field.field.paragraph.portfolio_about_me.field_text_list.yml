@@ -1,0 +1,19 @@
+uuid: 3ed5e56d-5d90-4b53-902b-70b511a7ec4b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_text_list
+    - paragraphs.paragraphs_type.portfolio_about_me
+id: paragraph.portfolio_about_me.field_text_list
+field_name: field_text_list
+entity_type: paragraph
+bundle: portfolio_about_me
+label: 'Skills list'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

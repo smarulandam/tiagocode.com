@@ -1,0 +1,30 @@
+services:
+  backoffice:
+    platform: linux/amd64
+
+  website:
+    platform: linux/amd64
+
+  prometheus:
+    extra_hosts: !reset []
+    networks:
+      - backend_network
+
+  node_exporter:
+    network_mode: !reset null
+    pid: !reset null
+    volumes: !reset []
+    command:
+      - "--collector.disable-defaults"
+      - "--collector.cpu"
+      - "--collector.meminfo"
+      - "--collector.filesystem"
+      - "--collector.diskstats"
+      - "--collector.netdev"
+      - "--collector.loadavg"
+      - "--collector.stat"
+      - "--collector.time"
+      - "--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|run)($|/)"
+    networks:
+      - backend_network
+    restart: unless-stopped

@@ -1,0 +1,18 @@
+uuid: e2a1df1f-dca4-4351-8bdc-f4d315b278b6
+langcode: es
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.portfolio_resume
+id: paragraph.portfolio_resume.created
+field_name: created
+entity_type: paragraph
+bundle: portfolio_resume
+label: 'Authored on'
+description: 'The time that the Paragraph was created.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

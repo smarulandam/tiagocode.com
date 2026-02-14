@@ -1,0 +1,24 @@
+uuid: 928bb62e-28ce-4504-a500-c89724744174
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_text
+    - filter.format.full_html
+    - paragraphs.paragraphs_type.portfolio_projects
+  module:
+    - text
+id: paragraph.portfolio_projects.field_text
+field_name: field_text
+entity_type: paragraph
+bundle: portfolio_projects
+label: Text
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - full_html
+field_type: text_long

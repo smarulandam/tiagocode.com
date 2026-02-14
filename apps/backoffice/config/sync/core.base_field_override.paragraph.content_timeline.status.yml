@@ -1,0 +1,22 @@
+uuid: 9b61bf89-6b04-41be-af41-ad1710d033b5
+langcode: es
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.content_timeline
+id: paragraph.content_timeline.status
+field_name: status
+entity_type: paragraph
+bundle: content_timeline
+label: Published
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

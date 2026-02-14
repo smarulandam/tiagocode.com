@@ -1,0 +1,18 @@
+uuid: 7c63d17d-931d-4ed7-98a5-46471be63655
+langcode: en
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.portfolio_about_me
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: paragraph.portfolio_about_me
+target_entity_type_id: paragraph
+target_bundle: portfolio_about_me
+default_langcode: site_default
+language_alterable: true

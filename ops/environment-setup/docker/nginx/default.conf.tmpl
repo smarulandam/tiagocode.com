@@ -1,0 +1,210 @@
+upstream phpfpm-upstream {
+    # Define PHP-FPM upstream server
+    server {{ getenv "NGINX_PHPFPM_HOST" "phpfpm" }}:{{ getenv "NGINX_PHPFPM_PORT" "9000" }} fail_timeout=0;
+}
+
+server {
+    listen       80;
+    listen      [::]:80 default ipv6only=on;
+    server_name  _;
+
+    # Default index files
+    index index.php index.html;
+
+    root {{ getenv "NGINX_SERVER_ROOT" "/var/www/html" }};
+
+    fastcgi_read_timeout 300;
+    fastcgi_connect_timeout 60;
+
+    # Security headers
+    add_header  X-XSS-Protection '1; mode=block';
+    add_header  X-Frame-Options SAMEORIGIN;
+    add_header  X-Content-Type-Options nosniff;
+    add_header  Content-Security-Policy "frame-ancestors 'self'";
+
+    location @drupal {
+        include fastcgi.conf;
+        fastcgi_param QUERY_STRING $query_string;
+        fastcgi_param SCRIPT_NAME /index.php;
+        fastcgi_param SCRIPT_FILENAME {{ getenv "NGINX_SERVER_ROOT" "/var/www/html" }}/index.php;
+        fastcgi_pass phpfpm-upstream;
+    }
+
+    location @drupal-no-args {
+        include fastcgi.conf;
+        fastcgi_param QUERY_STRING q=$uri;
+        fastcgi_param SCRIPT_NAME /index.php;
+        fastcgi_param SCRIPT_FILENAME {{ getenv "NGINX_SERVER_ROOT" "/var/www/html" }}/index.php;
+        fastcgi_pass phpfpm-upstream;
+    }
+
+    location @empty {
+        expires 1y;
+        empty_gif;
+    }
+
+    location = /robots.txt {
+        try_files $uri @drupal-no-args;
+        access_log off;
+        log_not_found off;
+    }
+
+    location = /humans.txt {
+        try_files $uri @drupal-no-args;
+        access_log off;
+        log_not_found off;
+    }
+
+    location / {
+        # Restrict access to private files
+        location ~* /sites/.+/files/private/ {
+            internal;
+        }
+
+        # Cache CSS/JS/style files
+        location ~* /files/(css|js|styles)/ {
+            access_log off;
+            expires 1y;
+            try_files $uri @drupal;
+        }
+
+        # Cache plain text files with optimization settings
+        location ~* /sites/.+/files/.+\.(?:txt) {
+            access_log off;
+            expires 1y;
+            tcp_nodelay off;
+            open_file_cache off;
+            open_file_cache_valid 30s;
+            open_file_cache_min_uses 2;
+            open_file_cache_errors off;
+        }
+
+        # Serve static assets with caching
+        location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot|otf|mp4)$ {
+            try_files $uri =404;
+            access_log off;
+            expires 1y;
+            add_header Cache-Control "public";
+        }
+
+        # Handle optimized CSS/JS with immutable cache headers
+        location ~* /sites/.+/files/optimized/(css|js)/ {
+            expires max;
+            add_header ETag '';
+            add_header Last-Modified 'Wed, 20 Jan 1988 04:20:42 GMT';
+            add_header Accept-Ranges '';
+            location ~* /sites/.*/files/optimized/css/.+\.css$ {
+                access_log off;
+                add_header Cache-Control "public, max-age=31536000, no-transform, immutable";
+                try_files $uri @drupal;
+            }
+            location ~* /sites/.*/files/optimized/js/.+\.js$ {
+                access_log off;
+                add_header Cache-Control "public, max-age=31536000, no-transform, immutable";
+                try_files $uri @drupal;
+            }
+        }
+
+        # Block access to sensitive or backup files
+        location ~* \.(engine|md|txt|inc|install|make|module|profile|po|sh|.*sql|theme|twig|tpl(\.php)?|xtmpl|yml|yaml)(~|\.sw[op]|\.bak|\.orig|\.save)?$|^(\.(?!well-known).*|Entries.*|Repository|Root|Tag|Template)$|(web\.config|composer\.(json|lock)|(package|package-lock)\.json|yarn\.lock)$|^#.*#$|\.php(~|\.sw[op]|\.bak|\.orig|\.save)$ {
+            return 404;
+        }
+
+        # Additional static file caching
+        location ~* ^.+\.(?:css|cur|js|jpe?g|gif|htc|ico|png|xml|otf|ttf|eot|woff|woff2|svg|mp4|svgz|ogg|ogv|pdf|pptx?|zip|tgz|gz|rar|bz2|doc|xls|exe|tar|mid|midi|wav|bmp|rtf|txt|map|webp)$ {
+            access_log off;
+            tcp_nodelay off;
+            expires 1y;
+
+            add_header Pragma "cache";
+            add_header Cache-Control "public";
+
+            open_file_cache off;
+            open_file_cache_valid 30s;
+            open_file_cache_min_uses 2;
+            open_file_cache_errors off;
+        }
+
+        # Default fallback to Drupal handler
+        try_files $uri @drupal;
+    }
+
+    # Direct access to index.php
+    location = /index.php {
+        fastcgi_pass phpfpm-upstream;
+    }
+
+    # Allow Drupal install script
+    location = /core/install.php {
+        fastcgi_pass phpfpm-upstream;
+    }
+
+    # Allow Drupal rebuild script
+    location = /core/rebuild.php {
+        fastcgi_pass phpfpm-upstream;
+    }
+
+    # Allow Drupal authorize.php
+    location ~* ^/core/authorize.php {
+        include fastcgi.conf;
+        fastcgi_param QUERY_STRING $args;
+        fastcgi_param SCRIPT_NAME /core/authorize.php;
+        fastcgi_param SCRIPT_FILENAME {{ getenv "NGINX_SERVER_ROOT" "/var/www/html" }}/core/authorize.php;
+        fastcgi_pass phpfpm-upstream;
+    }
+
+    # Handle cron
+    location = /cron {
+        include fastcgi.conf;
+        fastcgi_param QUERY_STRING $args;
+        fastcgi_param SCRIPT_NAME /index.php;
+        fastcgi_param SCRIPT_FILENAME {{ getenv "NGINX_SERVER_ROOT" "/var/www/html" }}/index.php;
+        fastcgi_pass phpfpm-upstream;
+    }
+
+    # Allow update.php
+    location ~* ^/update.php {
+        include fastcgi.conf;
+        fastcgi_param QUERY_STRING $args;
+        fastcgi_param SCRIPT_NAME /update.php;
+        fastcgi_param SCRIPT_FILENAME {{ getenv "NGINX_SERVER_ROOT" "/var/www/html" }}/update.php;
+        fastcgi_pass phpfpm-upstream;
+    }
+
+    # Block direct PHP access (fallback rule)
+    location ~* ^.+\.php$ {
+        return 404;
+    }
+
+    # Serve favicon with caching
+    location = /favicon.ico {
+        expires 1y;
+        try_files /favicon.ico @empty;
+        log_not_found off;
+        access_log off;
+    }
+
+    # Allow all access to robots.txt
+    location ^~ /robots.txt {
+        allow all;
+        log_not_found off;
+        access_log off;
+    }
+
+    # Enable HLS/MP4 video streaming
+    location ~* ^.+\.(?:m4a|mp4|mov)$ {
+        mp4;
+        mp4_buffer_size 1M;
+        mp4_max_buffer_size 5M;
+    }
+
+    # Allow access to .well-known paths (e.g., for SSL)
+    location ^~ /.well-known/ {
+        allow all;
+    }
+
+    # Deny access to Makefile
+    location ~ /Makefile {
+        deny all;
+    }
+}

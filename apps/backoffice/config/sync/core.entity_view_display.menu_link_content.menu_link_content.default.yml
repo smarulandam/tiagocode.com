@@ -1,0 +1,43 @@
+uuid: 751377b3-daf0-4b10-84fa-6eda0170c32a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.menu_link_content.menu_link_content.field_image
+  module:
+    - link
+    - menu_link_content
+    - menu_item_fields
+id: menu_link_content.menu_link_content.default
+targetEntityType: menu_link_content
+bundle: menu_link_content
+mode: default
+content:
+  field_image:
+    type: entity_reference_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  link:
+    type: link
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  description: true
+  enabled: true
+  expanded: true
+  langcode: true
+  title: true
+  weight: true

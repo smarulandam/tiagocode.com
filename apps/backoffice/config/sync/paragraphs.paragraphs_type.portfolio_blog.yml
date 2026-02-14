@@ -1,0 +1,10 @@
+uuid: 5d75a4b2-f065-4112-acc0-ae5dd404f9f3
+langcode: en
+status: true
+dependencies: {  }
+id: portfolio_blog
+label: 'Portfolio: Blog'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

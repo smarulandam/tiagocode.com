@@ -1,0 +1,34 @@
+uuid: 26b1b46c-ed04-4f57-9671-299a77694e3c
+langcode: en
+status: true
+dependencies:
+  module:
+    - language
+    - node
+id: node_portfolio
+label: 'Node: Portfolio'
+type: 'canonical_entities:node'
+pattern: '[node:langcode]/[node:content-type]/[node:title]'
+selection_criteria:
+  16713aec-1e06-44d1-9583-5793d0ebdb59:
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: 16713aec-1e06-44d1-9583-5793d0ebdb59
+    context_mapping:
+      node: node
+    bundles:
+      portfolio: portfolio
+  6d50294c-e563-4827-8c8e-84e51849ed1b:
+    id: language
+    negate: false
+    uuid: 6d50294c-e563-4827-8c8e-84e51849ed1b
+    context_mapping:
+      language: 'node:langcode:language'
+    langcodes:
+      en: en
+      es: es
+selection_logic: and
+weight: -10
+relationships:
+  'node:langcode:language':
+    label: Language

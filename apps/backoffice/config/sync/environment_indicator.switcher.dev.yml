@@ -1,0 +1,11 @@
+uuid: 558bbcd5-67d9-4da4-ba47-75ae3c0a703b
+langcode: en
+status: true
+dependencies: {  }
+machine: dev
+description: null
+name: DEV
+weight: -10
+url: 'https://local-admin.tiagocode.com'
+fg_color: '#232323'
+bg_color: '#96d35f'

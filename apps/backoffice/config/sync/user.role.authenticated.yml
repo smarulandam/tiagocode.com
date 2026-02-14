@@ -1,0 +1,35 @@
+uuid: 1e6d476f-73b0-4d76-a4a7-e5b0d30bfefa
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+    - rest.resource.rest_menu_item
+  module:
+    - comment
+    - contact
+    - file
+    - filter
+    - media
+    - rest
+    - search
+    - shortcut
+    - system
+_core:
+  default_config_hash: cFrlqjtkTfvY3RGccjJkPf1SGIfJ942IrxTLWAO4mgA
+id: authenticated
+label: 'Authenticated user'
+weight: 1
+is_admin: false
+permissions:
+  - 'access comments'
+  - 'access content'
+  - 'access shortcuts'
+  - 'access site-wide contact form'
+  - 'delete own files'
+  - 'post comments'
+  - 'restful get rest_menu_item'
+  - 'search content'
+  - 'skip comment approval'
+  - 'use text format basic_html'
+  - 'view media'

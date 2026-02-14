@@ -1,0 +1,33 @@
+uuid: fb8dc922-8ae1-4e2b-afe5-63a2678428f9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_media
+    - media.type.document
+    - media.type.image
+    - media.type.remote_video
+    - paragraphs.paragraphs_type.content_media
+id: paragraph.content_media.field_media
+field_name: field_media
+entity_type: paragraph
+bundle: content_media
+label: Media
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      document: document
+      image: image
+      remote_video: remote_video
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: image
+field_type: entity_reference

@@ -1,0 +1,18 @@
+uuid: ea12c715-bbb3-498e-af45-fac0cc93e288
+langcode: es
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.content_timeline
+id: paragraph.content_timeline.created
+field_name: created
+entity_type: paragraph
+bundle: content_timeline
+label: 'Authored on'
+description: 'The time that the Paragraph was created.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

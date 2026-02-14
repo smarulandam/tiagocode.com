@@ -1,0 +1,13 @@
+uuid: b3e4078f-18e5-4a64-a1fc-2a3488584153
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: sL588ui1E_8-2c_UupwyYxcqX2OVyMFp3HTLbbFqvPc
+id: global
+label: Global
+tags:
+  canonical_url: 'https://www.tiagocode.com[node:url:relative]'
+  robots: 'index, follow'
+  shortlink: '[node:url:relative]'
+  title: '[current-page:title] | [site:name]'

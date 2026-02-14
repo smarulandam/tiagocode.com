@@ -1,0 +1,19 @@
+uuid: b8d24bfa-924c-4141-96f7-7d6a39daa912
+langcode: en
+status: true
+dependencies:
+  module:
+    - taxonomy
+id: taxonomy_term.field_emoji
+field_name: field_emoji
+entity_type: taxonomy_term
+type: string_long
+settings:
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,484 @@
+{
+  "jsonapi": {
+    "version": "1.0",
+    "parsed": true
+  },
+  "data": [
+    {
+      "type": "node--article",
+      "id": "66fa079a-8b9f-4971-9b3c-60f33efa0bd2",
+      "langcode": "en",
+      "status": "1",
+      "title": "Understanding Linked Lists",
+      "created": "2025-03-23T00:55:50+00:00",
+      "promoted": "1",
+      "metatag": [
+        {
+          "tag": "meta",
+          "attributes": {
+            "name": "title",
+            "content": "Understanding Linked Lists | Tiagocode"
+          }
+        },
+        {
+          "tag": "meta",
+          "attributes": {
+            "name": "description",
+            "content": "A linked list is a fundamental data structure in computer science that provides a flexible way to store and manage data"
+          }
+        },
+        {
+          "tag": "meta",
+          "attributes": {
+            "name": "keywords",
+            "content": "Software Developer, Web Developer, Full-Stack Developer, Backend Developer, Rust Developer, PHP Developer, Laravel Developer, JavaScript Developer, Leptos Framework, Web Development, Personal Portfolio, Coding Blog, Programming Articles, Tech Blog, Open Source, Software Engineering, Cloud Computing, API Development, SEO Optimization, Responsive Web Design"
+          }
+        },
+        {
+          "tag": "meta",
+          "attributes": {
+            "name": "robots",
+            "content": "noindex, nofollow, noarchive, nosnippet, noimageindex, notranslate"
+          }
+        },
+        {
+          "tag": "link",
+          "attributes": {
+            "rel": "canonical",
+            "href": "https://local-admin.tiagocode.com/en/articles/programming/understanding-linked-lists"
+          }
+        },
+        {
+          "tag": "meta",
+          "attributes": {
+            "property": "og:site_name",
+            "content": "Tiagocode"
+          }
+        },
+        {
+          "tag": "meta",
+          "attributes": {
+            "property": "og:title",
+            "content": "Understanding Linked Lists | Tiagocode"
+          }
+        },
+        {
+          "tag": "meta",
+          "attributes": {
+            "property": "og:description",
+            "content": "A linked list is a fundamental data structure in computer science that provides a flexible way to store and manage data"
+          }
+        },
+        {
+          "tag": "meta",
+          "attributes": {
+            "property": "og:image",
+            "content": "https://local-admin.tiagocode.com/media/21/edit"
+          }
+        },
+        {
+          "tag": "meta",
+          "attributes": {
+            "name": "twitter:card",
+            "content": "summary"
+          }
+        },
+        {
+          "tag": "meta",
+          "attributes": {
+            "name": "twitter:description",
+            "content": "A linked list is a fundamental data structure in computer science that provides a flexible way to store and manage data"
+          }
+        },
+        {
+          "tag": "meta",
+          "attributes": {
+            "name": "twitter:title",
+            "content": "Understanding Linked Lists | Tiagocode"
+          }
+        }
+      ],
+      "path": {
+        "alias": "/en/articles/programming/understanding-linked-lists",
+        "pid": "18",
+        "langcode": "en"
+      },
+      "body": "A linked list is a fundamental data structure in computer science that provides a flexible way to store and manage data",
+      "content": [
+        {
+          "type": "paragraph--content_text",
+          "id": "cef86b9d-ded5-4d4e-a9e1-b3873c798636",
+          "text": "<h2>Introduction</h2><p style=\"-webkit-text-stroke-width:0px;caret-color:rgb(0, 0, 0);color:rgb(0, 0, 0);font-style:normal;font-variant-caps:normal;font-weight:400;letter-spacing:normal;orphans:auto;text-align:start;text-decoration:none;text-indent:0px;text-transform:none;white-space:normal;widows:auto;word-spacing:0px;\" data-pm-slice=\"1 1 []\"><span>A <strong>linked list</strong> is a fundamental data structure in computer science that provides a flexible way to store and manage data. Unlike arrays, which have a fixed size, </span><a href=\"https://example.com\"><span>linked lists</span></a><span> allow dynamic memory allocation, making them useful in scenarios where the number of elements is unknown in advance.</span></p><p style=\"-webkit-text-stroke-width:0px;caret-color:rgb(0, 0, 0);color:rgb(0, 0, 0);font-style:normal;font-variant-caps:normal;font-weight:400;letter-spacing:normal;orphans:auto;text-align:start;text-decoration:none;text-indent:0px;text-transform:none;white-space:normal;widows:auto;word-spacing:0px;\"><span>This article explores the basics of linked lists, their types, and how they are implemented in code</span></p>",
+          "meta": {
+            "target_revision_id": "846",
+            "drupal_internal__target_id": "32"
+          }
+        },
+        {
+          "type": "paragraph--content_text",
+          "id": "4a37216f-bb2a-4f2c-92d0-6adcee38017e",
+          "text": "<h2 style=\"-webkit-text-stroke-width:0px;caret-color:rgb(0, 0, 0);color:rgb(0, 0, 0);font-style:normal;font-variant-caps:normal;letter-spacing:normal;orphans:auto;text-align:start;text-decoration:none;text-indent:0px;text-transform:none;white-space:normal;widows:auto;word-spacing:0px;\" data-pm-slice=\"1 3 []\"><span>What is a Linked List? </span><strong>🧠</strong></h2><p style=\"-webkit-text-stroke-width:0px;caret-color:rgb(0, 0, 0);color:rgb(0, 0, 0);font-style:normal;font-variant-caps:normal;font-weight:400;letter-spacing:normal;orphans:auto;text-align:start;text-decoration:none;text-indent:0px;text-transform:none;white-space:normal;widows:auto;word-spacing:0px;\"><span>A linked list is a fundamental data structure in computer science that provides a flexible way to store and manage data. Unlike arrays, which have a fixed size, linked lists allow dynamic memory allocation, making them useful in scenarios where the number of elements is unknown in advance. A linked list consists of nodes, where each node contains:</span></p><p style=\"-webkit-text-stroke-width:0px;caret-color:rgb(0, 0, 0);color:rgb(0, 0, 0);font-style:normal;font-variant-caps:normal;font-weight:400;letter-spacing:normal;orphans:auto;text-align:start;text-decoration:none;text-indent:0px;text-transform:none;white-space:normal;widows:auto;word-spacing:0px;\"><span>A linked list is a fundamental data structure in computer science that provides a flexible way to store and manage data. Unlike arrays, which have a fixed size, linked lists allow dynamic memory allocation, making them useful in scenarios where the number of elements is unknown in advance. A linked list consists of nodes, where each node contains:</span></p><ol style=\"-webkit-text-stroke-width:0px;caret-color:rgb(0, 0, 0);color:rgb(0, 0, 0);font-style:normal;font-variant-caps:normal;font-weight:400;letter-spacing:normal;orphans:auto;text-align:start;text-decoration:none;text-indent:0px;text-transform:none;white-space:normal;widows:auto;word-spacing:0px;\" data-spread=\"false\"><li><span><strong>Singly Linked List</strong>: Each node points to the next node in the sequence.</span></li><li><span><strong>Doubly Linked List</strong>: Each node has two pointers, one to the next node and one to the previous node.</span></li><li><span><strong>Circular Linked List</strong>: The last node links back to the first node, forming a loop.</span></li></ol>",
+          "meta": {
+            "target_revision_id": "847",
+            "drupal_internal__target_id": "33"
+          }
+        },
+        {
+          "type": "paragraph--content_media",
+          "id": "8d424672-9ed8-42f7-8b1b-7fb1c51a76d3",
+          "meta": {
+            "target_revision_id": "848",
+            "drupal_internal__target_id": "34"
+          },
+          "media": {
+            "type": "media--image",
+            "id": "fa4f62e5-1fc5-4684-95c4-fa755dd9ba5f",
+            "langcode": "en",
+            "name": "linked_list.webp",
+            "meta": {
+              "drupal_internal__target_id": "19"
+            },
+            "media_image": {
+              "type": "file--file",
+              "id": "453309d0-81cb-48b7-9c04-69a550af2a75",
+              "uri": {
+                "value": "public://2025-03/linked_list_0.webp",
+                "url": "/sites/default/files/2025-03/linked_list_0.webp"
+              },
+              "filemime": "image/webp",
+              "filesize": "11156",
+              "image_style_uri": {
+                "max_2600x2600": "https://local-admin.tiagocode.com/sites/default/files/styles/max_2600x2600/public/2025-03/linked_list_0.webp?itok=GY2SvquL",
+                "max_900x550": "https://local-admin.tiagocode.com/sites/default/files/styles/max_900x550/public/2025-03/linked_list_0.webp?itok=ifIYaAHv",
+                "medium": "https://local-admin.tiagocode.com/sites/default/files/styles/medium/public/2025-03/linked_list_0.webp?itok=pDl7YP5g",
+                "medium_500x500": "https://local-admin.tiagocode.com/sites/default/files/styles/medium_500x500/public/2025-03/linked_list_0.webp?itok=3EOD7h_3",
+                "thumbnail": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail/public/2025-03/linked_list_0.webp?itok=92pleBOU",
+                "thumbnail_260x210": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail_260x210/public/2025-03/linked_list_0.webp?itok=IwIYKv3v",
+                "thumbnail_664x410": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail_664x410/public/2025-03/linked_list_0.webp?itok=SFzELDdW"
+              },
+              "meta": {
+                "alt": "Example image",
+                "title": "",
+                "width": "801",
+                "height": "401",
+                "drupal_internal__target_id": "38"
+              }
+            }
+          }
+        },
+        {
+          "type": "paragraph--content_text",
+          "id": "38a87c50-41ef-429a-8f06-905f69e7e1a1",
+          "text": "<h2 style=\"-webkit-text-stroke-width:0px;caret-color:rgb(0, 0, 0);color:rgb(0, 0, 0);font-style:normal;font-variant-caps:normal;letter-spacing:normal;orphans:auto;text-align:start;text-decoration:none;text-indent:0px;text-transform:none;white-space:normal;widows:auto;word-spacing:0px;\" data-pm-slice=\"1 1 []\"><span>Implementing a Singly Linked List in Python</span></h2><p style=\"-webkit-text-stroke-width:0px;caret-color:rgb(0, 0, 0);color:rgb(0, 0, 0);font-style:normal;font-variant-caps:normal;font-weight:400;letter-spacing:normal;orphans:auto;text-align:start;text-decoration:none;text-indent:0px;text-transform:none;white-space:normal;widows:auto;word-spacing:0px;\"><span>A linked list is a fundamental data structure in computer science that provides a flexible way to store and manage data. Unlike arrays, which have a fixed size, linked lists allow dynamic memory allocation, making them useful in scenarios where the number of elements is unknown in advance. A linked list consists of nodes, where each node contains. A linked list is a fundamental data structure in computer science that provides a flexible way to store and manage data. Unlike arrays, which have a fixed size, linked lists allow dynamic memory allocation, making them useful in scenarios where the number of elements is unknown in advance. A linked list consists of nodes, where each node contains</span></p><p style=\"-webkit-text-stroke-width:0px;caret-color:rgb(0, 0, 0);color:rgb(0, 0, 0);font-style:normal;font-variant-caps:normal;font-weight:400;letter-spacing:normal;orphans:auto;text-align:start;text-decoration:none;text-indent:0px;text-transform:none;white-space:normal;widows:auto;word-spacing:0px;\"><span>A linked list is a fundamental data structure in computer science that provides a flexible way to store and manage data. Unlike arrays, which have a fixed size, linked lists allow dynamic memory allocation, making them useful in scenarios where the number of elements is unknown in advance. A linked list consists of nodes, where each node contains:</span></p><pre><code class=\"language-python\">class Node:\n    def __init__(self, data):\n        self.data = data\n        self.next = None\n\nclass LinkedList:\n    def __init__(self):\n        self.head = None\n\n    def append(self, data):\n        new_node = Node(data)\n        if not self.head:\n            self.head = new_node\n            return\n        last = self.head\n        while last.next:\n            last = last.next\n        last.next = new_node\n\n    def display(self):\n        current = self.head\n        while current:\n            print(current.data, end=' -&gt; ')\n            current = current.next\n        print('None')\n\n# Example usage\nll = LinkedList()\nll.append(10)\nll.append(20)\nll.append(30)\nll.display()</code></pre>",
+          "meta": {
+            "target_revision_id": "849",
+            "drupal_internal__target_id": "35"
+          }
+        },
+        {
+          "type": "paragraph--content_text",
+          "id": "2c378e5d-ae68-488d-9f67-cc8f9197ef59",
+          "text": "<h2><span>Explanation:</span></h2><ul style=\"-webkit-text-stroke-width:0px;caret-color:rgb(0, 0, 0);color:rgb(0, 0, 0);font-style:normal;font-variant-caps:normal;font-weight:400;letter-spacing:normal;orphans:auto;text-align:start;text-decoration:none;text-indent:0px;text-transform:none;white-space:normal;widows:auto;word-spacing:0px;\" data-spread=\"false\"><li><span>The </span><code><span>Node</span></code><span> class represents a single node with </span><code><span>data</span></code><span> and </span><code><span>next</span></code><span> attributes.</span></li><li><span>The </span><code><span>LinkedList</span></code><span> class manages the list, allowing for appending and displaying elements.</span></li><li><span>The </span><code><span>append</span></code><span> method adds new nodes at the end.</span></li><li><span>The </span><code><span>display</span></code><span> method prints the elements in the list.</span></li></ul>",
+          "meta": {
+            "target_revision_id": "850",
+            "drupal_internal__target_id": "36"
+          }
+        },
+        {
+          "type": "paragraph--content_media",
+          "id": "c9d50d25-357f-4932-a2d3-0b99c7686661",
+          "meta": {
+            "target_revision_id": "851",
+            "drupal_internal__target_id": "38"
+          },
+          "media": {
+            "type": "media--image",
+            "id": "8654cd3f-4c43-4b97-afcf-c4cbbd458536",
+            "langcode": "en",
+            "name": "linked_ist_2.webp",
+            "meta": {
+              "drupal_internal__target_id": "20"
+            },
+            "media_image": {
+              "type": "file--file",
+              "id": "35fe6156-e8ee-4d33-ae86-ac7aed304aa4",
+              "uri": {
+                "value": "public://2025-03/linked_ist_2.webp",
+                "url": "/sites/default/files/2025-03/linked_ist_2.webp"
+              },
+              "filemime": "image/webp",
+              "filesize": "12344",
+              "image_style_uri": {
+                "max_2600x2600": "https://local-admin.tiagocode.com/sites/default/files/styles/max_2600x2600/public/2025-03/linked_ist_2.webp?itok=-dfYQT1Q",
+                "max_900x550": "https://local-admin.tiagocode.com/sites/default/files/styles/max_900x550/public/2025-03/linked_ist_2.webp?itok=-gZfWaCT",
+                "medium": "https://local-admin.tiagocode.com/sites/default/files/styles/medium/public/2025-03/linked_ist_2.webp?itok=k4nBmNZt",
+                "medium_500x500": "https://local-admin.tiagocode.com/sites/default/files/styles/medium_500x500/public/2025-03/linked_ist_2.webp?itok=jXNrB50h",
+                "thumbnail": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail/public/2025-03/linked_ist_2.webp?itok=K8ol15hI",
+                "thumbnail_260x210": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail_260x210/public/2025-03/linked_ist_2.webp?itok=cqufFlsm",
+                "thumbnail_664x410": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail_664x410/public/2025-03/linked_ist_2.webp?itok=6bRL8Rqo"
+              },
+              "meta": {
+                "alt": "Example image",
+                "title": "",
+                "width": "801",
+                "height": "287",
+                "drupal_internal__target_id": "39"
+              }
+            }
+          }
+        },
+        {
+          "type": "paragraph--content_text",
+          "id": "0780fd16-da12-4a5b-b541-cf490ac7448e",
+          "text": "<h2 style=\"-webkit-text-stroke-width:0px;caret-color:rgb(0, 0, 0);color:rgb(0, 0, 0);font-style:normal;font-variant-caps:normal;letter-spacing:normal;orphans:auto;text-align:start;text-decoration:none;text-indent:0px;text-transform:none;white-space:normal;widows:auto;word-spacing:0px;\" data-pm-slice=\"1 3 []\"><span>Advantages of Linked Lists</span></h2><p><span>A linked list is a fundamental data structure in computer science that provides a flexible way to store and manage data. Unlike arrays, which have a fixed size, linked lists allow dynamic memory allocation, making them useful in scenarios where the number of elements is unknown in advance.</span></p><ul style=\"-webkit-text-stroke-width:0px;caret-color:rgb(0, 0, 0);color:rgb(0, 0, 0);font-style:normal;font-variant-caps:normal;font-weight:400;letter-spacing:normal;orphans:auto;text-align:start;text-decoration:none;text-indent:0px;text-transform:none;white-space:normal;widows:auto;word-spacing:0px;\" data-spread=\"false\"><li><span><strong>Dynamic size</strong>: Unlike arrays, linked lists can grow and shrink dynamically.</span><ul><li><span>Subitem: Unlike arrays, linked lists can grow and shrink dynamically.</span></li><li><span>Subitem: Unlike arrays, linked lists can grow and shrink dynamically.</span></li></ul></li><li><span><strong>Efficient insertions and deletions</strong>: Adding or removing elements is faster than in arrays, as there is no need for shifting.</span></li></ul><h2 style=\"-webkit-text-stroke-width:0px;caret-color:rgb(0, 0, 0);color:rgb(0, 0, 0);font-style:normal;font-variant-caps:normal;letter-spacing:normal;orphans:auto;text-align:start;text-decoration:none;text-indent:0px;text-transform:none;white-space:normal;widows:auto;word-spacing:0px;\"><span>Disadvantages of Linked Lists</span></h2><p><span>A linked list is a fundamental data structure in computer science that provides a flexible way to store and manage data. Unlike arrays, which have a fixed size, linked lists allow dynamic memory allocation, making them useful in scenarios where the number of elements is unknown in advance.</span></p><ul style=\"-webkit-text-stroke-width:0px;caret-color:rgb(0, 0, 0);color:rgb(0, 0, 0);font-style:normal;font-variant-caps:normal;font-weight:400;letter-spacing:normal;orphans:auto;text-align:start;text-decoration:none;text-indent:0px;text-transform:none;white-space:normal;widows:auto;word-spacing:0px;\" data-spread=\"false\"><li><span><strong>Memory overhead</strong>: Each node requires additional memory for storing the pointer.</span></li><li><span><strong>Sequential access</strong>: Unlike arrays, random access is not possible, requiring traversal from the head.</span></li></ul>",
+          "meta": {
+            "target_revision_id": "852",
+            "drupal_internal__target_id": "37"
+          }
+        },
+        {
+          "type": "paragraph--content_text",
+          "id": "dfaf6073-54c3-4bce-a66f-d8c57d3e93c0",
+          "text": "<blockquote><p>Improve AI reasoning by letting it fail first, then fix itself.</p></blockquote>",
+          "meta": {
+            "target_revision_id": "853",
+            "drupal_internal__target_id": "40"
+          }
+        },
+        {
+          "type": "paragraph--content_text",
+          "id": "42faa260-e184-4f71-9cdc-0245324574a5",
+          "text": "<h2 style=\"-webkit-text-stroke-width:0px;caret-color:rgb(0, 0, 0);color:rgb(0, 0, 0);font-style:normal;font-variant-caps:normal;letter-spacing:normal;orphans:auto;text-align:start;text-decoration:none;text-indent:0px;text-transform:none;white-space:normal;widows:auto;word-spacing:0px;\" data-pm-slice=\"1 1 []\"><span>Conclusion</span></h2><p style=\"-webkit-text-stroke-width:0px;caret-color:rgb(0, 0, 0);color:rgb(0, 0, 0);font-style:normal;font-variant-caps:normal;font-weight:400;letter-spacing:normal;orphans:auto;text-align:start;text-decoration:none;text-indent:0px;text-transform:none;white-space:normal;widows:auto;word-spacing:0px;\"><span>Linked lists are a crucial data structure, widely used in applications like memory management, navigation systems, and data organization. Understanding how they work and implementing them in code will enhance your problem-solving skills in data structures and algorithms.</span></p><p style=\"-webkit-text-stroke-width:0px;caret-color:rgb(0, 0, 0);color:rgb(0, 0, 0);font-style:normal;font-variant-caps:normal;font-weight:400;letter-spacing:normal;orphans:auto;text-align:start;text-decoration:none;text-indent:0px;text-transform:none;white-space:normal;widows:auto;word-spacing:0px;\"><span>Would you like to explore more advanced linked list operations like insertion at specific positions or reversing a linked list? Let me know!</span></p>",
+          "meta": {
+            "target_revision_id": "854",
+            "drupal_internal__target_id": "39"
+          }
+        }
+      ],
+      "tags": {
+        "type": "taxonomy_term--tags",
+        "id": "6e66e2ac-fa9f-43d6-bcbe-701fb509c93a",
+        "langcode": "en",
+        "status": "1",
+        "name": "Programming",
+        "weight": "0",
+        "path": {
+          "alias": "/en/articles/programming",
+          "pid": "10",
+          "langcode": "en"
+        },
+        "emoji": "🖥️",
+        "meta": {
+          "drupal_internal__target_id": "2"
+        }
+      },
+      "thumbnail": {
+        "type": "media--image",
+        "id": "25dc41fe-0f8e-4125-8e80-3ac2143e41dc",
+        "langcode": "en",
+        "name": "Linked-List.png",
+        "meta": {
+          "drupal_internal__target_id": "21"
+        },
+        "media_image": {
+          "type": "file--file",
+          "id": "44fa7132-3c5b-4b5d-9fd3-f8d38694d9e3",
+          "uri": {
+            "value": "public://2025-03/Linked-List.png",
+            "url": "/sites/default/files/2025-03/Linked-List.png"
+          },
+          "filemime": "image/png",
+          "filesize": "23729",
+          "image_style_uri": {
+            "max_2600x2600": "https://local-admin.tiagocode.com/sites/default/files/styles/max_2600x2600/public/2025-03/Linked-List.png.webp?itok=eGE3L-nj",
+            "max_900x550": "https://local-admin.tiagocode.com/sites/default/files/styles/max_900x550/public/2025-03/Linked-List.png?itok=mW-yRXXY",
+            "medium": "https://local-admin.tiagocode.com/sites/default/files/styles/medium/public/2025-03/Linked-List.png.webp?itok=J0aS7HEY",
+            "medium_500x500": "https://local-admin.tiagocode.com/sites/default/files/styles/medium_500x500/public/2025-03/Linked-List.png?itok=9m_j_ago",
+            "thumbnail": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail/public/2025-03/Linked-List.png.webp?itok=2aCYnQNv",
+            "thumbnail_260x210": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail_260x210/public/2025-03/Linked-List.png?itok=KYjQiWRd",
+            "thumbnail_664x410": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail_664x410/public/2025-03/Linked-List.png?itok=Z9AYOgXp"
+          },
+          "meta": {
+            "alt": "Example image",
+            "title": "",
+            "width": "1081",
+            "height": "611",
+            "drupal_internal__target_id": "40"
+          }
+        }
+      }
+    },
+    {
+      "type": "node--article",
+      "id": "26d7df3e-626e-4716-86ce-a94f66efa297",
+      "langcode": "en",
+      "status": "1",
+      "title": "Organizing data in memory",
+      "created": "2025-03-16T14:57:58+00:00",
+      "promoted": "1",
+      "metatag": [
+        {
+          "tag": "meta",
+          "attributes": {
+            "name": "title",
+            "content": "Organizing data in memory | Tiagocode"
+          }
+        },
+        {
+          "tag": "meta",
+          "attributes": {
+            "name": "description",
+            "content": "An overview of essential data structures like arrays, linked lists, and trees, and how they efficiently organize data in memory."
+          }
+        },
+        {
+          "tag": "meta",
+          "attributes": {
+            "name": "keywords",
+            "content": "Software Developer, Web Developer, Full-Stack Developer, Backend Developer, Rust Developer, PHP Developer, Laravel Developer, JavaScript Developer, Leptos Framework, Web Development, Personal Portfolio, Coding Blog, Programming Articles, Tech Blog, Open Source, Software Engineering, Cloud Computing, API Development, SEO Optimization, Responsive Web Design"
+          }
+        },
+        {
+          "tag": "meta",
+          "attributes": {
+            "name": "robots",
+            "content": "noindex, nofollow, noarchive, nosnippet, noimageindex, notranslate"
+          }
+        },
+        {
+          "tag": "link",
+          "attributes": {
+            "rel": "canonical",
+            "href": "https://local-admin.tiagocode.com/en/articles/programming/organizing-data-memory"
+          }
+        },
+        {
+          "tag": "meta",
+          "attributes": {
+            "property": "og:site_name",
+            "content": "Tiagocode"
+          }
+        },
+        {
+          "tag": "meta",
+          "attributes": {
+            "property": "og:title",
+            "content": "Organizing data in memory | Tiagocode"
+          }
+        },
+        {
+          "tag": "meta",
+          "attributes": {
+            "property": "og:description",
+            "content": "An overview of essential data structures like arrays, linked lists, and trees, and how they efficiently organize data in memory."
+          }
+        },
+        {
+          "tag": "meta",
+          "attributes": {
+            "property": "og:image",
+            "content": "https://local-admin.tiagocode.com/media/17/edit"
+          }
+        },
+        {
+          "tag": "meta",
+          "attributes": {
+            "name": "twitter:card",
+            "content": "summary"
+          }
+        },
+        {
+          "tag": "meta",
+          "attributes": {
+            "name": "twitter:description",
+            "content": "An overview of essential data structures like arrays, linked lists, and trees, and how they efficiently organize data in memory."
+          }
+        },
+        {
+          "tag": "meta",
+          "attributes": {
+            "name": "twitter:title",
+            "content": "Organizing data in memory | Tiagocode"
+          }
+        }
+      ],
+      "path": {
+        "alias": "/en/articles/programming/organizing-data-memory",
+        "pid": "16",
+        "langcode": "en"
+      },
+      "body": "An overview of essential data structures like arrays, linked lists, and trees, and how they efficiently organize data in memory.",
+      "content": [
+        {
+          "type": "paragraph--content_text",
+          "id": "94efd269-fb30-428c-8ca7-7e71f18a1b34",
+          "text": "<p>Lorem Ipsum</p>",
+          "meta": {
+            "target_revision_id": "594",
+            "drupal_internal__target_id": "30"
+          }
+        }
+      ],
+      "tags": {
+        "type": "taxonomy_term--tags",
+        "id": "6e66e2ac-fa9f-43d6-bcbe-701fb509c93a",
+        "langcode": "en",
+        "status": "1",
+        "name": "Programming",
+        "weight": "0",
+        "path": {
+          "alias": "/en/articles/programming",
+          "pid": "10",
+          "langcode": "en"
+        },
+        "emoji": "🖥️",
+        "meta": {
+          "drupal_internal__target_id": "2"
+        }
+      },
+      "thumbnail": {
+        "type": "media--image",
+        "id": "6d925578-ae0d-426e-9459-cf8c497b994d",
+        "langcode": "en",
+        "name": "linked_list.webp",
+        "meta": {
+          "drupal_internal__target_id": "17"
+        },
+        "media_image": {
+          "type": "file--file",
+          "id": "7b491fe7-f57a-4527-a908-a695dd1d41d0",
+          "uri": {
+            "value": "public://2025-03/linked_list.webp",
+            "url": "/sites/default/files/2025-03/linked_list.webp"
+          },
+          "filemime": "image/webp",
+          "filesize": "34604",
+          "image_style_uri": {
+            "max_2600x2600": "https://local-admin.tiagocode.com/sites/default/files/styles/max_2600x2600/public/2025-03/linked_list.webp?itok=gw9Wv84e",
+            "max_900x550": "https://local-admin.tiagocode.com/sites/default/files/styles/max_900x550/public/2025-03/linked_list.webp?itok=HiIkeMsS",
+            "medium": "https://local-admin.tiagocode.com/sites/default/files/styles/medium/public/2025-03/linked_list.webp?itok=oKxlJ8Pq",
+            "medium_500x500": "https://local-admin.tiagocode.com/sites/default/files/styles/medium_500x500/public/2025-03/linked_list.webp?itok=1yxpmpSQ",
+            "thumbnail": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail/public/2025-03/linked_list.webp?itok=S_O4Wyat",
+            "thumbnail_260x210": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail_260x210/public/2025-03/linked_list.webp?itok=_r7Vnz_D",
+            "thumbnail_664x410": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail_664x410/public/2025-03/linked_list.webp?itok=Vj0Xm0G6"
+          },
+          "meta": {
+            "alt": "Organizing data in memory",
+            "title": "",
+            "width": "860",
+            "height": "484",
+            "drupal_internal__target_id": "36"
+          }
+        }
+      }
+    }
+  ],
+  "meta": {
+    "count": 2
+  },
+  "links": {
+    "self": {
+      "href": "https://local-admin.tiagocode.com/jsonapi/node/article?filter%5Bstatus%5D=1&filter%5Btags%5D%5Bcondition%5D%5Bpath%5D=tags.name&filter%5Btags%5D%5Bcondition%5D%5Bvalue%5D=Programming&include=tags%2Ccontent.media.media_image%2Cthumbnail.media_image&jsonapi_include=1&page%5Blimit%5D=10&sort%5Bsort-created%5D%5Bpath%5D=created&sort%5Bsort-created%5D%5Bdirection%5D=desc"
+    }
+  }
+}

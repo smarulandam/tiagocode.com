@@ -1,0 +1,11 @@
+uuid: 525001f9-e6eb-4742-b925-cedfe9ba950d
+langcode: en
+status: true
+dependencies: {  }
+id: node__page
+label: 'Content: Basic page'
+tags:
+  og_image: 'https://tiagocode-bucket.s3.eu-north-1.amazonaws.com/2025-06/homepage_image.jpg'
+  og_image_secure_url: 'https://tiagocode-bucket.s3.eu-north-1.amazonaws.com/2025-06/homepage_image.jpg'
+  og_image_url: 'https://tiagocode-bucket.s3.eu-north-1.amazonaws.com/2025-06/homepage_image.jpg'
+  og_type: website

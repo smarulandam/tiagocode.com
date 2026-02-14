@@ -1,0 +1,52 @@
+uuid: d82a4ebe-13b3-4403-ac33-019a7226d492
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_items
+    - paragraphs.paragraphs_type.content_timeline
+    - paragraphs.paragraphs_type.portfolio_resume
+  module:
+    - entity_reference_revisions
+id: paragraph.portfolio_resume.field_items
+field_name: field_items
+entity_type: paragraph
+bundle: portfolio_resume
+label: Items
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      content_timeline: content_timeline
+    negate: 0
+    target_bundles_drag_drop:
+      content_hover_card:
+        weight: 9
+        enabled: false
+      content_media:
+        weight: 8
+        enabled: false
+      content_text:
+        weight: 9
+        enabled: false
+      content_timeline:
+        weight: 10
+        enabled: true
+      content_timeline_item:
+        weight: 11
+        enabled: false
+      portfolio_about_me:
+        weight: 12
+        enabled: false
+      portfolio_projects:
+        weight: 13
+        enabled: false
+      portfolio_resume:
+        weight: 14
+        enabled: false
+field_type: entity_reference_revisions

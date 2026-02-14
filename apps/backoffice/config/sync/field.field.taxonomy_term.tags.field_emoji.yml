@@ -1,0 +1,19 @@
+uuid: b1fca2ca-6e8e-47c1-8c7c-a8603144af37
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_emoji
+    - taxonomy.vocabulary.tags
+id: taxonomy_term.tags.field_emoji
+field_name: field_emoji
+entity_type: taxonomy_term
+bundle: tags
+label: Emoji
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

@@ -1,0 +1,61 @@
+uuid: 6d057528-f283-4da7-92f4-9b7e9afb4a47
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_content
+    - node.type.portfolio
+    - paragraphs.paragraphs_type.portfolio_about_me
+    - paragraphs.paragraphs_type.portfolio_blog
+    - paragraphs.paragraphs_type.portfolio_projects
+    - paragraphs.paragraphs_type.portfolio_resume
+  module:
+    - entity_reference_revisions
+id: node.portfolio.field_content
+field_name: field_content
+entity_type: node
+bundle: portfolio
+label: Content
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      portfolio_about_me: portfolio_about_me
+      portfolio_resume: portfolio_resume
+      portfolio_projects: portfolio_projects
+      portfolio_blog: portfolio_blog
+    negate: 0
+    target_bundles_drag_drop:
+      content_hover_card:
+        weight: -13
+        enabled: false
+      content_media:
+        weight: -15
+        enabled: false
+      content_text:
+        weight: -14
+        enabled: false
+      content_timeline:
+        weight: -12
+        enabled: false
+      content_timeline_item:
+        weight: -11
+        enabled: false
+      portfolio_about_me:
+        weight: -19
+        enabled: true
+      portfolio_blog:
+        weight: -16
+        enabled: true
+      portfolio_projects:
+        weight: -17
+        enabled: true
+      portfolio_resume:
+        weight: -18
+        enabled: true
+field_type: entity_reference_revisions

@@ -1,0 +1,62 @@
+uuid: 07a58c5c-ec95-4cbb-b03b-3ed61db88e2c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_content
+    - node.type.article
+    - paragraphs.paragraphs_type.content_media
+    - paragraphs.paragraphs_type.content_slider
+    - paragraphs.paragraphs_type.content_text
+  module:
+    - entity_reference_revisions
+id: node.article.field_content
+field_name: field_content
+entity_type: node
+bundle: article
+label: Content
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      content_media: content_media
+      content_text: content_text
+      content_slider: content_slider
+    negate: 0
+    target_bundles_drag_drop:
+      content_hover_card:
+        weight: 11
+        enabled: false
+      content_media:
+        weight: 3
+        enabled: true
+      content_slider:
+        weight: 13
+        enabled: true
+      content_text:
+        weight: 4
+        enabled: true
+      content_timeline:
+        weight: 15
+        enabled: false
+      content_timeline_item:
+        weight: 16
+        enabled: false
+      portfolio_about_me:
+        weight: 17
+        enabled: false
+      portfolio_blog:
+        weight: 18
+        enabled: false
+      portfolio_projects:
+        weight: 19
+        enabled: false
+      portfolio_resume:
+        weight: 20
+        enabled: false
+field_type: entity_reference_revisions

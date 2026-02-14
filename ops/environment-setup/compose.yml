@@ -1,0 +1,331 @@
+networks:
+  backend_network:
+    driver: ${DOCKER_NETWORKS_DRIVER}
+
+volumes:
+  postgres_data:
+    driver: ${DOCKER_VOLUMES_DRIVER}
+
+  redis_backoffice_data:
+    driver: ${DOCKER_VOLUMES_DRIVER}
+
+  redis_website_data:
+    driver: ${DOCKER_VOLUMES_DRIVER}
+
+  grafana_data:
+    driver: ${DOCKER_VOLUMES_DRIVER}
+  
+  loki_data:
+    driver: ${DOCKER_VOLUMES_DRIVER}
+
+  alloy_data:
+    driver: ${DOCKER_VOLUMES_DRIVER}
+  
+services:
+  traefik:
+    build:
+      context: ./docker/traefik
+      args:
+        - TRAEFIK_VERSION=${TRAEFIK_VERSION}
+    environment:
+      - CF_API_EMAIL=${TRAEFIK_CF_EMAIL}
+      - CF_API_KEY=${TRAEFIK_CF_API_KEY}
+    command:
+      # log/
+      - "--log.level=debug"
+      # api
+      - "--api"
+      - "--api.dashboard=true"
+      # providers
+      - "--providers.docker.exposedbydefault=false"
+      # entrypoints
+      - "--entrypoints.metrics.address=:8082"
+      - "--entrypoints.web_insecure.address=:80"
+      - "--entrypoints.web_secure.address=:443"
+      - "--entrypoints.postgres.address=:5432"
+      - "--entrypoints.redisbackoffice.address=:6379"
+      - "--entrypoints.rediswebsite.address=:6380"
+      # middleware for redirecting traffic to https
+      - "--entrypoints.web_insecure.http.redirections.entryPoint.to=web_secure"
+      - "--entrypoints.web_insecure.http.redirections.entryPoint.scheme=https"
+      - "--entrypoints.web_insecure.http.redirections.entryPoint.permanent=false"
+      # tls
+      - "--entrypoints.web_secure.http.tls.domains[0].main=${PROJECT_DOMAIN_NAME}"
+      - "--entrypoints.web_secure.http.tls.domains[0].sans=*.${PROJECT_DOMAIN_NAME}"
+      - "--certificatesresolvers.lets_encrypt.acme.storage=/data/acme.json"
+      - "--certificatesresolvers.lets_encrypt.acme.dnsChallenge=true"
+      - "--certificatesresolvers.lets_encrypt.acme.dnsChallenge.delayBeforeCheck=0"
+      - "--certificatesresolvers.lets_encrypt.acme.dnsChallenge.provider=cloudflare"
+      - "--certificatesresolvers.lets_encrypt.acme.email=${TRAEFIK_ACME_EMAIL}"
+      - "--certificatesresolvers.lets_encrypt.acme.dnsChallenge.resolvers=${TRAEFIK_CF_DNS}"
+      # the following line is the caserver for testing the certificates generating (comment it for prod)
+      # - "--certificatesresolvers.lets_encrypt.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+      # accesslogb
+      - "--accesslog=true"
+      - "--accesslog.format=json"
+      - "--accesslog.fields.headers.defaultmode=drop"
+      - "--accesslog.fields.headers.names.CF-IPCountry=keep"
+      - "--accesslog.fields.headers.names.CF-Connecting-IP=keep"
+      - "--accesslog.fields.headers.names.User-Agent=keep"
+      - "--accesslog.fields.headers.names.Referer=keep"
+      # metrics
+      - "--metrics.prometheus=true"
+      - "--metrics.prometheus.entrypoint=metrics"
+      - "--metrics.prometheus.addrouterslabels=true"
+      - "--metrics.prometheus.addserviceslabels=true"
+      - "--metrics.prometheus.addentrypointslabels=true"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "5432:5432"
+      - "6379:6379"
+      - "6380:6380"
+    networks:
+      backend_network:
+        aliases:
+          - ${PROJECT_SUBDOMAIN_PREFIX}admin.${PROJECT_DOMAIN_NAME}
+          - ${PROJECT_SUBDOMAIN_PREFIX}website.${PROJECT_DOMAIN_NAME}
+          - ${PROJECT_SUBDOMAIN_PREFIX}rediswebsite.${PROJECT_DOMAIN_NAME}
+          - ${PROJECT_SUBDOMAIN_PREFIX}redisbackoffice.${PROJECT_DOMAIN_NAME}
+    volumes:
+      - ./docker/traefik/data:/data
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.entrypoints=web_secure"
+      - "traefik.http.routers.traefik.tls.certresolver=lets_encrypt"
+      - "traefik.http.routers.traefik.rule=Host(`${PROJECT_SUBDOMAIN_PREFIX}traefik.${PROJECT_DOMAIN_NAME}`)"
+      - "traefik.http.routers.traefik.service=api@internal"
+      - "traefik.http.services.api@internal.loadbalancer.server.port=8888"
+      - "traefik.http.routers.traefik.middlewares=access-auth"
+      - "traefik.http.middlewares.access-auth.basicauth.realm=Login Required"
+      - "traefik.http.middlewares.access-auth.basicauth.users=${TRAEFIK_USER_PASSWORD}"    
+      - "traefik.http.routers.root-redirect.rule=Host(`local.${PROJECT_DOMAIN_NAME}`)"
+      - "traefik.http.routers.root-redirect.entryPoints=web_secure"
+      - "traefik.http.routers.root-redirect.tls.certresolver=lets_encrypt"
+      - "traefik.http.routers.root-redirect.middlewares=redirect-to-website"
+      - "traefik.http.middlewares.redirect-to-website.redirectregex.regex=^https?://local.${PROJECT_DOMAIN_NAME}/(.*)"
+      - "traefik.http.middlewares.redirect-to-website.redirectregex.replacement=https://${PROJECT_SUBDOMAIN_PREFIX}website.${PROJECT_DOMAIN_NAME}/$$1"
+      - "traefik.http.middlewares.redirect-to-website.redirectregex.permanent=true"
+
+  postgres:
+    build:
+      context: ./docker/postgres
+      dockerfile: Dockerfile
+      args:
+        - POSTGRES_VERSION=${POSTGRES_VERSION}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 5s
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    networks:
+      - backend_network
+    volumes:
+      - "postgres_data:/var/lib/postgresql/data"
+      - "./docker/postgres/initdb.d:/docker-entrypoint-initdb.d"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.tcp.routers.postgres.rule=HostSNI(`${PROJECT_SUBDOMAIN_PREFIX}postgres.${PROJECT_DOMAIN_NAME}`)"
+      - "traefik.tcp.routers.postgres.service=postgres"
+      - "traefik.tcp.routers.postgres.entryPoints=postgres"
+      - "traefik.tcp.services.postgres.loadbalancer.server.port=5432"
+      - "traefik.tcp.routers.postgres.tls.certresolver=lets_encrypt"
+
+  redis_website:
+    build:
+      context: ./docker/redis
+      args:
+        - REDIS_VERSION=${REDIS_VERSION}
+    command: --requirepass ${REDIS_PASSWORD}
+    networks:
+      - backend_network
+    volumes:
+      - redis_website_data:/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.tcp.routers.rediswebsite.rule=HostSNI(`${PROJECT_SUBDOMAIN_PREFIX}rediswebsite.${PROJECT_DOMAIN_NAME}`)"
+      - "traefik.tcp.routers.rediswebsite.service=rediswebsite"
+      - "traefik.tcp.routers.rediswebsite.entryPoints=rediswebsite"
+      - "traefik.tcp.services.rediswebsite.loadbalancer.server.port=6379"
+      - "traefik.tcp.routers.rediswebsite.tls.certresolver=lets_encrypt"
+
+  redis_backoffice:
+    build:
+      context: ./docker/redis
+      args:
+        - REDIS_VERSION=${REDIS_VERSION}
+    command: --requirepass ${REDIS_PASSWORD}
+    networks:
+      - backend_network
+    volumes:
+      - redis_backoffice_data:/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.tcp.routers.redisbackoffice.rule=HostSNI(`${PROJECT_SUBDOMAIN_PREFIX}redisbackoffice.${PROJECT_DOMAIN_NAME}`)"
+      - "traefik.tcp.routers.redisbackoffice.service=redisbackoffice"
+      - "traefik.tcp.routers.redisbackoffice.entryPoints=redisbackoffice"
+      - "traefik.tcp.services.redisbackoffice.loadbalancer.server.port=6379"
+      - "traefik.tcp.routers.redisbackoffice.tls.certresolver=lets_encrypt"
+
+  nginx:
+    build:
+      context: ./docker/nginx
+      args:
+        - NGINX_VERSION=${NGINX_VERSION}
+        - NGINX_PHPFPM_HOST=backoffice
+        - NGINX_SERVER_ROOT=/var/www/html/web
+    volumes:
+      - ${BACKOFFICE_HOST_PATH}:/var/www/html:ro
+    networks:
+      - backend_network
+    depends_on:
+      - backoffice
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nginx.entrypoints=web_secure"
+      - "traefik.http.routers.nginx.tls.certresolver=lets_encrypt"
+      - "traefik.http.routers.nginx.rule=Host(`${PROJECT_SUBDOMAIN_PREFIX}admin.${PROJECT_DOMAIN_NAME}`)"
+      - "traefik.http.services.nginx.loadbalancer.server.port=80"
+
+  backoffice: 
+    image: $BACKOFFICE_IMAGE:$BACKOFFICE_VERSION
+    environment:
+      PHP_VERSION: $BACKOFFICE_PHP_VERSION
+      DRUPAL_DB_HOST: $BACKOFFICE_DB_HOST
+      DRUPAL_SERVER_HOST: nginx
+      DRUPAL_DB_DRIVER: $BACKOFFICE_DB_DRIVER
+      DRUPAL_DB_PREFIX: $BACKOFFICE_DB_PREFIX
+      DRUPAL_DB_NAME: $POSTGRES_DB
+      DRUPAL_DB_USER: $POSTGRES_USER
+      DRUPAL_DB_PASSWORD: $POSTGRES_PASSWORD
+      DRUPAL_HASH_SALT: $BACKOFFICE_HASH_SALT
+      DRUPAL_SLD: $PROJECT_SECOND_LEVEL_DOMAIN
+      DRUPAL_CONFIG_SYNC_PATH: $BACKOFFICE_CONFIG_SYNC_CONTAINER_PATH
+      DRUPAL_PRIVATE_FILES_PATH: $BACKOFFICE_PRIVATE_FILE_CONTAINER_PATH
+      DRUPAL_PUBLIC_FILES_BASE_URL: https://${PROJECT_SUBDOMAIN_PREFIX}admin.${PROJECT_DOMAIN_NAME}/sites/default/files
+      DRUPAL_S3FS_ACCESS_KEY:  $AWS_ACCESS_KEY
+      DRUPAL_S3FS_SECRET_KEY: $AWS_SECRET_KEY
+      DRUPAL_S3FS_BUCKET: $AWS_BACKOFFICE_S3_BUCKET
+      DRUPAL_S3FS_REGION: $AWS_BACKOFFICE_S3_REGION
+      DRUPAL_REDIS_HOST: redis_backoffice
+      DRUPAL_REDIS_PORT: 6379
+      DRUPAL_REDIS_PASSWORD: $REDIS_PASSWORD
+    volumes:
+      - ${BACKOFFICE_HOST_PATH}:/var/www/html:cached
+      - ./backup:/var/www/html/backup
+    networks:
+      - backend_network
+ 
+  website:
+    image: $WEBSITE_IMAGE:$WEBSITE_VERSION
+    environment:      
+      JSONAPI_BASE_URL: https://${PROJECT_SUBDOMAIN_PREFIX}admin.${PROJECT_DOMAIN_NAME}
+      JSONAPI_USERNAME: $WEBSITE_JSONAPI_USERNAME
+      JSONAPI_PASSWORD: $WEBSITE_JSONAPI_PASSWORD
+      JSONAPI_IMAGES_URL: $WEBSITE_JSONAPI_IMAGES_URL
+      WEBSITE_REDIS_HOST: ${PROJECT_SUBDOMAIN_PREFIX}rediswebsite.${PROJECT_DOMAIN_NAME}
+      WEBSITE_REDIS_PORT: 6380
+      WEBSITE_REDIS_PASSWORD: $REDIS_PASSWORD
+      WEBSITE_CACHE_PURGE_TOKEN: $WEBSITE_CACHE_PURGE_TOKEN
+    networks:
+      - backend_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.website.entrypoints=web_secure"
+      - "traefik.http.routers.website.tls.certresolver=lets_encrypt"
+      - "traefik.http.routers.website.rule=Host(`${PROJECT_SUBDOMAIN_PREFIX}website.${PROJECT_DOMAIN_NAME}`)"
+      - "traefik.http.services.website.loadbalancer.server.port=3000"
+      - "traefik.http.services.website.loadbalancer.server.scheme=http"
+      - "traefik.http.middlewares.website-headers.headers.customrequestheaders.X-Forwarded-Proto=https"
+      - "traefik.http.routers.website.middlewares=website-headers"
+
+  grafana:
+    image: grafana/grafana:${GRAFANA_VERSION}
+    environment:
+      - GF_SERVER_ROOT_URL=https://${PROJECT_SUBDOMAIN_PREFIX}grafana.${PROJECT_DOMAIN_NAME}
+      - GF_LOG_LEVEL=warn
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_ADMIN_USER}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
+    volumes:
+      - ./docker/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./docker/grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana_data:/var/lib/grafana
+    networks:
+      - backend_network
+    depends_on:
+      - loki
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.grafana.entrypoints=web_secure"
+      - "traefik.http.routers.grafana.tls.certresolver=lets_encrypt"
+      - "traefik.http.routers.grafana.rule=Host(`${PROJECT_SUBDOMAIN_PREFIX}grafana.${PROJECT_DOMAIN_NAME}`)"
+      - "traefik.http.services.grafana.loadbalancer.server.port=3000"
+      - "traefik.http.services.grafana.loadbalancer.server.scheme=http"
+      - "traefik.http.middlewares.grafana-headers.headers.customrequestheaders.X-Forwarded-Proto=https"
+      - "traefik.http.routers.grafana.middlewares=grafana-headers"
+
+  loki:
+    image: grafana/loki:${GRAFANA_LOKI_VERSION}
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - ./docker/loki/local-config.yaml:/etc/loki/local-config.yaml:ro
+      - loki_data:/loki
+    networks:
+      - backend_network
+
+  alloy:
+    image: grafana/alloy:${GRAFANA_ALLOY_VERSION}
+    environment:
+      - ALLOY_LOG_LEVEL=debug
+      - ALLOY_SERVER_HTTP_LISTEN_PORT=8080
+      - ALLOY_SERVER_GRPC_LISTEN_PORT=9095
+      - ALLOY_SERVER_GRPC_SERVER_MAX_CONCURRENT_STREAMS=1000
+      - ALLOY_COMMON_INSTANCE_ADDR=
+    volumes:
+      - ./docker/alloy/config.alloy:/etc/alloy/config.alloy:ro
+      - alloy_data:/var/lib/alloy/data
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - backend_network
+    depends_on:
+      - loki
+
+  prometheus:
+    image: prom/prometheus:${GRAFANA_PROMETHEUS_VERSION}
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    volumes:
+      - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    extra_hosts:
+      - "node_exporter:host-gateway"
+    networks:
+      - backend_network
+
+  node_exporter:
+    image: prom/node-exporter:${GRAFANA_NODE_EXPORTER_VERSION}
+    restart: unless-stopped
+    network_mode: host
+    pid: host
+    command:
+      - "--path.rootfs=/host"
+      - "--path.procfs=/host/proc"
+      - "--path.sysfs=/host/sys"
+      - "--collector.disable-defaults"
+      - "--collector.cpu"
+      - "--collector.meminfo"
+      - "--collector.filesystem"
+      - "--collector.diskstats"
+      - "--collector.netdev"
+      - "--collector.loadavg"
+      - "--collector.stat"
+      - "--collector.time"
+      - "--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($|/)"
+    volumes:
+      - "/:/host:ro"

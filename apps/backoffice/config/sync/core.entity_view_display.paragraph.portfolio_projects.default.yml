@@ -1,0 +1,51 @@
+uuid: 83a70938-b94b-4f7f-a221-a06612f166f5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.portfolio_projects.field_items
+    - field.field.paragraph.portfolio_projects.field_subtitle
+    - field.field.paragraph.portfolio_projects.field_text
+    - field.field.paragraph.portfolio_projects.field_title
+    - paragraphs.paragraphs_type.portfolio_projects
+  module:
+    - entity_reference_revisions
+    - text
+id: paragraph.portfolio_projects.default
+targetEntityType: paragraph
+bundle: portfolio_projects
+mode: default
+content:
+  field_items:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_subtitle:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_text:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_title:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden: {  }

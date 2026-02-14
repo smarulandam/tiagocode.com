@@ -1,0 +1,367 @@
+{
+  "jsonapi": {
+    "version": "1.0",
+    "parsed": true
+  },
+  "data": {
+    "type": "node--portfolio",
+    "id": "413b8ba1-2bc4-4fda-8455-0c0dea528ca0",
+    "langcode": "en",
+    "status": "1",
+    "title": "John Doe",
+    "created": "2024-12-15T14:03:56+00:00",
+    "path": {
+      "alias": "/portfolio/john-doe",
+      "pid": "4",
+      "langcode": "en"
+    },
+    "content": [
+      {
+        "type": "paragraph--portfolio_about_me",
+        "id": "4d90b38a-113d-4dc6-97a5-1b2e23aff4ed",
+        "subtitle": "About Me",
+        "text": "<p><span style=\"-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgba(0, 0, 0, 0.9);display:inline !important;float:none;font-family:-apple-system, system-ui, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, &quot;Fira Sans&quot;, Ubuntu, Oxygen, &quot;Oxygen Sans&quot;, Cantarell, &quot;Droid Sans&quot;, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Lucida Grande&quot;, Helvetica, Arial, sans-serif;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;\">Hey there! 👋 As a tech enthusiast, I thrive on turning complex challenges into elegant solutions. From online gaming platforms to websites for global beer brands, I've woven together countless APIs and automated complex systems that turned manual headaches into digital symphonies. While I'm proficient in PHP ecosystems, I'm constantly exploring new technologies that push the boundaries of what's possible.</span></p>",
+        "text_list": [
+          "PHP",
+          "Rust",
+          "Laravel",
+          "Drupal",
+          "ReactJs",
+          "Linux",
+          "AWS"
+        ],
+        "title": "Backend developer PHP",
+        "years_of_experience": "6",
+        "meta": {
+          "target_revision_id": "427",
+          "drupal_internal__target_id": "6"
+        },
+        "document": {
+          "type": "media--document",
+          "id": "e4c3f6db-fa69-4d4d-a006-98b8a7763924",
+          "langcode": "en",
+          "name": "cv_resume_john_doe.pdf",
+          "meta": {
+            "drupal_internal__target_id": "10"
+          },
+          "media_document": {
+            "type": "file--file",
+            "id": "ae475422-f200-4d50-9b1d-016fc38b3047",
+            "uri": {
+              "value": "public://2025-01/cv_resume_john_doe.pdf",
+              "url": "/sites/default/files/2025-01/cv_resume_john_doe.pdf"
+            },
+            "filemime": "application/pdf",
+            "filesize": "106995",
+            "image_style_uri": null,
+            "meta": {
+              "display": "",
+              "description": "",
+              "drupal_internal__target_id": "13"
+            }
+          }
+        },
+        "image": {
+          "type": "media--image",
+          "id": "3493a08d-f2f2-4148-9541-01dbf619a19b",
+          "langcode": "en",
+          "name": "profile500x500.jpg",
+          "meta": {
+            "drupal_internal__target_id": "6"
+          },
+          "media_image": {
+            "type": "file--file",
+            "id": "ad19e979-e05c-48a1-82b4-6b9d8e415661",
+            "uri": {
+              "value": "public://2025-01/profile500x500.jpg",
+              "url": "/sites/default/files/2025-01/profile500x500.jpg"
+            },
+            "filemime": "image/jpeg",
+            "filesize": "57491",
+            "image_style_uri": {
+              "medium_500x500": "https://local-admin.tiagocode.com/sites/default/files/styles/medium_500x500/public/2025-01/profile500x500.jpg?itok=gfdBE_R1",
+              "max_2600x2600": "https://local-admin.tiagocode.com/sites/default/files/styles/max_2600x2600/public/2025-01/profile500x500.jpg.webp?itok=BuwBM-FK",
+              "medium": "https://local-admin.tiagocode.com/sites/default/files/styles/medium/public/2025-01/profile500x500.jpg.webp?itok=CIKwYVmf",
+              "thumbnail": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail/public/2025-01/profile500x500.jpg.webp?itok=B4xReXMR",
+              "thumbnail_664x410": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail/public/2025-01/thumbnail_664x410.jpg.webp?itok=B4xReXMR"
+            },
+            "meta": {
+              "alt": "John Doe - Developer",
+              "title": "",
+              "width": "472",
+              "height": "500",
+              "drupal_internal__target_id": "9"
+            }
+          }
+        }
+      },
+      {
+        "type": "paragraph--portfolio_resume",
+        "id": "72d61723-66f2-48b2-bb49-30c11840c92e",
+        "subtitle": "Resume",
+        "text": "<p><span style=\"-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(131, 132, 133);display:inline !important;float:none;font-family:&quot;Open Sans&quot;, sans-serif;font-size:medium;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;\">Throughout my journey in tech, I've had the privilege of working with amazing teams and tackling exciting challenges across different corners of the world. From Colombia's vibrant tech scene to Malta's dynamic gaming industry, each step has added a unique flavor to my expertise. 🚀</span></p>",
+        "title": "Resume",
+        "meta": {
+          "target_revision_id": "436",
+          "drupal_internal__target_id": "7"
+        },
+        "items": [
+          {
+            "type": "paragraph--content_timeline",
+            "id": "d71e003e-699b-48e5-b4b3-19027e7e4699",
+            "meta": {
+              "target_revision_id": "430",
+              "drupal_internal__target_id": "18"
+            },
+            "items": [
+              {
+                "type": "paragraph--content_timeline_item",
+                "id": "55c6016c-2fac-4f2c-a4a6-59df6295ed2e",
+                "date_human_readable": "Aug 2021",
+                "subtitle": "Acquia",
+                "text": null,
+                "title": "Certified Site Builder Drupal 8",
+                "meta": {
+                  "target_revision_id": "428",
+                  "drupal_internal__target_id": "22"
+                }
+              },
+              {
+                "type": "paragraph--content_timeline_item",
+                "id": "ab38be9b-d98f-4cd4-80c6-d8ad4008d2e6",
+                "date_human_readable": "Jan 2016 - Dec 2019",
+                "subtitle": "Censa",
+                "text": null,
+                "title": "Technician, in Analyst and Computer programming",
+                "meta": {
+                  "target_revision_id": "429",
+                  "drupal_internal__target_id": "17"
+                }
+              }
+            ]
+          },
+          {
+            "type": "paragraph--content_timeline",
+            "id": "fe72cdb5-a18c-4eea-abb6-b96ce2d98a11",
+            "meta": {
+              "target_revision_id": "435",
+              "drupal_internal__target_id": "21"
+            },
+            "items": [
+              {
+                "type": "paragraph--content_timeline_item",
+                "id": "bdaec8e3-97f1-4d71-897a-c14d43d7a85d",
+                "date_human_readable": "Aug 2022 - Present",
+                "subtitle": "Immersed group",
+                "text": null,
+                "title": "Mid Backend developer",
+                "meta": {
+                  "target_revision_id": "431",
+                  "drupal_internal__target_id": "19"
+                }
+              },
+              {
+                "type": "paragraph--content_timeline_item",
+                "id": "3bb19174-6813-42df-9e85-3fa216705fc5",
+                "date_human_readable": "Oct 2020 - Jun 2022",
+                "subtitle": "VMLY&amp;R",
+                "text": null,
+                "title": "Drupal Developer",
+                "meta": {
+                  "target_revision_id": "432",
+                  "drupal_internal__target_id": "20"
+                }
+              },
+              {
+                "type": "paragraph--content_timeline_item",
+                "id": "dd602b70-8cb9-467e-8a21-b26cfa83281c",
+                "date_human_readable": "May 2019 - Oct 2020",
+                "subtitle": "Julius2Grow",
+                "text": null,
+                "title": " Backend Developer PHP",
+                "meta": {
+                  "target_revision_id": "433",
+                  "drupal_internal__target_id": "23"
+                }
+              },
+              {
+                "type": "paragraph--content_timeline_item",
+                "id": "ead281f0-aef6-48a5-b6e4-4606d0fcff4f",
+                "date_human_readable": "Apr 2018 - May 2019",
+                "subtitle": "Latitude Digital",
+                "text": null,
+                "title": "Servicios Para Empresarios",
+                "meta": {
+                  "target_revision_id": "434",
+                  "drupal_internal__target_id": "24"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph--portfolio_projects",
+        "id": "3b907f71-0e74-414b-95d5-693b973ff9db",
+        "subtitle": "Projects",
+        "text": "<p><span style=\"-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(131, 132, 133);display:inline !important;float:none;font-family:&quot;Open Sans&quot;, sans-serif;font-size:medium;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;\">Ready for a closer look at some of my favorite digital adventures? From automating casino gaming systems to crafting multilingual beer experiences, each project has its own unique story! 🎮 🍺 ⚡</span></p>",
+        "title": "My Latest Works",
+        "meta": {
+          "target_revision_id": "440",
+          "drupal_internal__target_id": "8"
+        },
+        "items": [
+          {
+            "type": "paragraph--content_hover_card",
+            "id": "0d2ec132-81d1-44b1-917e-ce889fd22d42",
+            "link": {
+              "uri": "https://www.videoslots.com/",
+              "title": "",
+              "options": []
+            },
+            "text": null,
+            "title": "Videoslots",
+            "meta": {
+              "target_revision_id": "437",
+              "drupal_internal__target_id": "14"
+            },
+            "media": {
+              "type": "media--image",
+              "id": "015ad21e-897f-478f-bc07-a980588595ef",
+              "langcode": "en",
+              "name": "videoslots_website.png",
+              "meta": {
+                "drupal_internal__target_id": "7"
+              },
+              "media_image": {
+                "type": "file--file",
+                "id": "87c957de-e2f4-48e2-b6f9-2b9981a26e83",
+                "uri": {
+                  "value": "public://2025-01/videoslots_website.png",
+                  "url": "/sites/default/files/2025-01/videoslots_website.png"
+                },
+                "filemime": "image/png",
+                "filesize": "270871",
+                "image_style_uri": {
+                  "medium_500x500": "https://local-admin.tiagocode.com/sites/default/files/styles/medium_500x500/public/2025-01/videoslots_website.png?itok=T4HhMbeN",
+                  "max_2600x2600": "https://local-admin.tiagocode.com/sites/default/files/styles/max_2600x2600/public/2025-01/videoslots_website.png.webp?itok=q5r95dKa",
+                  "medium": "https://local-admin.tiagocode.com/sites/default/files/styles/medium/public/2025-01/videoslots_website.png.webp?itok=ye2udCSQ",
+                  "thumbnail": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail/public/2025-01/videoslots_website.png.webp?itok=osvsWrRR",
+                  "thumbnail_664x410": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail/public/2025-01/videoslots_website.png.webp?itok=osvsWrRR"
+                },
+                "meta": {
+                  "alt": "Videoslots",
+                  "title": "",
+                  "width": "1229",
+                  "height": "920",
+                  "drupal_internal__target_id": "10"
+                }
+              }
+            }
+          },
+          {
+            "type": "paragraph--content_hover_card",
+            "id": "29bd3b46-5cf7-47d8-aff6-f21213a4268e",
+            "link": {
+              "uri": "https://sanvicentefundacion.com/",
+              "title": "",
+              "options": []
+            },
+            "text": null,
+            "title": "Sanvicente Fundacion",
+            "meta": {
+              "target_revision_id": "438",
+              "drupal_internal__target_id": "15"
+            },
+            "media": {
+              "type": "media--image",
+              "id": "a21c2eba-60cd-4402-b6ce-ea9b0c5c803b",
+              "langcode": "en",
+              "name": "sanvicente_website.png",
+              "meta": {
+                "drupal_internal__target_id": "8"
+              },
+              "media_image": {
+                "type": "file--file",
+                "id": "27d911fa-a59b-49e3-b8d6-29bcc3584bf5",
+                "uri": {
+                  "value": "public://2025-01/sanvicente_website.png",
+                  "url": "/sites/default/files/2025-01/sanvicente_website.png"
+                },
+                "filemime": "image/png",
+                "filesize": "350921",
+                "image_style_uri": {
+                  "medium_500x500": "https://local-admin.tiagocode.com/sites/default/files/styles/medium_500x500/public/2025-01/sanvicente_website.png?itok=XtnMYPth",
+                  "max_2600x2600": "https://local-admin.tiagocode.com/sites/default/files/styles/max_2600x2600/public/2025-01/sanvicente_website.png.webp?itok=uVJnCUhS",
+                  "medium": "https://local-admin.tiagocode.com/sites/default/files/styles/medium/public/2025-01/sanvicente_website.png.webp?itok=4cY5C1h9",
+                  "thumbnail": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail/public/2025-01/sanvicente_website.png.webp?itok=tSv2l6OV",
+                  "thumbnail_664x410": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail/public/2025-01/sanvicente_website.png.webp?itok=tSv2l6OV"
+                },
+                "meta": {
+                  "alt": "San Vicente Fundacion",
+                  "title": "",
+                  "width": "1239",
+                  "height": "919",
+                  "drupal_internal__target_id": "11"
+                }
+              }
+            }
+          },
+          {
+            "type": "paragraph--content_hover_card",
+            "id": "dfbe10db-e8d0-4d5b-a9d0-6f6f7f904842",
+            "link": {
+              "uri": "https://www.stellaartoisafrica.com/en-za",
+              "title": "",
+              "options": []
+            },
+            "text": null,
+            "title": "Stella Artois Africa (Older versions)",
+            "meta": {
+              "target_revision_id": "439",
+              "drupal_internal__target_id": "16"
+            },
+            "media": {
+              "type": "media--image",
+              "id": "396f44ed-930c-4d9b-b0ca-de4cfec2a67b",
+              "langcode": "en",
+              "name": "stella_artois_africa_website.png",
+              "meta": {
+                "drupal_internal__target_id": "9"
+              },
+              "media_image": {
+                "type": "file--file",
+                "id": "4269c49e-a79d-49af-b01b-66a8f77ada7b",
+                "uri": {
+                  "value": "public://2025-01/stella_artois_africa_website.png",
+                  "url": "/sites/default/files/2025-01/stella_artois_africa_website.png"
+                },
+                "filemime": "image/png",
+                "filesize": "284203",
+                "image_style_uri": {
+                  "medium_500x500": "https://local-admin.tiagocode.com/sites/default/files/styles/medium_500x500/public/2025-01/stella_artois_africa_website.png?itok=BVEJPPS-",
+                  "max_2600x2600": "https://local-admin.tiagocode.com/sites/default/files/styles/max_2600x2600/public/2025-01/stella_artois_africa_website.png.webp?itok=qLsiE8NI",
+                  "medium": "https://local-admin.tiagocode.com/sites/default/files/styles/medium/public/2025-01/stella_artois_africa_website.png.webp?itok=yq54zzmS",
+                  "thumbnail": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail/public/2025-01/stella_artois_africa_website.png.webp?itok=30F8StXj",
+                  "thumbnail_664x410": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail/public/2025-01/stella_artois_africa_website.png.webp?itok=30F8StXj"
+                },
+                "meta": {
+                  "alt": "Stella Artois Africa",
+                  "title": "",
+                  "width": "1243",
+                  "height": "923",
+                  "drupal_internal__target_id": "12"
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "links": {
+    "self": {
+      "href": "https://local-admin.tiagocode.com/jsonapi/node/portfolio/413b8ba1-2bc4-4fda-8455-0c0dea528ca0?include=content%2Ccontent.document.media_document%2Ccontent.image.media_image%2Ccontent.items.media.media_image%2Ccontent.items.items&jsonapi_include=1"
+    }
+  }
+}

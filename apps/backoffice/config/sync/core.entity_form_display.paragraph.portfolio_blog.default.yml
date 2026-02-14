@@ -1,0 +1,43 @@
+uuid: 8c1256d8-ed31-4717-8d2a-94b896a12b45
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.portfolio_blog.field_subtitle
+    - field.field.paragraph.portfolio_blog.field_text
+    - field.field.paragraph.portfolio_blog.field_title
+    - paragraphs.paragraphs_type.portfolio_blog
+  module:
+    - text
+id: paragraph.portfolio_blog.default
+targetEntityType: paragraph
+bundle: portfolio_blog
+mode: default
+content:
+  field_subtitle:
+    type: string_textfield
+    weight: 2
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_text:
+    type: text_textarea
+    weight: 2
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_title:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

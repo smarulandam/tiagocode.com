@@ -1,0 +1,24 @@
+uuid: db9ce9c1-b0bd-4fe6-a2a1-1a5dc84b192b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_text
+    - filter.format.plain_text
+    - paragraphs.paragraphs_type.content_hover_card
+  module:
+    - text
+id: paragraph.content_hover_card.field_text
+field_name: field_text
+entity_type: paragraph
+bundle: content_hover_card
+label: Text
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - plain_text
+field_type: text_long

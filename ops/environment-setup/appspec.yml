@@ -1,0 +1,42 @@
+version: 0.0
+os: linux
+files: 
+  - source: /
+    destination: /home/ec2-user/env-tiagocode.com
+permissions:
+  - object: /home/ec2-user/env-tiagocode.com
+    pattern: "**"
+    owner: ec2-user
+    group: ec2-user
+file_exists_behavior: OVERWRITE
+hooks:
+  # To see the logs:
+  # tail -f /opt/codedeploy-agent/deployment-root/deployment-logs/*log
+
+  # You can use this deployment lifecycle event for preinstall tasks, 
+  # such as decrypting files and creating a backup of the current version
+  BeforeInstall:
+    - location: scripts/before_install.sh
+      timeout: 360
+      runas: root
+
+  # You can use this deployment lifecycle event for tasks such as 
+  # configuring your application or changing file permissions.
+  AfterInstall:
+    - location: scripts/after_install.sh
+      timeout: 60
+      runas: root
+
+  # You typically use this deployment lifecycle event to restart services 
+  # that were stopped during ApplicationStop.
+  ApplicationStart:
+    - location: scripts/application_start.sh
+      timeout: 360
+      runas: root
+
+  # You can specify scripts for this event to gracefully stop the application
+  # or remove currently installed packages in preparation for a deployment
+  ApplicationStop:
+    - location: scripts/application_stop.sh
+      timeout: 60
+      runas: root

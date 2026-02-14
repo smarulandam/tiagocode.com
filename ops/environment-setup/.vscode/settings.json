@@ -1,0 +1,5 @@
+{
+    "yaml.schemas": {
+        "https://www.schemastore.org/projektor.json": "file:///Users/tiagocodemini/Workspace/rust-sites/tiagocode.com/environment-setup/docker/grafana/provisioning/loki.yml"
+    }
+}

@@ -1,0 +1,10 @@
+uuid: a9d4b0b0-37cc-40e4-8624-d8e0b3f41a33
+langcode: en
+status: true
+dependencies: {  }
+id: content_hover_card
+label: 'Hover Card'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

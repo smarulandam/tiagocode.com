@@ -1,0 +1,19 @@
+uuid: 7a5bc3d6-2ab1-4824-9292-6b2bcf3d4d08
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: rpwvgyEURXLz_JjgMCrkS1rUv-0k3L79BpO-ReN7fDI
+id: node
+label: Content
+tags:
+  description: '[node:summary]'
+  keywords: 'Software Developer, Web Developer, Full-Stack Developer, Backend Developer, Rust Developer, PHP Developer, Laravel Developer, JavaScript Developer, Leptos Framework, Web Development, Personal Portfolio, Coding Blog, Programming Articles, Tech Blog, Open Source, Software Engineering, Cloud Computing, API Development, SEO Optimization, Responsive Web Design'
+  og_description: '[node:summary]'
+  og_site_name: '[site:name]'
+  og_title: '[node:title]'
+  title: '[node:title] | [site:name]'
+  twitter_cards_description: '[node:summary]'
+  twitter_cards_site: '@tiagocode97'
+  twitter_cards_title: '[node:title]'
+  twitter_cards_type: summary

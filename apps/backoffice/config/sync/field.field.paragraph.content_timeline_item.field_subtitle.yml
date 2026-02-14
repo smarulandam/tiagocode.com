@@ -1,0 +1,19 @@
+uuid: 98699f80-dcc9-4d66-85e5-1d813e2d5f72
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_subtitle
+    - paragraphs.paragraphs_type.content_timeline_item
+id: paragraph.content_timeline_item.field_subtitle
+field_name: field_subtitle
+entity_type: paragraph
+bundle: content_timeline_item
+label: Subtitle
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,19 @@
+uuid: ae55bb33-07a3-4cb2-a67f-ae01655ff64f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_subtitle
+    - paragraphs.paragraphs_type.portfolio_resume
+id: paragraph.portfolio_resume.field_subtitle
+field_name: field_subtitle
+entity_type: paragraph
+bundle: portfolio_resume
+label: Subtitle
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

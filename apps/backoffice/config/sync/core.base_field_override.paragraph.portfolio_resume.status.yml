@@ -1,0 +1,22 @@
+uuid: bb720b73-3cde-4464-b029-6d702079b144
+langcode: es
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.portfolio_resume
+id: paragraph.portfolio_resume.status
+field_name: status
+entity_type: paragraph
+bundle: portfolio_resume
+label: Published
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

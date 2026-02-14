@@ -1,0 +1,22 @@
+uuid: d055df41-02b5-4e5d-926f-2003e63a9c25
+langcode: es
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.portfolio_projects
+id: paragraph.portfolio_projects.status
+field_name: status
+entity_type: paragraph
+bundle: portfolio_projects
+label: Published
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

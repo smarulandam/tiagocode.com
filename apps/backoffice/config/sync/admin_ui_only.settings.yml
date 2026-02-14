@@ -1,0 +1,5 @@
+_core:
+  default_config_hash: L_rAiCIVCIoTgqIZ9JZC5h_zZV5NyxvGNjcfXGFBIRY
+routes:
+  - health_check.content
+error_code: 404

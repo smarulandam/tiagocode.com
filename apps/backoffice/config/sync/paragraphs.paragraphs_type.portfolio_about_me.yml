@@ -1,0 +1,10 @@
+uuid: 4b1f93b9-d85e-4ea0-bf56-c94b442bf1b1
+langcode: en
+status: true
+dependencies: {  }
+id: portfolio_about_me
+label: 'Portfolio: About me'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

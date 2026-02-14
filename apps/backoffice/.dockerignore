@@ -1,0 +1,37 @@
+# Ignore Git
+.git
+.gitignore
+
+# Ignore Docker-related files
+.dockerignore
+Dockerfile
+docker-compose.yml
+docker-compose.*.yml
+
+# Ignore environment files
+.env
+.env.*
+web/sites/default/settings.php
+
+# Database backups
+**/*.sql
+
+# Ignore logs
+*.log
+
+# Ignore OS and IDE/system-specific files
+*.DS_Store
+*.swp
+*.swo
+*.idea/
+*.vscode/
+
+# Ignore Composer vendor directory (optional)
+vendor/
+web/core/
+web/modules/contrib/
+web/themes/contrib/
+
+# Ignore Drupal's file system directories (optional for production builds)
+web/sites/default/files/
+private/

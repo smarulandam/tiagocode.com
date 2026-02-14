@@ -1,0 +1,17 @@
+_core:
+  default_config_hash: IgOVnECx6lbVt6JVFnadoEEugneDf3UblPZnOzov43Q
+mode: simple
+ignored_config_entities:
+  - 'environment_indicator.indicator:bg_color'
+  - 'environment_indicator.indicator:fg_color'
+  - 'environment_indicator.indicator:name'
+  - 'recaptcha.settings: secret_key'
+  - 'recaptcha.settings:site_key'
+  - 'recaptcha_v3.settings: site_key'
+  - 'recaptcha_v3.settings:secret_key'
+  - rest_api_authentication.settings
+  - 'smtp.settings:smtp_from'
+  - 'smtp.settings:smtp_fromname'
+  - 'smtp.settings:smtp_password'
+  - 'smtp.settings:smtp_test_address'
+  - 'smtp.settings:smtp_username'

@@ -1,0 +1,52 @@
+uuid: aa6499ad-bf57-4a4d-83bb-5c7773fad31e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_items
+    - paragraphs.paragraphs_type.content_hover_card
+    - paragraphs.paragraphs_type.portfolio_projects
+  module:
+    - entity_reference_revisions
+id: paragraph.portfolio_projects.field_items
+field_name: field_items
+entity_type: paragraph
+bundle: portfolio_projects
+label: Items
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      content_hover_card: content_hover_card
+    negate: 0
+    target_bundles_drag_drop:
+      content_hover_card:
+        weight: 9
+        enabled: true
+      content_media:
+        weight: 8
+        enabled: false
+      content_text:
+        weight: 9
+        enabled: false
+      content_timeline:
+        weight: 10
+        enabled: false
+      content_timeline_item:
+        weight: 11
+        enabled: false
+      portfolio_about_me:
+        weight: 12
+        enabled: false
+      portfolio_projects:
+        weight: 13
+        enabled: false
+      portfolio_resume:
+        weight: 14
+        enabled: false
+field_type: entity_reference_revisions

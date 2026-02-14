@@ -1,0 +1,22 @@
+uuid: 872ff322-7e06-4532-b966-4fbde6d903be
+langcode: es
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.content_hover_card
+id: paragraph.content_hover_card.status
+field_name: status
+entity_type: paragraph
+bundle: content_hover_card
+label: Published
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

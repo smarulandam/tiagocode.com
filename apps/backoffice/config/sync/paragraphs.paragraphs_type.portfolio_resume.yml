@@ -1,0 +1,10 @@
+uuid: 9c19aa2b-f1fd-4498-8998-8446512adbfa
+langcode: en
+status: true
+dependencies: {  }
+id: portfolio_resume
+label: 'Portfolio: Resume'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

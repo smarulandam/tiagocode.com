@@ -1,0 +1,15 @@
+uuid: 5dbf3bb1-c5cb-46cd-9723-3cab74dfd269
+langcode: en
+status: true
+dependencies: {  }
+name: max_900x550
+label: "Max 900x550\t"
+effects:
+  f4a99fc3-60f5-43b1-a8e3-4f197be03cc3:
+    uuid: f4a99fc3-60f5-43b1-a8e3-4f197be03cc3
+    id: image_scale
+    weight: 2
+    data:
+      width: 900
+      height: 550
+      upscale: true

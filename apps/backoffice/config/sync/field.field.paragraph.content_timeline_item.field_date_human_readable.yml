@@ -1,0 +1,19 @@
+uuid: 3d6e92e6-3129-461d-9c35-97911b53c0e5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_date_human_readable
+    - paragraphs.paragraphs_type.content_timeline_item
+id: paragraph.content_timeline_item.field_date_human_readable
+field_name: field_date_human_readable
+entity_type: paragraph
+bundle: content_timeline_item
+label: 'Date (Human readable)'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

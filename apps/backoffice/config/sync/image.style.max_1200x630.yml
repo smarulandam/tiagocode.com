@@ -1,0 +1,15 @@
+uuid: 99b1f748-6f0e-4364-9ee7-9a437f665e65
+langcode: en
+status: true
+dependencies: {  }
+name: max_1200x630
+label: 'Max 1200x630'
+effects:
+  a9bed09f-d0c6-4ab9-9029-bfc174c311ce:
+    uuid: a9bed09f-d0c6-4ab9-9029-bfc174c311ce
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 1200
+      height: 630
+      anchor: center-center

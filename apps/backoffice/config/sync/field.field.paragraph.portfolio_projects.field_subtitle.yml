@@ -1,0 +1,19 @@
+uuid: 73089a4c-6409-41f7-a0e5-b74df9995023
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_subtitle
+    - paragraphs.paragraphs_type.portfolio_projects
+id: paragraph.portfolio_projects.field_subtitle
+field_name: field_subtitle
+entity_type: paragraph
+bundle: portfolio_projects
+label: Subtitle
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,55 @@
+uuid: b4b5ddbd-528e-41fb-8e0b-05bf5b7f70ff
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.content_hover_card.field_link
+    - field.field.paragraph.content_hover_card.field_media
+    - field.field.paragraph.content_hover_card.field_text
+    - field.field.paragraph.content_hover_card.field_title
+    - paragraphs.paragraphs_type.content_hover_card
+  module:
+    - link
+    - text
+id: paragraph.content_hover_card.default
+targetEntityType: paragraph
+bundle: content_hover_card
+mode: default
+content:
+  field_link:
+    type: link
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_media:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_text:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_title:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden: {  }

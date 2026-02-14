@@ -1,0 +1,25 @@
+uuid: 2471caa0-d63c-4bf7-8b13-08db2905943f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_years_of_experience
+    - paragraphs.paragraphs_type.portfolio_about_me
+id: paragraph.portfolio_about_me.field_years_of_experience
+field_name: field_years_of_experience
+entity_type: paragraph
+bundle: portfolio_about_me
+label: 'Years of experience'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  min: 0
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

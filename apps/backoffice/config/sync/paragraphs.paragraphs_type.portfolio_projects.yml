@@ -1,0 +1,10 @@
+uuid: b02edd79-e724-4ed0-86c7-95a1f07a115d
+langcode: en
+status: true
+dependencies: {  }
+id: portfolio_projects
+label: 'Portfolio: Projects'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

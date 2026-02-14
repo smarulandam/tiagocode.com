@@ -1,0 +1,144 @@
+uuid: 637084a9-2b47-4420-818d-21b8574c77e4
+langcode: en
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.portfolio_projects
+  module:
+    - jsonapi_defaults
+third_party_settings:
+  jsonapi_defaults:
+    page_limit: 50
+id: paragraph--portfolio_projects
+disabled: false
+path: paragraph/portfolio_projects
+resourceType: paragraph--portfolio_projects
+resourceFields:
+  id:
+    disabled: true
+    fieldName: id
+    publicName: id
+    enhancer:
+      id: ''
+  uuid:
+    disabled: false
+    fieldName: uuid
+    publicName: uuid
+    enhancer:
+      id: ''
+  revision_id:
+    disabled: true
+    fieldName: revision_id
+    publicName: revision_id
+    enhancer:
+      id: ''
+  langcode:
+    disabled: true
+    fieldName: langcode
+    publicName: langcode
+    enhancer:
+      id: ''
+  type:
+    disabled: true
+    fieldName: type
+    publicName: type
+    enhancer:
+      id: ''
+  status:
+    disabled: true
+    fieldName: status
+    publicName: status
+    enhancer:
+      id: ''
+  created:
+    disabled: true
+    fieldName: created
+    publicName: created
+    enhancer:
+      id: ''
+  parent_id:
+    disabled: true
+    fieldName: parent_id
+    publicName: parent_id
+    enhancer:
+      id: ''
+  parent_type:
+    disabled: true
+    fieldName: parent_type
+    publicName: parent_type
+    enhancer:
+      id: ''
+  parent_field_name:
+    disabled: true
+    fieldName: parent_field_name
+    publicName: parent_field_name
+    enhancer:
+      id: ''
+  behavior_settings:
+    disabled: true
+    fieldName: behavior_settings
+    publicName: behavior_settings
+    enhancer:
+      id: ''
+  default_langcode:
+    disabled: true
+    fieldName: default_langcode
+    publicName: default_langcode
+    enhancer:
+      id: ''
+  revision_default:
+    disabled: true
+    fieldName: revision_default
+    publicName: revision_default
+    enhancer:
+      id: ''
+  revision_translation_affected:
+    disabled: true
+    fieldName: revision_translation_affected
+    publicName: revision_translation_affected
+    enhancer:
+      id: ''
+  content_translation_source:
+    disabled: true
+    fieldName: content_translation_source
+    publicName: content_translation_source
+    enhancer:
+      id: ''
+  content_translation_outdated:
+    disabled: true
+    fieldName: content_translation_outdated
+    publicName: content_translation_outdated
+    enhancer:
+      id: ''
+  content_translation_changed:
+    disabled: true
+    fieldName: content_translation_changed
+    publicName: content_translation_changed
+    enhancer:
+      id: ''
+  field_items:
+    disabled: false
+    fieldName: field_items
+    publicName: items
+    enhancer:
+      id: ''
+  field_subtitle:
+    disabled: false
+    fieldName: field_subtitle
+    publicName: subtitle
+    enhancer:
+      id: ''
+  field_text:
+    disabled: false
+    fieldName: field_text
+    publicName: text
+    enhancer:
+      id: nested
+      settings:
+        path: processed
+  field_title:
+    disabled: false
+    fieldName: field_title
+    publicName: title
+    enhancer:
+      id: ''

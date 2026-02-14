@@ -1,0 +1,127 @@
+services:
+  traefik:
+    restart: always
+    command:
+      - "--log.level=error"
+      - "--api"
+      - "--api.dashboard=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.metrics.address=:8082"
+      - "--entrypoints.web_insecure.address=:80"
+      - "--entrypoints.web_secure.address=:443"
+      - "--entrypoints.redisbackoffice.address=:6379"
+      - "--entrypoints.rediswebsite.address=:6380"
+      - "--entrypoints.web_secure.http.tls.domains[0].main=${PROJECT_DOMAIN_NAME}"
+      - "--entrypoints.web_secure.http.tls.domains[0].sans=*.${PROJECT_DOMAIN_NAME}"
+      - "--certificatesresolvers.lets_encrypt.acme.storage=/data/acme.json"
+      - "--certificatesresolvers.lets_encrypt.acme.dnsChallenge=true"
+      - "--certificatesresolvers.lets_encrypt.acme.dnsChallenge.delayBeforeCheck=0"
+      - "--certificatesresolvers.lets_encrypt.acme.dnsChallenge.provider=cloudflare"
+      - "--certificatesresolvers.lets_encrypt.acme.email=${TRAEFIK_ACME_EMAIL}"
+      - "--certificatesresolvers.lets_encrypt.acme.dnsChallenge.resolvers=${TRAEFIK_CF_DNS}"
+      - "--accesslog=true"
+      - "--accesslog.format=json"
+      - "--accesslog.fields.headers.defaultmode=drop"
+      - "--accesslog.fields.headers.names.CF-IPCountry=keep"
+      - "--accesslog.fields.headers.names.CF-Connecting-IP=keep"
+      - "--accesslog.fields.headers.names.User-Agent=keep"
+      - "--accesslog.fields.headers.names.Referer=keep"
+      # metrics
+      - "--metrics.prometheus=true"
+      - "--metrics.prometheus.entrypoint=metrics"
+      - "--metrics.prometheus.addrouterslabels=true"
+      - "--metrics.prometheus.addserviceslabels=true"
+      - "--metrics.prometheus.addentrypointslabels=true"
+    ports: !override
+      - "80:80"
+      - "443:443"
+    labels: !override
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.entrypoints=web_secure"
+      - "traefik.http.routers.traefik.tls.certresolver=lets_encrypt"
+      - "traefik.http.routers.traefik.rule=Host(`${PROJECT_SUBDOMAIN_PREFIX}traefik.${PROJECT_DOMAIN_NAME}`)"
+      - "traefik.http.routers.traefik.service=api@internal"
+      - "traefik.http.services.api@internal.loadbalancer.server.port=8888"
+      - "traefik.http.routers.traefik.middlewares=access-auth"
+      - "traefik.http.middlewares.access-auth.basicauth.realm=Login Required"
+      - "traefik.http.middlewares.access-auth.basicauth.users=${TRAEFIK_USER_PASSWORD}"    
+      - "traefik.http.routers.root-redirect.rule=Host(`${PROJECT_DOMAIN_NAME}`)"
+      - "traefik.http.routers.root-redirect.entryPoints=web_secure"
+      - "traefik.http.routers.root-redirect.tls.certresolver=lets_encrypt"
+      - "traefik.http.routers.root-redirect.middlewares=redirect-to-website"
+      - "traefik.http.middlewares.redirect-to-website.redirectregex.regex=^https?://${PROJECT_DOMAIN_NAME}/(.*)"
+      - "traefik.http.middlewares.redirect-to-website.redirectregex.replacement=https://www.${PROJECT_DOMAIN_NAME}/$$1"
+      - "traefik.http.middlewares.redirect-to-website.redirectregex.permanent=true"
+  website:
+    restart: always
+    labels:
+      - "traefik.http.routers.website.rule=Host(`${PROJECT_SUBDOMAIN_PREFIX}website.${PROJECT_DOMAIN_NAME}`) || Host(`www.${PROJECT_DOMAIN_NAME}`)"
+  nginx:
+    restart: always
+    volumes: !override
+      - backoffice_codebase:/var/www/html:ro
+      - backoffice_private_files:/var/www/html/private:ro
+      - backoffice_public_files:/var/www/html/web/sites/default/files:ro
+
+  backoffice:
+    restart: always
+    volumes: !override
+      - backoffice_codebase:/var/www/html:cached
+      - backoffice_private_files:/var/www/html/private:cached
+      - backoffice_public_files:/var/www/html/web/sites/default/files:cached
+      - ./backup:/var/www/html/backup
+
+  redis_website:
+    restart: always
+    labels: !override
+      - "traefik.enable=true"
+      - "traefik.tcp.routers.rediswebsite.rule=HostSNI(`${PROJECT_SUBDOMAIN_PREFIX}rediswebsite.${PROJECT_DOMAIN_NAME}`)"
+      - "traefik.tcp.routers.rediswebsite.service=rediswebsite"
+      - "traefik.tcp.routers.rediswebsite.entryPoints=rediswebsite"
+      - "traefik.tcp.services.rediswebsite.loadbalancer.server.port=6379"
+      - "traefik.tcp.routers.rediswebsite.tls.certresolver=lets_encrypt"
+
+  redis_backoffice:
+    restart: always
+    labels: !override
+      - "traefik.enable=true"
+      - "traefik.tcp.routers.redisbackoffice.rule=HostSNI(`${PROJECT_SUBDOMAIN_PREFIX}redisbackoffice.${PROJECT_DOMAIN_NAME}`)"
+      - "traefik.tcp.routers.redisbackoffice.service=redisbackoffice"
+      - "traefik.tcp.routers.redisbackoffice.entryPoints=redisbackoffice"
+      - "traefik.tcp.services.redisbackoffice.loadbalancer.server.port=6379"
+      - "traefik.tcp.routers.redisbackoffice.tls.certresolver=lets_encrypt"
+
+  grafana:
+    restart: always
+    labels: !override
+      - "traefik.enable=true"
+      - "traefik.http.routers.grafana.rule=Host(`${PROJECT_SUBDOMAIN_PREFIX}grafana.${PROJECT_DOMAIN_NAME}`)"
+      - "traefik.http.routers.grafana.entrypoints=web_secure"
+      - "traefik.http.routers.grafana.tls.certresolver=lets_encrypt"
+      - "traefik.http.services.grafana.loadbalancer.server.port=3000"
+
+  loki:
+    restart: always
+
+  alloy:
+    restart: always
+
+  prometheus:
+    restart: always
+
+  node_exporter:
+    restart: always
+
+  postgres: !reset []
+
+volumes:
+  postgres_data: !reset []
+
+  backoffice_codebase:
+    driver: ${DOCKER_VOLUMES_DRIVER}
+
+  backoffice_public_files:
+    driver: ${DOCKER_VOLUMES_DRIVER}
+
+  backoffice_private_files:
+    driver: ${DOCKER_VOLUMES_DRIVER}
