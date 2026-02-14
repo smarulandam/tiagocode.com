@@ -1,0 +1,84 @@
+name: "Infrastructure Deploy (Manual)"
+
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: "Run terraform apply after plan"
+        required: true
+        type: boolean
+        default: false
+
+concurrency:
+  group: infrastructure-deploy-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  terraform:
+    name: Deploy infrastructure
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    defaults:
+      run:
+        working-directory: ops/infrastructure
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.6.6"
+
+      - name: Initialize Terraform
+        run: terraform init -input=false -lock-timeout=5m
+
+      - name: Validate Terraform config
+        run: terraform validate
+
+      - name: Plan infrastructure
+        run: |
+          terraform plan -input=false \
+            -lock-timeout=5m \
+            -out=infrastructure_plan \
+            -var 'project_name=${{ vars.TIAGOCODE_PROJECT_NAME }}' \
+            -var 'project_environment=${{ vars.TIAGOCODE_PROJECT_ENVIRONMENT }}' \
+            -var 'project_domain_name=${{ vars.TIAGOCODE_PROJECT_DOMAIN_NAME }}' \
+            -var 'project_subdomain_prefix=' \
+            -var 'project_second_level_domain=${{ vars.TIAGOCODE_PROJECT_DOMAIN_NAME_2ND_LEVEL }}' \
+            -var 'aws_region=${{ vars.AWS_REGION }}' \
+            -var 'aws_access_key=${{ secrets.AWS_ACCESS_KEY_ID }}' \
+            -var 'aws_secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}' \
+            -var 'cloudflare_email=${{ secrets.TIAGOCODE_CLOUDFLARE_EMAIL }}' \
+            -var 'cloudflare_dns=${{ secrets.TIAGOCODE_CLOUDFLARE_DNS }}' \
+            -var 'cloudflare_api_key=${{ secrets.TIAGOCODE_CLOUDFLARE_API_KEY }}' \
+            -var 'cloudflare_api_token=${{ secrets.TIAGOCODE_CLOUDFLARE_API_TOKEN }}' \
+            -var 'cloudflare_zone_id=${{ secrets.TIAGOCODE_CLOUDFLARE_ZONE_ID }}' \
+            -var 'database_name=${{ secrets.TIAGOCODE_DATABASE_NAME }}' \
+            -var 'database_username=${{ secrets.TIAGOCODE_DATABASE_USERNAME }}' \
+            -var 'database_password=${{ secrets.TIAGOCODE_DATABASE_PASSWORD }}' \
+            -var 'service_traefik_username_password=${{ secrets.TIAGOCODE_SERVICE_TRAEFIK_USERNAME_PASSWORD }}' \
+            -var 'service_grafana_admin_user=${{ secrets.TIAGOCODE_SERVICE_GRAFANA_ADMIN_USER }}' \
+            -var 'service_grafana_admin_password=${{ secrets.TIAGOCODE_SERVICE_GRAFANA_ADMIN_PASSWORD }}' \
+            -var 'service_redis_username=${{ secrets.TIAGOCODE_SERVICE_REDIS_USERNAME }}' \
+            -var 'service_redis_password=${{ secrets.TIAGOCODE_SERVICE_REDIS_PASSWORD }}' \
+            -var 'service_drupal_database_prefix=${{ secrets.TIAGOCODE_SERVICE_DRUPAL_DATABASE_PREFIX }}' \
+            -var 'service_drupal_hash_salt=${{ secrets.TIAGOCODE_DRUPAL_HASH_SALT }}' \
+            -var 'service_frontend_images_url=${{ vars.TIAGOCODE_SERVICE_FRONTEND_IMAGES_URL }}' \
+            -var 'service_frontend_api_url=${{ vars.TIAGOCODE_SERVICE_FRONTEND_API_URL }}' \
+            -var 'service_frontend_api_username=${{ secrets.TIAGOCODE_SERVICE_FRONTEND_API_USERNAME }}' \
+            -var 'service_frontend_api_password=${{ secrets.TIAGOCODE_SERVICE_FRONTEND_API_PASSWORD }}' \
+            -var 'service_frontend_cache_purge_token=${{ secrets.TIAGOCODE_SERVICE_FRONTEND_CACHE_PURGE_TOKEN }}' \
+            -var 'github_container_registry_pat=${{ secrets.GHCR_PAT }}'
+
+      - name: Apply infrastructure
+        if: github.event.inputs.apply == 'true'
+        run: terraform apply -input=false -lock-timeout=5m "infrastructure_plan"
+
+      - name: Skip apply (plan-only mode)
+        if: github.event.inputs.apply != 'true'
+        run: echo "Apply skipped. Plan completed successfully."
