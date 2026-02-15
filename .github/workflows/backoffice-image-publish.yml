@@ -48,7 +48,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/bytemmalabs/tiagocode.com/backoffice
+          images: ghcr.io/smarulandam/tiagocode.com/backoffice
           tags: |
             type=raw,value=latest
             type=sha,prefix=sha-
@@ -62,8 +62,8 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=registry,ref=ghcr.io/bytemmalabs/tiagocode.com/backoffice:buildcache
-          cache-to: type=registry,ref=ghcr.io/bytemmalabs/tiagocode.com/backoffice:buildcache,mode=max
+          cache-from: type=registry,ref=ghcr.io/smarulandam/tiagocode.com/backoffice:buildcache
+          cache-to: type=registry,ref=ghcr.io/smarulandam/tiagocode.com/backoffice:buildcache,mode=max
 
       - name: Build image only (no push)
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.push_image != 'true'
