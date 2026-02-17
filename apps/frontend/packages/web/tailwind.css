@@ -1,0 +1,8 @@
+@import "tailwindcss";
+@source "./src/**/*.{rs,html,css}";
+@source "../ui/src/**/*.{rs,html,css}";
+
+@theme {
+    --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+    --font-display: "Space Grotesk", "Plus Jakarta Sans", sans-serif;
+}
