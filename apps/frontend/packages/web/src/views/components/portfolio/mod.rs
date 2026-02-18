@@ -12,4 +12,4 @@ pub use dynamic::DynamicSections;
 pub use projects::ProjectsSection;
 pub use resume::ResumeSection;
 pub use sidebar::Sidebar;
-pub use timeline::{TimelineSection, TimelineSectionItem};
+pub use timeline::{TimelineIcon, TimelineSection, TimelineSectionItem};

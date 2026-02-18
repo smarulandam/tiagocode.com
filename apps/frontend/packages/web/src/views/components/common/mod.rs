@@ -1,4 +1,6 @@
+mod container;
 mod errors;
+mod icons;
 mod image;
 mod menu;
 mod metatags;
@@ -7,7 +9,9 @@ mod navbar;
 mod raw_html;
 mod slider;
 
+pub use container::*;
 pub use errors::*;
+pub use icons::*;
 pub use image::*;
 pub use menu::*;
 pub use metatags::*;

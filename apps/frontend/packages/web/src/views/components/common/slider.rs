@@ -21,13 +21,10 @@ pub fn Slider(thumbnails: Vec<Image>, images: Vec<Image>) -> Element {
             div {
                 id: main_slider_id,
                 class: "splide splide-wrapper mt-4 first:mt-0",
-                div {
-                    class: "splide__track",
-                    ul {
-                        class: "splide__list",
+                div { class: "splide__track",
+                    ul { class: "splide__list",
                         for image in images {
-                            li {
-                                class: "splide__slide opacity-60 [&.is-active]:opacity-100",
+                            li { class: "splide__slide opacity-60 [&.is-active]:opacity-100",
                                 Img {
                                     image,
                                     class: Some("h-full w-full object-cover".to_string()),
@@ -40,13 +37,10 @@ pub fn Slider(thumbnails: Vec<Image>, images: Vec<Image>) -> Element {
             div {
                 id: thumbnail_slider_id,
                 class: "splide splide-wrapper mt-4 first:mt-0",
-                div {
-                    class: "splide__track",
-                    ul {
-                        class: "splide__list",
+                div { class: "splide__track",
+                    ul { class: "splide__list",
                         for thumbnail in thumbnails {
-                            li {
-                                class: "splide__slide opacity-60 [&.is-active]:opacity-100",
+                            li { class: "splide__slide opacity-60 [&.is-active]:opacity-100",
                                 Img {
                                     image: thumbnail,
                                     class: Some("h-full w-full object-cover".to_string()),

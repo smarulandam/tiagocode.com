@@ -10,8 +10,6 @@ pub fn NotFoundPage(route: Vec<String>) -> Element {
     );
 
     rsx! {
-        NotFoundError {
-            route: Some(route.join("/")),
-        }
+        NotFoundError { route: Some(route.join("/")) }
     }
 }

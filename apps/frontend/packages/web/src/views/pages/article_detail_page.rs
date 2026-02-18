@@ -1,7 +1,7 @@
 use dioxus::prelude::*;
 
 use crate::views::components::blog::{DynamicContent, Header};
-use crate::views::components::common::MetaTagsView;
+use crate::views::components::common::{Container, MetaTagsView};
 
 #[component]
 pub fn ArticleDetailPage(lang: String, category: String, slug: String) -> Element {
@@ -82,14 +82,14 @@ pub fn ArticleDetailPage(lang: String, category: String, slug: String) -> Elemen
     rsx! {
         MetaTagsView { metatags: article.metatags().clone() }
 
-        script {
-            dangerous_inner_html: init_script,
-        }
+        script { dangerous_inner_html: init_script }
 
-        div {
-            class: "justify-center space-y-6 lg:flex lg:space-y-0 lg:space-x-8 xl:space-x-12",
-            div {
-                class: "article-detail section rounded-lg bg-white px-6 py-8 pb-12 shadow-[var(--shadow-panel)] transition duration-[160ms] ease-out hover:shadow-[var(--shadow-soft)] md:px-8 md:py-10 lg:w-3/4 lg:p-12",
+        div { class: "justify-center space-y-6 lg:flex lg:space-y-0 lg:space-x-8 xl:space-x-12",
+            Container {
+                class: Some(
+                    "article-detail section rounded-lg bg-white px-6 py-8 pb-12 shadow-[0_8px_26px_0_rgba(22,24,26,0.15)] transition ease-out duration-[160ms] hover:shadow-[0_10px_30px_0_rgba(22,24,26,0.22)] md:px-8 md:py-10 lg:w-3/4 lg:p-12"
+                        .to_string(),
+                ),
                 Header { article: article.clone() }
                 DynamicContent { content: article.content().clone() }
             }

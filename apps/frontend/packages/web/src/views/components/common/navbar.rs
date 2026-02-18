@@ -1,36 +1,33 @@
 use dioxus::prelude::*;
 
+use crate::Route;
 use content_core::application::domain::layout::MenuTree;
-
 use crate::views::components::common::Menu;
-use crate::{Route, LOGO_TEAL};
 
 #[component]
 pub fn Navbar(main_menu: MenuTree, social_menu: MenuTree) -> Element {
     let mut open_mobile_menu = use_signal(|| false);
 
     rsx! {
-        nav {
-            class: "sticky top-0 z-40 border-b border-gray-200 bg-white shadow-[0_8px_26px_0_rgba(22,24,26,0.15)] transition ease-out duration-[160ms]",
-            div {
-                class: "mx-auto flex max-w-[1320px] flex-wrap items-center justify-between px-5 py-4 xl:px-0",
+        nav { class: "sticky top-0 z-40 border-b border-gray-200 bg-white shadow-[0_8px_26px_0_rgba(22,24,26,0.15)] transition ease-out duration-[160ms]",
+            div { class: "mx-auto flex max-w-[1320px] flex-wrap items-center justify-between px-5 py-4 xl:px-0",
 
                 Link {
                     class: "flex items-center space-x-3",
-                    to: Route::RootRedirectPage {},
+                    to: Route::PortfolioPage {
+                        lang: "en".to_string(),
+                    },
                     img {
-                        src: LOGO_TEAL,
                         class: "h-8",
                         alt: "Tiagocode Logo",
+                        src: asset!("/assets/images/logo_teal.svg"),
                     }
-                    span {
-                        class: "hidden self-center whitespace-nowrap text-2xl font-semibold uppercase tracking-widest text-primary md:block",
+                    span { class: "hidden self-center whitespace-nowrap text-2xl font-semibold uppercase tracking-widest text-primary md:block",
                         "Tiagocode"
                     }
                 }
 
-                div {
-                    class: "flex items-center",
+                div { class: "flex items-center",
                     div { class: "md:order-2",
                         Menu {
                             menu: social_menu.clone(),
@@ -44,7 +41,9 @@ pub fn Navbar(main_menu: MenuTree, social_menu: MenuTree) -> Element {
                             menu: main_menu.clone(),
                             container_class: Some("mr-4 flex items-center font-medium".to_string()),
                             item_class: Some("block px-3 py-0 uppercase".to_string()),
-                            anchor_class: Some("text-sm font-medium tracking-[0.04em] text-black hover:text-primary".to_string()),
+                            anchor_class: Some(
+                                "text-sm font-medium tracking-[0.04em] text-black hover:text-primary".to_string(),
+                            ),
                         }
                     }
                 }
@@ -86,9 +85,7 @@ pub fn Navbar(main_menu: MenuTree, social_menu: MenuTree) -> Element {
                             "block rounded-sm px-3 py-2 text-gray-900 uppercase hover:bg-gray-100 md:border-0 md:p-0 md:hover:bg-transparent"
                                 .to_string(),
                         ),
-                        anchor_class: Some(
-                            "block text-sm font-medium tracking-[0.04em]".to_string(),
-                        ),
+                        anchor_class: Some("block text-sm font-medium tracking-[0.04em]".to_string()),
                     }
                 }
             }
