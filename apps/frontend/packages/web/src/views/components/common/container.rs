@@ -1,6 +1,7 @@
 use dioxus::prelude::*;
 
-const CONTAINER_CLASS: &str = "section rounded-lg bg-white px-6 py-8 shadow-[0_8px_26px_0_rgba(22,24,26,0.15)] transition ease-out duration-[160ms] hover:shadow-[0_10px_30px_0_rgba(22,24,26,0.22)] md:px-8 md:py-10 lg:p-12";
+const CONTAINER_CLASS: &str =
+    "section rounded-2xl border border-border bg-card px-6 py-8 md:px-8 md:py-10 lg:p-12";
 
 #[component]
 pub fn Container(children: Element, id: Option<String>, class: Option<String>) -> Element {
@@ -15,21 +16,21 @@ pub fn Container(children: Element, id: Option<String>, class: Option<String>) -
 #[component]
 pub fn PrimaryTitle(text: String) -> Element {
     rsx! {
-        h1 { class: "mb-2 text-4xl font-display font-semibold text-primary", "{text}" }
+        h1 { class: "section-heading mb-2 text-4xl font-display font-semibold text-primary", "{text}" }
     }
 }
 
 #[component]
 pub fn SecondaryTitle(text: String) -> Element {
     rsx! {
-        h2 { class: "mb-2 text-4xl font-display font-semibold text-primary", "{text}" }
+        h2 { class: "section-heading mb-2 text-4xl font-display font-semibold text-primary", "{text}" }
     }
 }
 
 #[component]
 pub fn Decoration(text: String) -> Element {
     rsx! {
-        span { class: "relative mb-5 pt-4 font-mono text-sm font-medium uppercase tracking-wider text-accent before:pr-2 before:content-['//']",
+        span { class: "section-eyebrow relative mb-5 pt-4 font-mono text-sm font-medium uppercase tracking-wider text-accent before:pr-2 before:content-['//']",
             "{text}"
         }
     }
@@ -38,6 +39,6 @@ pub fn Decoration(text: String) -> Element {
 #[component]
 pub fn Description(text: String) -> Element {
     rsx! {
-        p { class: "text-zeus", "{text}" }
+        p { class: "section-description text-zeus", "{text}" }
     }
 }

@@ -37,7 +37,11 @@ fn MenuLink(item: MenuItem, item_class: String, anchor_class: String) -> Element
     rsx! {
         li { class: item_class,
             a {
-                class: if item.icon().is_some() { anchor_class.clone() } else { format!("{} hover:text-[#86a873] w-full", anchor_class.clone()).trim().to_string() },
+                class: if item.icon().is_some() || fallback_icon.is_some() {
+                    anchor_class.clone()
+                } else {
+                    format!("{} w-full", anchor_class.clone()).trim().to_string()
+                },
                 href,
                 target: if is_external { "_blank" } else { "_self" },
                 rel: if is_external { "noopener noreferrer" } else { "" },
@@ -46,7 +50,7 @@ fn MenuLink(item: MenuItem, item_class: String, anchor_class: String) -> Element
 
                 if let Some(icon) = item.icon().clone() {
                     img {
-                        class: "h-8",
+                        class: "h-10 w-10 object-contain",
                         src: icon.url().to_string(),
                         alt: icon.alt().to_string(),
                         loading: "lazy",
@@ -54,10 +58,10 @@ fn MenuLink(item: MenuItem, item_class: String, anchor_class: String) -> Element
                 } else if let Some(icon) = fallback_icon {
                     SocialIcon {
                         icon,
-                        class: Some("h-[1.35rem] w-[1.35rem] text-black".to_string()),
+                        class: Some("h-7 w-7 text-current".to_string()),
                     }
                 } else {
-                    span { class: "h-8", "{title}" }
+                    "{title}"
                 }
             }
         }

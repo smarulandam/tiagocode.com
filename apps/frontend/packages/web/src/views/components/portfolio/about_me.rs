@@ -9,11 +9,11 @@ use content_core::application::domain::portfolio::AboutMe;
 pub fn AboutMeSection(data: AboutMe) -> Element {
     rsx! {
         Container { id: Some("about".to_string()),
-            div { class: "lg:flex space-y-5 lg:space-x-10 lg:space-y-0",
+            div { class: "about-grid grid grid-cols-1 gap-7 lg:grid-cols-[17rem_minmax(0,1fr)] lg:gap-10",
 
                 div { class: "shrink-0",
                     div { class: "relative flex h-fit justify-center",
-                        figure { class: "h-52 w-52 min-h-52 min-w-52 overflow-hidden rounded-full md:h-64 md:w-64 md:min-h-64 md:min-w-64",
+                        figure { class: "profile-wrap h-52 w-52 min-h-52 min-w-52 overflow-hidden rounded-full md:h-64 md:w-64 md:min-h-64 md:min-w-64",
                             img {
                                 src: data.profile_picture().url().to_string(),
                                 alt: data.profile_picture().alt().to_string(),
@@ -25,17 +25,16 @@ pub fn AboutMeSection(data: AboutMe) -> Element {
                         }
                     }
 
-                    div { class: "mt-2 flex items-center justify-center",
+                    div { class: "experience-card mt-4 flex items-center justify-center",
                         div { class: "pe-2",
                             div {
-                                class: "font-mono text-6xl font-semibold text-black",
-                                style: "-webkit-text-fill-color: transparent; -webkit-text-stroke-width: 1.4px; -webkit-text-stroke-color: black;",
-                                span { class: "counter", "{data.years_of_experience()}" }
+                                class: "font-mono text-6xl font-semibold text-primary",
+                                span { "{data.years_of_experience()}" }
                             }
                         }
                         div { class: "py-2",
-                            span { class: "mb-1 block text-2xl font-normal", "+" }
-                            p { class: "font-mono text-sm font-medium uppercase tracking-[0.5px] text-zeus",
+                            span { class: "mb-1 block text-xl font-medium text-primary", "+" }
+                            p { class: "font-mono text-xs font-medium uppercase tracking-[0.11em] text-muted-foreground",
                                 "Years of Experience"
                             }
                         }
@@ -47,22 +46,21 @@ pub fn AboutMeSection(data: AboutMe) -> Element {
                     PrimaryTitle { text: data.title().to_string() }
                     Description { text: data.text().to_string() }
 
-                    div { class: "mb-2 mt-3 space-y-3",
+                    div { class: "mb-2 mt-4 flex flex-wrap gap-2",
                         for skill in data.skills().iter() {
-                            div { class: "me-2 inline-block rounded-full border border-black/20 border-dashed px-4 py-2 text-zeus transition duration-100 ease-linear hover:bg-accent/70",
-                                span { class: "mr-2 hidden", " " }
-                                span { class: "inline-block font-mono text-sm", "{skill}" }
+                            div { class: "skill-pill inline-flex items-center px-4 py-2 font-mono text-sm text-zeus",
+                                span { "{skill}" }
                             }
                         }
                     }
 
-                    div { class: "mb-2 flex justify-end space-y-3",
+                    div { class: "mb-2 mt-4 flex justify-end",
                         a {
                             href: data.cv_document().url().to_string(),
                             target: "_blank",
                             rel: "noopener noreferrer",
-                            class: "inline-flex items-center text-sm text-zeus transition duration-[120ms] ease-out hover:text-primary",
-                            span { class: "btn-text", "Download cv" }
+                            class: "button-link inline-flex items-center",
+                            span { "Download cv" }
                             DownloadIcon { class: Some("ml-1 h-4 w-4".to_string()) }
                         }
                     }

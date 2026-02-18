@@ -77,10 +77,7 @@ fn ArticleCard(article: Article) -> Element {
             div { class: "group relative w-full overflow-hidden rounded-lg md:w-[280px] md:flex-shrink-0",
                 Img {
                     image: thumbnail,
-                    class: Some(
-                        "w-full transition duration-500 ease-out group-hover:scale-105 group-hover:blur-[1.5px]"
-                            .to_string(),
-                    ),
+                    class: "w-full transition duration-500 ease-out group-hover:scale-105 group-hover:blur-[1.5px]"
                 }
                 div { class: "absolute right-0 bottom-0 left-0 rounded-none bg-black/50 px-4 py-3 text-center font-mono text-sm font-bold tracking-[0.5px] text-white backdrop-blur-[5px]",
                     a { href: category_slug, target: "_self",

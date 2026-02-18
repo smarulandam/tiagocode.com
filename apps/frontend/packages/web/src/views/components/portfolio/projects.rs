@@ -34,21 +34,21 @@ pub fn ProjectsSection(data: Projects) -> Element {
 #[component]
 fn FeaturedProjectCard(title: String, link: Link, image: Image) -> Element {
     rsx! {
-        div { class: "portfolio-item category-1",
-            div { class: "category-1 group relative overflow-hidden rounded-lg after:absolute after:top-0 after:left-0 after:h-full after:w-full after:bg-gradient-to-t after:from-black/30 after:to-transparent after:opacity-0 after:transition after:duration-[160ms] after:ease-out after:content-[''] hover:after:opacity-100",
+        div { class: "project-card",
+            div { class: "project-media group relative overflow-hidden rounded-xl after:absolute after:top-0 after:left-0 after:h-full after:w-full after:bg-gradient-to-t after:from-black/55 after:to-transparent after:opacity-70 after:transition after:duration-[180ms] after:ease-out after:content-['']",
                 Img {
                     image,
                     class: Some(
-                        "transition duration-500 ease-out group-hover:scale-105 group-hover:blur-[1.4px]"
+                        "transition duration-500 ease-out group-hover:scale-105"
                             .to_string(),
                     ),
                 }
-                div { class: "invisible absolute bottom-0 left-0 z-[1] w-full translate-y-2 px-2 pb-6 text-center opacity-0 transition duration-[160ms] ease-out group-hover:visible group-hover:translate-y-0 group-hover:mb-0 group-hover:opacity-100",
+                div { class: "absolute bottom-0 left-0 z-[1] w-full px-4 pb-4 text-left",
                     a {
                         href: link.url().to_string(),
                         target: "_blank",
                         rel: "noopener noreferrer",
-                        class: "font-display text-3xl font-semibold tracking-[0.5px] text-white transition-all duration-100 ease-linear lg:text-4xl",
+                        class: "project-title font-display text-xl font-semibold tracking-tight text-white transition-all duration-100 ease-linear lg:text-2xl",
                         "{title}"
                     }
                 }

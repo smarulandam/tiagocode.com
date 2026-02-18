@@ -2,29 +2,29 @@
 @source "./src/**/*.{rs,html,css}";
 
 @theme {
-    --font-sans: "Open Sans", system-ui, -apple-system, sans-serif;
-    --font-display: "Poppins", "Open Sans", system-ui, sans-serif;
-    --font-mono: "Roboto Mono", ui-monospace, SFMono-Regular, monospace;
+    --font-sans: "Manrope", "Segoe UI", sans-serif;
+    --font-display: "Sora", "Manrope", "Segoe UI", sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
-    --color-background: #eaedf1;
-    --color-foreground: #1f2b37;
+    --color-background: #f2f7f7;
+    --color-foreground: #112338;
     --color-surface: #ffffff;
-    --color-surface-soft: #f5f7fa;
-    --color-primary: #087f8c;
-    --color-primary-foreground: #ffffff;
-    --color-accent: #bb9f06;
-    --color-accent-foreground: #6f5b05;
-    --color-zeus: #242424;
-    --color-muted: #dfe4ea;
-    --color-muted-foreground: #627183;
-    --color-border: #d2d9e1;
-    --color-ring: #087f8c;
+    --color-surface-soft: #eef6f6;
+    --color-primary: #0d766e;
+    --color-primary-foreground: #eefcfb;
+    --color-accent: #06b6d4;
+    --color-accent-foreground: #0d2930;
+    --color-zeus: #334155;
+    --color-muted: #dce9ea;
+    --color-muted-foreground: #64748b;
+    --color-border: #cfe1e2;
+    --color-ring: #06b6d4;
     --color-card: #ffffff;
-    --color-card-foreground: #1f2b37;
+    --color-card-foreground: #112338;
 
-    --shadow-soft: 0 12px 28px -22px rgba(24, 33, 45, 0.46);
-    --shadow-panel: 0 16px 34px -24px rgba(24, 33, 45, 0.34);
-    --shadow-card: 0 10px 22px -18px rgba(24, 33, 45, 0.32);
+    --shadow-soft: 0 14px 28px -22px rgba(15, 24, 36, 0.65);
+    --shadow-panel: 0 22px 44px -30px rgba(15, 24, 36, 0.48);
+    --shadow-card: 0 14px 26px -20px rgba(15, 24, 36, 0.34);
 
     --animate-fade-up: fade-up 0.55s cubic-bezier(0.2, 0.72, 0.2, 1);
     --animate-fade-in: fade-in 0.4s ease-out;
@@ -76,7 +76,7 @@
 
     body {
         @apply bg-background font-sans text-foreground antialiased;
-        background-image: linear-gradient(180deg, #f0f2f5 0%, #eaedf1 45%, #e6eaef 100%);
+        background-image: linear-gradient(180deg, #f4f8f8 0%, #edf5f5 48%, #f2f7f7 100%);
     }
 
     h1,

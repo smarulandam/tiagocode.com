@@ -31,7 +31,7 @@ pub fn AppLayout() -> Element {
                     social_menu: layout.social_menu().clone(),
                 }
 
-                main { class: "relative mx-auto w-full max-w-7xl px-4 pb-14 pt-7 sm:px-6 sm:pt-9 lg:px-8 lg:pt-10",
+                main { class: "site-main relative mx-auto w-full max-w-[1320px] px-5 pb-14 pt-7 sm:pt-9 lg:pt-10 xl:px-0",
                     Outlet::<Route> {}
                 }
             }
