@@ -10,10 +10,16 @@ pub fn DynamicContent(content: Vec<ArticleContent>) -> Element {
         for block in content {
             match block {
                 ArticleContent::Image(image) => rsx! {
-                    Img { image, class: Some("mt-6".to_string()) }
+                    Img {
+                        image,
+                        class: Some(
+                            "mt-6 w-full rounded-2xl border border-border/70 shadow-[var(--shadow-card)]"
+                                .to_string(),
+                        ),
+                    }
                 },
                 ArticleContent::Text(text) => rsx! {
-                    RawHtml { html: text.to_string(), class: Some("mt-6".to_string()) }
+                    RawHtml { html: text.to_string(), class: Some("article-prose mt-6".to_string()) }
                 },
                 ArticleContent::Slider(thumbnails, images) => rsx! {
                     Slider { thumbnails, images }

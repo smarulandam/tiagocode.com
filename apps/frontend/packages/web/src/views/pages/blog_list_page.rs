@@ -28,14 +28,12 @@ pub fn BlogListContent(lang: String, category: Option<String>) -> Element {
     rsx! {
         MetaTagsView { metatags: page.metatags().clone() }
 
-        div { class: "justify-center space-y-6 lg:flex lg:space-y-0 lg:space-x-8 xl:space-x-12",
-            div { class: "mb-12 w-full space-y-6",
-                ListSection {
-                    categories,
-                    articles,
-                    lang,
-                    selected_category: category,
-                }
+        section { class: "w-full pb-12",
+            ListSection {
+                categories,
+                articles,
+                lang,
+                selected_category: category,
             }
         }
     }
