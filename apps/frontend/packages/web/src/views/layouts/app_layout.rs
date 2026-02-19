@@ -25,13 +25,13 @@ pub fn AppLayout() -> Element {
                 }
             },
 
-            div { class: "app-shell",
+            div { class: "relative min-h-screen text-foreground",
                 Navbar {
                     main_menu: layout.main_menu().clone(),
                     social_menu: layout.social_menu().clone(),
                 }
 
-                main { class: "site-main relative mx-auto w-full max-w-[1320px] px-5 pb-14 pt-7 sm:pt-9 lg:pt-10 xl:px-0",
+                main { class: "relative mx-auto w-full max-w-[1320px] px-5 pb-14 pt-4 sm:pt-5 lg:pt-6 xl:px-0",
                     Outlet::<Route> {}
                 }
             }

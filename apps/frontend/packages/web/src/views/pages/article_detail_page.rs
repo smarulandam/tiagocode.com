@@ -87,7 +87,7 @@ pub fn ArticleDetailPage(lang: String, category: String, slug: String) -> Elemen
         div { class: "justify-center space-y-6 lg:flex lg:space-y-0 lg:space-x-8 xl:space-x-12",
             Container {
                 class: Some(
-                    "article-detail section rounded-lg bg-white px-6 py-8 pb-12 shadow-[0_8px_26px_0_rgba(22,24,26,0.15)] transition ease-out duration-[160ms] hover:shadow-[0_10px_30px_0_rgba(22,24,26,0.22)] md:px-8 md:py-10 lg:w-3/4 lg:p-12"
+                    "article-detail relative overflow-hidden rounded-2xl border border-[#d6dee8] bg-white px-6 py-8 pb-12 shadow-[0_18px_34px_-28px_rgba(17,28,42,0.32)] transition duration-200 ease-out hover:-translate-y-[2px] hover:shadow-[0_24px_42px_-30px_rgba(17,28,42,0.4)] before:absolute before:inset-x-0 before:top-0 before:h-[2px] before:bg-gradient-to-r before:from-cyan-300/40 before:via-teal-700/40 before:to-cyan-300/30 before:content-[''] md:px-8 md:py-10 lg:w-3/4 lg:p-12"
                         .to_string(),
                 ),
                 Header { article: article.clone() }

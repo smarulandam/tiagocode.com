@@ -38,7 +38,6 @@ fn App() -> Element {
     rsx! {
         document::Link { rel: "icon", href: asset!("/assets/favicon.ico") }
         document::Stylesheet { href: asset!("/assets/tailwind.css") }
-        document::Stylesheet { href: asset!("/assets/main.css") }
         document::Stylesheet { href: asset!("/assets/css/custom.css") }
 
         Router::<Route> {}

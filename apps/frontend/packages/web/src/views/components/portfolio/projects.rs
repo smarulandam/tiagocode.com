@@ -34,8 +34,8 @@ pub fn ProjectsSection(data: Projects) -> Element {
 #[component]
 fn FeaturedProjectCard(title: String, link: Link, image: Image) -> Element {
     rsx! {
-        div { class: "project-card",
-            div { class: "project-media group relative overflow-hidden rounded-xl after:absolute after:top-0 after:left-0 after:h-full after:w-full after:bg-gradient-to-t after:from-black/55 after:to-transparent after:opacity-70 after:transition after:duration-[180ms] after:ease-out after:content-['']",
+        div { class: "rounded-2xl transition duration-200 ease-out hover:-translate-y-[2px]",
+            div { class: "group relative overflow-hidden rounded-xl border border-[#d6dee8] bg-white shadow-[0_12px_24px_-20px_rgba(17,28,42,0.24)] transition duration-200 ease-out hover:border-accent/30 hover:shadow-[0_20px_34px_-24px_rgba(17,28,42,0.3)] after:absolute after:top-0 after:left-0 after:h-full after:w-full after:bg-gradient-to-t after:from-black/55 after:to-transparent after:opacity-70 after:transition after:duration-[180ms] after:ease-out after:content-['']",
                 Img {
                     image,
                     class: Some(
@@ -48,7 +48,7 @@ fn FeaturedProjectCard(title: String, link: Link, image: Image) -> Element {
                         href: link.url().to_string(),
                         target: "_blank",
                         rel: "noopener noreferrer",
-                        class: "project-title font-display text-xl font-semibold tracking-tight text-white transition-all duration-100 ease-linear lg:text-2xl",
+                        class: "font-display text-xl font-semibold tracking-tight text-white drop-shadow-[0_8px_14px_rgba(3,8,18,0.58)] transition-all duration-100 ease-linear lg:text-2xl",
                         "{title}"
                     }
                 }

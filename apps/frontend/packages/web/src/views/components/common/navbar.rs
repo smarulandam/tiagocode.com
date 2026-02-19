@@ -9,11 +9,11 @@ pub fn Navbar(main_menu: MenuTree, social_menu: MenuTree) -> Element {
     let mut open_mobile_menu = use_signal(|| false);
 
     rsx! {
-        nav { class: "site-nav sticky top-0 z-40 w-full transition ease-out duration-[220ms]",
-            div { class: "site-nav-inner mx-auto flex max-w-[1320px] flex-wrap items-center justify-between px-5 py-4 xl:px-0",
+        nav { class: "sticky top-0 z-40 w-full border-b border-border/80 bg-[linear-gradient(90deg,rgba(250,252,252,0.94)_0%,rgba(240,247,247,0.98)_52%,rgba(250,252,252,0.94)_100%)] shadow-[0_10px_24px_-24px_rgba(15,24,36,0.45)] backdrop-blur-[10px] transition duration-[220ms] ease-out",
+            div { class: "mx-auto flex min-h-[4.5rem] max-w-[1320px] flex-wrap items-center justify-between px-5 py-4 xl:px-0",
 
                 Link {
-                    class: "site-brand flex items-center space-x-3",
+                    class: "flex items-center space-x-3 text-primary/90",
                     to: Route::PortfolioPage {
                         lang: "en".to_string(),
                     },
@@ -22,7 +22,7 @@ pub fn Navbar(main_menu: MenuTree, social_menu: MenuTree) -> Element {
                         alt: "Tiagocode Logo",
                         src: asset!("/assets/images/logo_teal.svg"),
                     }
-                    span { class: "site-wordmark hidden self-center whitespace-nowrap text-2xl font-semibold uppercase tracking-widest md:block",
+                    span { class: "hidden self-center whitespace-nowrap font-display text-2xl font-semibold uppercase tracking-[0.14em] text-primary/90 md:block",
                         "Tiagocode"
                     }
                 }
@@ -33,7 +33,10 @@ pub fn Navbar(main_menu: MenuTree, social_menu: MenuTree) -> Element {
                             menu: social_menu.clone(),
                             container_class: Some("flex items-center gap-2".to_string()),
                             item_class: Some("block py-0 px-0".to_string()),
-                            anchor_class: Some("social-link".to_string()),
+                            anchor_class: Some(
+                                "inline-flex h-[3.15rem] w-[3.15rem] items-center justify-center rounded-xl bg-transparent text-foreground/90 transition duration-150 ease-out hover:-translate-y-px hover:text-primary"
+                                    .to_string(),
+                            ),
                         }
                     }
                     div { class: "hidden md:order-1 md:block",
@@ -41,7 +44,10 @@ pub fn Navbar(main_menu: MenuTree, social_menu: MenuTree) -> Element {
                             menu: main_menu.clone(),
                             container_class: Some("mr-4 flex items-center gap-1".to_string()),
                             item_class: Some("block px-1 py-0 uppercase".to_string()),
-                            anchor_class: Some("nav-link nav-link-main".to_string()),
+                            anchor_class: Some(
+                                "inline-flex items-center rounded-lg px-[1.05rem] py-[0.68rem] font-mono text-[1rem] font-extrabold uppercase leading-[1.2] tracking-[0.07em] text-foreground/90 transition duration-150 ease-out hover:-translate-y-px hover:bg-accent/10 hover:text-primary"
+                                    .to_string(),
+                            ),
                         }
                     }
                 }
@@ -76,14 +82,17 @@ pub fn Navbar(main_menu: MenuTree, social_menu: MenuTree) -> Element {
                     Menu {
                         menu: main_menu,
                         container_class: Some(
-                            "site-mobile-menu mt-4 flex flex-col gap-1 rounded-xl border border-border bg-card p-4 shadow-[0_18px_30px_-28px_rgba(8,15,30,0.85)] md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-transparent md:p-0 rtl:space-x-reverse"
+                            "mt-4 flex flex-col gap-1 rounded-xl border border-border bg-[rgba(250,252,252,0.98)] p-4 shadow-[0_18px_30px_-28px_rgba(8,15,30,0.85)] md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-transparent md:p-0 rtl:space-x-reverse"
                                 .to_string(),
                         ),
                         item_class: Some(
                             "block rounded-md px-0 py-0 text-gray-900 uppercase md:border-0 md:p-0"
                                 .to_string(),
                         ),
-                        anchor_class: Some("nav-link block text-sm font-medium".to_string()),
+                        anchor_class: Some(
+                            "block rounded-lg px-3 py-2 font-mono text-sm font-semibold uppercase tracking-[0.09em] text-foreground/90 transition duration-150 ease-out hover:bg-accent/10 hover:text-primary"
+                                .to_string(),
+                        ),
                     }
                 }
             }
