@@ -10,7 +10,8 @@ pub fn ListSection(
     lang: String,
     selected_category: Option<String>,
 ) -> Element {
-    const PILL_BASE_CLASS: &str = "inline-block rounded-full border border-black/20 border-dashed px-4 py-2 text-zeus transition duration-100 ease-linear hover:bg-accent/70";
+    const PILL_BASE_CLASS: &str =
+        "inline-flex items-center rounded-full border border-border/90 bg-surface-soft/60 px-4 py-2 font-mono text-sm text-zeus transition duration-150 ease-linear hover:border-accent/45 hover:bg-accent/10 hover:text-primary";
     let are_articles_empty = articles.is_empty();
     let all_articles_url = format!("/{lang}/articles");
 
@@ -23,10 +24,13 @@ pub fn ListSection(
 
                 div { class: "py-6",
                     a {
-                        class: if selected_category.is_none() { format!("{PILL_BASE_CLASS} bg-accent/25") } else { PILL_BASE_CLASS.to_string() },
+                        class: if selected_category.is_none() {
+                            format!("{PILL_BASE_CLASS} border-accent/45 bg-accent/15 text-primary")
+                        } else {
+                            PILL_BASE_CLASS.to_string()
+                        },
                         href: all_articles_url,
                         target: "_self",
-                        span { class: "mr-2 hidden", " " }
                         span { class: "inline-block font-mono text-sm", "All" }
                     }
 
@@ -35,7 +39,11 @@ pub fn ListSection(
                             class: if selected_category
     .as_ref()
     .map(|value| category.slug().to_string().ends_with(value))
-    .unwrap_or(false) { format!("{PILL_BASE_CLASS} bg-accent/25") } else { PILL_BASE_CLASS.to_string() },
+    .unwrap_or(false) {
+                                format!("{PILL_BASE_CLASS} border-accent/45 bg-accent/15 text-primary")
+                            } else {
+                                PILL_BASE_CLASS.to_string()
+                            },
                             target: "_self",
                             href: category.slug().to_string(),
                             span { class: "mr-2", "{category.emoji()}" }
@@ -73,13 +81,13 @@ fn ArticleCard(article: Article) -> Element {
     let category_emoji = category.emoji().to_string();
 
     rsx! {
-        article { class: "mt-8 md:flex md:items-start md:justify-center",
+        article { class: "rounded-2xl border border-[#d6dee8] bg-white p-4 shadow-[0_14px_26px_-22px_rgba(17,28,42,0.26)] transition duration-200 ease-out hover:-translate-y-[2px] hover:border-accent/30 hover:shadow-[0_20px_34px_-26px_rgba(17,28,42,0.32)] sm:flex sm:items-start",
             div { class: "group relative w-full overflow-hidden rounded-lg md:w-[280px] md:flex-shrink-0",
                 Img {
                     image: thumbnail,
                     class: "w-full transition duration-500 ease-out group-hover:scale-105 group-hover:blur-[1.5px]"
                 }
-                div { class: "absolute right-0 bottom-0 left-0 rounded-none bg-black/50 px-4 py-3 text-center font-mono text-sm font-bold tracking-[0.5px] text-white backdrop-blur-[5px]",
+                div { class: "absolute bottom-0 left-0 right-0 rounded-none bg-slate-900/55 px-4 py-3 text-center font-mono text-sm font-semibold tracking-[0.04em] text-white backdrop-blur-[5px]",
                     a { href: category_slug, target: "_self",
                         "{category_title}"
                         span { class: "ml-2", "{category_emoji}" }
@@ -87,15 +95,15 @@ fn ArticleCard(article: Article) -> Element {
                 }
             }
             div { class: "mt-4 flex-grow md:mt-0 md:pl-7",
-                span { class: "text-zeus", "{date}" }
-                h2 { class: "mt-2 font-display text-lg font-semibold text-foreground",
+                span { class: "font-mono text-[0.72rem] uppercase tracking-[0.08em] text-muted-foreground", "{date}" }
+                h2 { class: "mt-2 font-display text-lg font-semibold text-primary",
                     "{title}"
                 }
-                p { class: "text-zeus", "{summary}" }
+                p { class: "leading-[1.74] text-zeus", "{summary}" }
                 a {
                     href: slug,
                     target: "_self",
-                    class: "mt-3 inline-block rounded-full border border-dashed border-black bg-black px-6 py-3 font-mono text-sm text-white transition duration-[120ms] ease-out hover:border-black hover:bg-white hover:text-zeus lg:mt-4",
+                    class: "mt-3 inline-flex items-center justify-center rounded-xl border border-border/90 bg-surface-soft/60 px-4 py-2 font-mono text-xs font-semibold uppercase tracking-[0.09em] text-primary transition duration-150 ease-out hover:-translate-y-px hover:border-accent/40 hover:bg-accent/10 hover:text-accent lg:mt-4",
                     "Read More"
                 }
             }
