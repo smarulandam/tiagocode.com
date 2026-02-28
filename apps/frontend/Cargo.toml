@@ -4,8 +4,6 @@ members = [
     "packages/content_core",
     "packages/ui",
     "packages/web",
-    "packages/desktop",
-    "packages/mobile",
     "packages/api",
 ]
 

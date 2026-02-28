@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap");
 @import "tailwindcss";
 @source "./src/**/*.{rs,html,css}";
+@source "../ui/src/**/*.{rs,html,css}";
 
 @theme {
     --font-sans: "Manrope", "Segoe UI", sans-serif;

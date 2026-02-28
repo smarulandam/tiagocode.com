@@ -38,6 +38,8 @@ pub struct Category {
     status: ModerationStatus,
 }
 
+pub type Categories = Vec<Category>;
+
 #[cfg(test)]
 pub mod tests {
     use super::*;

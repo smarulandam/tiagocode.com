@@ -1,10 +1,14 @@
-//! This crate contains all shared UI for the workspace.
+//! Shared UI for all platforms.
 
-mod hero;
-pub use hero::Hero;
+use dioxus::prelude::*;
 
-mod navbar;
-pub use navbar::Navbar;
+pub mod components;
+pub mod layouts;
+pub mod views;
 
-mod echo;
-pub use echo::Echo;
+pub use components::common::{NotFoundError, UnexpectedError};
+pub use layouts::AppShell;
+pub use views::{ArticleDetailView, ArticlesListView, NotFoundView, PortfolioView};
+
+pub const FAVICON: Asset = asset!("/assets/favicon.ico");
+pub const CUSTOM_CSS: Asset = asset!("/assets/css/custom.css");

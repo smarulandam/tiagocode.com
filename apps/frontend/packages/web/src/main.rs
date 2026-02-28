@@ -1,10 +1,11 @@
 use dioxus::prelude::*;
 
-mod views;
+mod adapters;
 
-use crate::views::layouts::AppLayout;
-use crate::views::pages::{ArticleDetailPage, BlogCategoryPage};
-use crate::views::pages::{BlogListPage, NotFoundPage, PortfolioPage};
+use crate::adapters::layouts::AppLayout;
+use crate::adapters::pages::{ArticleDetailPage, BlogCategoryPage};
+use crate::adapters::pages::{BlogListPage, NotFoundPage, PortfolioPage};
+use ui::{CUSTOM_CSS, FAVICON};
 
 #[derive(Debug, Clone, Routable, PartialEq)]
 #[rustfmt::skip]
@@ -36,9 +37,9 @@ pub enum Route {
 #[component]
 fn App() -> Element {
     rsx! {
-        document::Link { rel: "icon", href: asset!("/assets/favicon.ico") }
+        document::Link { rel: "icon", href: FAVICON }
         document::Stylesheet { href: asset!("/assets/tailwind.css") }
-        document::Stylesheet { href: asset!("/assets/css/custom.css") }
+        document::Stylesheet { href: CUSTOM_CSS }
 
         Router::<Route> {}
     }
