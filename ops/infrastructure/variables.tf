@@ -36,7 +36,7 @@ variable "aws_ec2_instance_ami" {
 
 variable "aws_ec2_instance_type" {
   type        = string
-  default     = "t3.small"
+  default     = "t3.micro"
   description = "The instance type for the virtual machine (e.g., t3.micro)."
 }
 
