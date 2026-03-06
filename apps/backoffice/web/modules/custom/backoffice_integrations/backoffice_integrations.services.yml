@@ -1,0 +1,9 @@
+services:
+  backoffice_integrations.website_cache_purger:
+    class: Drupal\backoffice_integrations\Integration\WebsiteCachePurger
+    arguments:
+      - '@http_client'
+      - '@logger.factory'
+      - '@messenger'
+      - '@router.admin_context'
+      - '@current_route_match'

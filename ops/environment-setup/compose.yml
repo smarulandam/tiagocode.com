@@ -196,6 +196,7 @@ services:
   backoffice: 
     image: $BACKOFFICE_IMAGE:$BACKOFFICE_VERSION
     environment:
+      PROJECT_ENVIRONMENT: $PROJECT_ENVIRONMENT
       PHP_VERSION: $BACKOFFICE_PHP_VERSION
       DRUPAL_DB_HOST: $BACKOFFICE_DB_HOST
       DRUPAL_SERVER_HOST: nginx
@@ -216,6 +217,8 @@ services:
       DRUPAL_REDIS_HOST: redis_backoffice
       DRUPAL_REDIS_PORT: 6379
       DRUPAL_REDIS_PASSWORD: $REDIS_PASSWORD
+      WEBSITE_CACHE_PURGE_URL: http://website:3000/internal/cache/purge
+      WEBSITE_CACHE_PURGE_TOKEN: $WEBSITE_CACHE_PURGE_TOKEN
     volumes:
       - ./../../apps/backoffice:/var/www/html:cached
       - ./backup:/var/www/html/backup

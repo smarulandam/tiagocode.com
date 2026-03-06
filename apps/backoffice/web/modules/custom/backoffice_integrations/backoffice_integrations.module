@@ -1,0 +1,15 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * @file
+ * Hooks for the Backoffice Integrations module.
+ */
+
+/**
+ * Implements hook_cache_flush().
+ */
+function backoffice_integrations_cache_flush(): void {
+  \Drupal::service('backoffice_integrations.website_cache_purger')->purgeWebsiteCache();
+}

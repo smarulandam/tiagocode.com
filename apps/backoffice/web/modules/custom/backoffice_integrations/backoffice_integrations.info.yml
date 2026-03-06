@@ -1,0 +1,5 @@
+name: 'Backoffice Integrations'
+type: module
+description: 'Provides lightweight outbound integrations for the backoffice.'
+package: Custom
+core_version_requirement: ^11
