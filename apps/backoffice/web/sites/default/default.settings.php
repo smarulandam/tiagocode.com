@@ -934,3 +934,7 @@ $settings['bootstrap_container_definition'] = [
     ],
   ],
 ];
+
+$settings['backoffice_integrations_environment'] = getenv('PROJECT_ENVIRONMENT') ?: '';
+$settings['backoffice_integrations_website_cache_purge_url'] = getenv('WEBSITE_CACHE_PURGE_URL') ?: '';
+$settings['backoffice_integrations_website_cache_purge_token'] = getenv('WEBSITE_CACHE_PURGE_TOKEN') ?: '';
