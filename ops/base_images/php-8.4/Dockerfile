@@ -14,7 +14,7 @@ RUN set -ex; \
         sudo \
         git \
         patch \
-        postgresql-client \
+        postgresql17-client \
         su-exec
 
 RUN set -ex; \
