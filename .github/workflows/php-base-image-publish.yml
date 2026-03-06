@@ -1,0 +1,76 @@
+name: Build & Publish PHP Base Image
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths:
+      - "ops/base_images/php-8.4/**"
+
+concurrency:
+  group: php-base-image-publish-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build_and_publish:
+    name: Build and publish PHP base image
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Load base image configuration
+        id: config
+        shell: bash
+        run: |
+          set -euo pipefail
+          set -a
+          source ops/base_images/php-8.4/version.env
+          set +a
+          echo "base_image_name=${BASE_IMAGE_NAME}" >> "$GITHUB_OUTPUT"
+          echo "base_image_version=${BASE_IMAGE_VERSION}" >> "$GITHUB_OUTPUT"
+          echo "php_version=${PHP_VERSION}" >> "$GITHUB_OUTPUT"
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ steps.config.outputs.base_image_name }}
+          tags: |
+            type=raw,value=${{ steps.config.outputs.base_image_version }}
+            type=sha,prefix=sha-
+          labels: |
+            org.opencontainers.image.title=PHP 8.4 Base Image
+            org.opencontainers.image.description=PHP runtime base image for Tiagocode backoffice
+            org.opencontainers.image.version=${{ steps.config.outputs.base_image_version }}
+
+      - name: Build and push image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./ops/base_images/php-8.4
+          file: ./ops/base_images/php-8.4/Dockerfile
+          push: true
+          build-args: |
+            PHP_VERSION=${{ steps.config.outputs.php_version }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=registry,ref=${{ steps.config.outputs.base_image_name }}:buildcache
+          cache-to: type=registry,ref=${{ steps.config.outputs.base_image_name }}:buildcache,mode=max

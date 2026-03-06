@@ -181,7 +181,7 @@ services:
         - NGINX_PHPFPM_HOST=backoffice
         - NGINX_SERVER_ROOT=/var/www/html/web
     volumes:
-      - ${BACKOFFICE_HOST_PATH}:/var/www/html:ro
+      - ./../../apps/backoffice:/var/www/html:ro
     networks:
       - backend_network
     depends_on:
@@ -217,7 +217,7 @@ services:
       DRUPAL_REDIS_PORT: 6379
       DRUPAL_REDIS_PASSWORD: $REDIS_PASSWORD
     volumes:
-      - ${BACKOFFICE_HOST_PATH}:/var/www/html:cached
+      - ./../../apps/backoffice:/var/www/html:cached
       - ./backup:/var/www/html/backup
     networks:
       - backend_network
@@ -310,7 +310,6 @@ services:
 
   node_exporter:
     image: prom/node-exporter:${GRAFANA_NODE_EXPORTER_VERSION}
-    restart: unless-stopped
     network_mode: host
     pid: host
     command:
