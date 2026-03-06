@@ -16,7 +16,7 @@ pub fn ResumeSection(data: Resume) -> Element {
                 Description { text: data.text().to_string() }
             }
 
-            div { class: "mt-6 grid grid-cols-1 gap-6 border-t border-border/60 pt-7 md:gap-8 lg:mt-10 lg:gap-10 md:grid-cols-2",
+            div { class: "mt-6 grid grid-cols-1 gap-6 pt-7 md:gap-8 lg:mt-10 lg:gap-10 md:grid-cols-2",
                 TimelineSection { icon: TimelineIcon::Education,
                     for item in data.education().items().iter() {
                         TimelineSectionItem {

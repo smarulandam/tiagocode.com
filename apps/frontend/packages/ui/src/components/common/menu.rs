@@ -50,7 +50,7 @@ fn MenuLink(item: MenuItem, item_class: String, anchor_class: String) -> Element
 
                 if let Some(icon) = item.icon().clone() {
                     img {
-                        class: "h-10 w-10 object-contain",
+                        class: "h-2 object-contain",
                         src: icon.url().to_string(),
                         alt: icon.alt().to_string(),
                         loading: "lazy",

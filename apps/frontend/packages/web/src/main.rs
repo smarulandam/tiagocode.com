@@ -5,7 +5,7 @@ mod adapters;
 use crate::adapters::layouts::AppLayout;
 use crate::adapters::pages::{ArticleDetailPage, BlogCategoryPage};
 use crate::adapters::pages::{BlogListPage, NotFoundPage, PortfolioPage};
-use ui::{CUSTOM_CSS, FAVICON};
+use ui::{CUSTOM_CSS, FAVICON, TAILWIND_CSS};
 
 #[derive(Debug, Clone, Routable, PartialEq)]
 #[rustfmt::skip]
@@ -38,7 +38,7 @@ pub enum Route {
 fn App() -> Element {
     rsx! {
         document::Link { rel: "icon", href: FAVICON }
-        document::Stylesheet { href: asset!("/assets/tailwind.css") }
+        document::Stylesheet { href: TAILWIND_CSS }
         document::Stylesheet { href: CUSTOM_CSS }
 
         Router::<Route> {}

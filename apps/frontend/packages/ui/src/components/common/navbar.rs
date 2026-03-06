@@ -11,7 +11,7 @@ pub fn Navbar(
     let mut open_mobile_menu = use_signal(|| false);
 
     rsx! {
-        nav { class: "sticky top-0 z-40 w-full border-b border-border/80 bg-[linear-gradient(90deg,rgba(250,252,252,0.94)_0%,rgba(240,247,247,0.98)_52%,rgba(250,252,252,0.94)_100%)] shadow-[0_10px_24px_-24px_rgba(15,24,36,0.45)] backdrop-blur-[10px] transition duration-[220ms] ease-out",
+        nav { class: "sticky top-0 z-40 w-full border-b border-border/80 bg-white shadow-[0_10px_24px_-24px_rgba(15,24,36,0.45)] backdrop-blur-[10px] transition duration-[220ms] ease-out",
             div { class: "mx-auto flex min-h-[4.5rem] max-w-[1320px] flex-wrap items-center justify-between gap-2 px-5 py-4 xl:px-0",
 
                 a {
@@ -50,7 +50,7 @@ pub fn Navbar(
                             container_class: Some("flex items-center gap-2".to_string()),
                             item_class: Some("block py-0 px-0".to_string()),
                             anchor_class: Some(
-                                "inline-flex h-[3.15rem] w-[3.15rem] items-center justify-center rounded-xl bg-transparent text-foreground/90 transition duration-150 ease-out hover:-translate-y-px hover:text-primary"
+                                "inline-flex items-center justify-center rounded-xl bg-transparent text-foreground/90 transition duration-150 ease-out hover:-translate-y-px hover:text-primary"
                                     .to_string(),
                             ),
                         }
