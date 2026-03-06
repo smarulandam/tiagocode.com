@@ -58,6 +58,7 @@ flowchart LR
 |---|---|---|
 | Website | `apps/website` | Public blog and portfolio UI built with Rust and Leptos. |
 | Backoffice | `apps/backoffice` | Drupal CMS used to manage and publish content. |
+| Base images | `ops/base_images` | Versioned reusable Docker base images, including the PHP 8.4 runtime for backoffice. |
 | Health checks | `ops/healthchecks` | Checks for service availability and basic alerting. |
 | Environment setup | `ops/environment-setup` | Runtime stack, app deployment hooks, and compose configuration. |
 | Infrastructure | `ops/infrastructure` | Terraform code and architecture assets for AWS/Cloudflare setup. |
@@ -65,6 +66,7 @@ flowchart LR
 ## Deployment model (high level)
 
 - Website and backoffice are built as container images and published to GHCR.
+- Backoffice builds consume a versioned PHP base image published separately from `ops/base_images/php-8.4`.
 - Environment deployment uses CodeDeploy with the environment bundle.
 - Infrastructure changes are managed via Terraform workflows.
 - Health checks run as operational support, separate from app delivery.
@@ -77,6 +79,7 @@ tiagocode.com/
 |   |-- website/
 |   `-- backoffice/
 `-- ops/
+    |-- base_images/
     |-- healthchecks/
     |-- environment-setup/
     `-- infrastructure/
