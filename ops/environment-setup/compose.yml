@@ -192,6 +192,10 @@ services:
       - "traefik.http.routers.nginx.tls.certresolver=lets_encrypt"
       - "traefik.http.routers.nginx.rule=Host(`${PROJECT_SUBDOMAIN_PREFIX}admin.${PROJECT_DOMAIN_NAME}`)"
       - "traefik.http.services.nginx.loadbalancer.server.port=80"
+      - "traefik.http.middlewares.nginx-headers.headers.customrequestheaders.X-Forwarded-Proto=https"
+      - "traefik.http.middlewares.nginx-headers.headers.customresponseheaders.X-Frame-Options=SAMEORIGIN"
+      - "traefik.http.middlewares.nginx-headers.headers.customresponseheaders.Content-Security-Policy=frame-ancestors 'self'"
+      - "traefik.http.routers.nginx.middlewares=nginx-headers"
 
   backoffice: 
     image: $BACKOFFICE_IMAGE:$BACKOFFICE_VERSION
@@ -220,8 +224,10 @@ services:
       WEBSITE_CACHE_PURGE_URL: http://website:3000/internal/cache/purge
       WEBSITE_CACHE_PURGE_TOKEN: $WEBSITE_CACHE_PURGE_TOKEN
     volumes:
-      - ./../../apps/backoffice:/var/www/html:cached
-      - ./backup:/var/www/html/backup
+      - ./../../apps/backoffice:/var/www/html:ro
+      - ./../../apps/backoffice/private:/var/www/html/private:cached
+      - ./../../apps/backoffice/web/sites/default/files:/var/www/html/web/sites/default/files:cached
+      - ./../../apps/backoffice/backup:/backup
     networks:
       - backend_network
  

@@ -66,10 +66,10 @@ services:
   backoffice:
     restart: always
     volumes: !override
-      - backoffice_codebase:/var/www/html:cached
-      - backoffice_private_files:/var/www/html/private:cached
-      - backoffice_public_files:/var/www/html/web/sites/default/files:cached
-      - ./backup:/var/www/html/backup
+      - backoffice_codebase:/var/www/html:ro
+      - backoffice_private_files:/var/www/html/private
+      - backoffice_public_files:/var/www/html/web/sites/default/files
+      - ./backup:/backup
 
   redis_website:
     restart: always

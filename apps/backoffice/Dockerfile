@@ -25,13 +25,17 @@ COPY ./php.ini-production "$PHP_INI_DIR/php.ini"
 
 RUN set -ex; \
     mkdir -p /var/www/html/web/sites/default/files; \
-    chmod -R 775 /var/www/html/web/sites/default/files; \
-    chown -R tiagocode:tiagocode /var/www/html/web/sites/default/files; \
     mkdir -p /var/www/html/private; \
-    chmod -R 775 /var/www/html/private; \
+    mkdir -p /tmp/drupal/php_storage; \
+    chmod -R a-w /var/www/html; \
+    chown -R tiagocode:tiagocode /var/www/html/web/sites/default/files; \
+    find /var/www/html/web/sites/default/files -type d -exec chmod 775 {} +; \
+    find /var/www/html/web/sites/default/files -type f -exec chmod 664 {} +; \
     chown -R tiagocode:tiagocode /var/www/html/private; \
-    chmod 664 /var/www/html/web/sites/default/settings.php; \
-    chown tiagocode:tiagocode /var/www/html/web/sites/default/settings.php
+    find /var/www/html/private -type d -exec chmod 775 {} +; \
+    find /var/www/html/private -type f -exec chmod 664 {} +; \
+    chown -R tiagocode:tiagocode /tmp/drupal; \
+    chmod 700 /tmp/drupal /tmp/drupal/php_storage
 
 ENV PATH="/var/www/html/vendor/bin:${PATH}"
 

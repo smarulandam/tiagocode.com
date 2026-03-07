@@ -894,7 +894,7 @@ $settings['s3fs.access_key'] = getenv('DRUPAL_S3FS_ACCESS_KEY');
 $settings['s3fs.secret_key'] = getenv('DRUPAL_S3FS_SECRET_KEY');
 $config['s3fs.settings']['bucket'] = getenv("DRUPAL_S3FS_BUCKET");
 $config['s3fs.settings']['region'] = getenv("DRUPAL_S3FS_REGION");
-$settings['php_storage']['twig']['directory'] = '../storage/php';
+$settings['php_storage']['twig']['directory'] = '/tmp/drupal/php_storage';
 
 
 $settings['redis.connection']['interface'] = 'PhpRedis';
@@ -938,3 +938,5 @@ $settings['bootstrap_container_definition'] = [
 $settings['backoffice_integrations_environment'] = getenv('PROJECT_ENVIRONMENT') ?: '';
 $settings['backoffice_integrations_website_cache_purge_url'] = getenv('WEBSITE_CACHE_PURGE_URL') ?: '';
 $settings['backoffice_integrations_website_cache_purge_token'] = getenv('WEBSITE_CACHE_PURGE_TOKEN') ?: '';
+
+$settings['php_storage']['twig']['directory'] = '/tmp/drupal/php_storage';
