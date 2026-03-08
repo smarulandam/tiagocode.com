@@ -36,7 +36,7 @@ pub fn ListSection(categories: Vec<Category>, articles: Vec<Article>) -> impl In
                         "No articles available. Check back soon!"
                     </p>
                 }>
-                <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 mt-6 lg:mt-3">
+                <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-8 lg:mt-8 lg:grid-cols-2 xl:grid-cols-3">
                     {articles
                         .clone()
                         .into_iter()
@@ -68,30 +68,50 @@ pub fn ArticleCard(
     thumbnail: Image,
     category: Category,
 ) -> impl IntoView {
+    let cta_label = format!("Read more: {}", title.clone());
+    let category_href = category.slug().to_string();
+    let category_label = format!(
+        "{} {}",
+        category.title().to_string(),
+        category.emoji().to_string()
+    );
+
     view! {
-        <article class="md:flex md:items-start md:justify-center mt-8">
-            <div class="overflow-hidden relative rounded-lg group  flex-shrink-0">
-                <Img image=thumbnail class="w-full transition ease-custom duration-500 group-hover:scale-105 group-hover:blur-[1.5px]" />
-                <div class="absolute bottom-0 left-0 right-0 rounded-none text-center bg-black/50 px-4 py-3 text-white backdrop-blur-[5px] font-mono font-bold uppercase text-sm tracking-[0.5px]">
-                    <a href=category.slug().to_string() target="_self">
-                        {category.title().to_string()}
-                        <span class="ml-2">{category.emoji().to_string()}</span>
+        <article class="group flex h-full flex-col">
+            <div class="relative aspect-[16/10] overflow-hidden rounded-[0.9rem] bg-smoke">
+                <Img image=thumbnail class="h-full w-full object-cover transition ease-custom duration-500 group-hover:scale-[1.02] group-hover:saturate-[1.03]" />
+            </div>
+            <div class="mt-4 flex min-w-0 flex-1 flex-col">
+                <span class="text-base font-medium leading-6 text-zeus/60">
+                    {date}
+                </span>
+                <h2 class="mt-2 line-clamp-2 text-[1.3rem] font-poppins font-semibold leading-[1.14] text-deepsea lg:text-[1.4rem]">
+                    <a href=slug.clone() target="_self" class="transition duration-150 ease-out group-hover:text-teal">
+                        {title}
+                    </a>
+                </h2>
+                <div class="mt-3">
+                    <a
+                        href=category_href
+                        target="_self"
+                        class="inline-flex items-center rounded-full border border-teal/15 bg-teal/8 px-3.5 py-1.5 font-medium text-base leading-none text-teal transition duration-150 ease-out hover:border-teal/25 hover:bg-teal/12"
+                    >
+                        {category_label}
                     </a>
                 </div>
-            </div>
-            <div class="md:pl-7 md:mt-0  flex-grow">
-                <span class="text-zeus dark:text-white/70">{date}</span>
-                <h2 class="font-poppins font-semibold text-lg mt-2">{title}</h2>
-                <p class="text-zeus dark:text-white/70">{
-                    if summary.chars().count() > 110 {
-                        summary.chars().take(110).collect::<String>() + "..."
-                    } else {
-                        summary
-                    }
-                }</p>
-                <a href=slug target="_self" class="inline-block text-white hover:text-zeus bg-black hover:bg-white hover:border hover:border-black border-dashed rounded-full px-6 py-3 mt-3 lg:mt-4 font-mono text-sm transition ease-out duration-[120ms]">
-                    Read More
-                </a>
+                <p class="mt-2.5 line-clamp-3 text-base leading-7 text-zeus/72">
+                    {summary}
+                </p>
+                <div class="mt-auto pt-4">
+                    <a
+                        href=slug
+                        target="_self"
+                        aria-label=cta_label
+                        class="inline-block self-start rounded-full border border-black border-dashed px-6 py-3 font-mono text-sm transition duration-[120ms] ease-out hover:bg-black hover:text-white dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-black"
+                    >
+                        "Read More"
+                    </a>
+                </div>
             </div>
         </article>
     }
