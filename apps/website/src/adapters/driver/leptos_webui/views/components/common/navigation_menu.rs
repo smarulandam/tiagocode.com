@@ -1,11 +1,11 @@
 use leptos::prelude::*;
 
 use crate::application::domain::common::Image;
-use crate::application::domain::layout::MenuItem;
+use crate::application::domain::layout::MenuItem as LayoutMenuItem;
 
 #[component]
-pub fn Menu(
-    items: Vec<MenuItem>,
+pub fn NavigationMenu(
+    items: Vec<LayoutMenuItem>,
     #[prop(default = "")] item_class: &'static str,
     #[prop(default = "")] container_class: &'static str,
     #[prop(default = "")] anchor_class: &'static str,
@@ -16,7 +16,7 @@ pub fn Menu(
                 .into_iter()
                 .map(|item| {
                     view! {
-                        <MenuItem
+                        <NavigationMenuItem
                             url=item.url().clone().to_string()
                             icon=item.icon().clone()
                             title=item.title().to_string()
@@ -32,7 +32,7 @@ pub fn Menu(
 }
 
 #[component]
-pub fn MenuItem(
+fn NavigationMenuItem(
     url: String,
     title: String,
     class: String,

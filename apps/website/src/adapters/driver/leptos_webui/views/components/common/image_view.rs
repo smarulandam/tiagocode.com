@@ -4,7 +4,7 @@ use leptos::prelude::*;
 use crate::application::domain::common::Image;
 
 #[component]
-pub fn Img(
+pub fn ImageView(
     image: Image,
     #[prop(default = "")] class: &'static str,
     #[prop(default = true)] with_wrapper: bool,

@@ -5,7 +5,7 @@ use crate::adapters::driver::leptos_webui::controllers::layout_controller;
 use crate::adapters::driver::leptos_webui::views::components::common::Navbar;
 
 #[component]
-pub fn BasicLayout(children: Children) -> impl IntoView {
+pub fn SiteLayout(children: Children) -> impl IntoView {
     let layout = OnceResource::new(layout_controller());
 
     view! {

@@ -2,9 +2,11 @@ use leptos::prelude::*;
 use leptos_router::hooks::use_location;
 
 use crate::adapters::driver::leptos_webui::controllers::articles_list_controller;
-use crate::adapters::driver::leptos_webui::views::components::blog::ListSection;
-use crate::adapters::driver::leptos_webui::views::components::common::*;
-use crate::adapters::driver::leptos_webui::views::layouts::BasicLayout;
+use crate::adapters::driver::leptos_webui::views::components::blog::ArticleListSection;
+use crate::adapters::driver::leptos_webui::views::components::common::{
+    SeoMetaTags, UnexpectedError,
+};
+use crate::adapters::driver::leptos_webui::views::layouts::SiteLayout;
 
 #[component]
 pub fn BlogListPage() -> impl IntoView {
@@ -15,7 +17,7 @@ pub fn BlogListPage() -> impl IntoView {
     );
 
     view! {
-        <BasicLayout>
+        <SiteLayout>
             <Suspense fallback=move || { view! { <div class="bg-smoke"></div> } }>
                 {move || {
                     page_data
@@ -28,16 +30,16 @@ pub fn BlogListPage() -> impl IntoView {
                         let (page, categories, articles) = data.unwrap();
 
                         view! {
-                            <MetaTags metatags=page.metatags().clone() />
+                            <SeoMetaTags metatags=page.metatags().clone() />
                             <div class="flex flex-col justify-center gap-6 lg:flex-row lg:gap-8 xl:gap-12">
                                 <div class="mb-12 flex w-full flex-col gap-6">
-                                    <ListSection articles=articles categories=categories />
+                                    <ArticleListSection articles=articles categories=categories />
                                 </div>
                             </div>
                         }.into_any()
                     })
                 }}
             </Suspense>
-        </BasicLayout>
+        </SiteLayout>
     }
 }

@@ -1,6 +1,8 @@
 use leptos::prelude::*;
 
-use crate::adapters::driver::leptos_webui::views::components::common::*;
+use crate::adapters::driver::leptos_webui::views::components::common::{
+    ImageView, Pill, PrimarySectionTitle, SectionContainer, SectionDescription, SectionEyebrow,
+};
 use crate::application::domain::common::{Document, Image};
 
 #[component]
@@ -13,12 +15,14 @@ pub fn AboutMeSection(
     years_of_experience: u8,
     cv_document: Document,
 ) -> impl IntoView {
+    let _ = cv_document;
+
     view! {
-        <Container id="about".into()>
+        <SectionContainer id="about".into()>
             <div class="flex flex-col gap-5 lg:flex-row lg:gap-10">
                 <div>
                     <div class="flex justify-center relative h-fit">
-                        <Img image=profile_picture class="min-w-52 min-h-52 max-w-64 max-h-64 rounded-full" />
+                        <ImageView image=profile_picture class="min-w-52 min-h-52 max-w-64 max-h-64 rounded-full" />
                     </div>
                     <div class="flex items-center justify-center">
                         <div class="pe-2">
@@ -33,9 +37,9 @@ pub fn AboutMeSection(
                     </div>
                 </div>
                 <div>
-                    <Decoration text=subtitle />
-                    <PrimaryTitle text=title />
-                    <Description text=text />
+                    <SectionEyebrow text=subtitle />
+                    <PrimarySectionTitle text=title />
+                    <SectionDescription text=text />
                     <div class="mt-5 flex flex-wrap gap-3">
                         {skills
                             .into_iter()
@@ -54,6 +58,6 @@ pub fn AboutMeSection(
                     // </div>
                 </div>
             </div>
-        </Container>
+        </SectionContainer>
     }
 }

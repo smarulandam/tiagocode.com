@@ -1,7 +1,7 @@
 use leptos::prelude::*;
 
 use crate::adapters::driver::leptos_webui::views::components::common::Logo;
-use crate::adapters::driver::leptos_webui::views::components::common::Menu;
+use crate::adapters::driver::leptos_webui::views::components::common::NavigationMenu;
 use crate::application::domain::layout::MenuTree;
 
 #[component]
@@ -14,14 +14,14 @@ pub fn Navbar(main_menu: MenuTree, social_menu: MenuTree) -> impl IntoView {
                 <Logo />
                 <div class="flex items-center">
                     <div class="md:order-2">
-                        <Menu
+                        <NavigationMenu
                             items=social_menu.items().clone()
                             item_class="block py-0 px-3 -mr-3"
                             container_class="flex items-center font-medium"
                         />
                     </div>
                     <div class="md:order-1 hidden md:block">
-                        <Menu
+                        <NavigationMenu
                             items=main_menu.items().clone()
                             item_class="block py-0 px-3 uppercase"
                             container_class="flex items-center font-medium mr-4"
@@ -59,7 +59,7 @@ pub fn Navbar(main_menu: MenuTree, social_menu: MenuTree) -> impl IntoView {
                     class="w-full md:hidden md:w-auto"
                     class:hidden=move || !open_mobile_menu.get()
                 >
-                    <Menu
+                    <NavigationMenu
                         items=main_menu.items().clone()
                         anchor_class="block"
                         item_class="block py-2 px-3 text-gray-900 rounded-xs hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 uppercase"

@@ -1,10 +1,10 @@
 use leptos::prelude::*;
 use leptos_meta::{Link, Meta, Title};
 
-use crate::application::domain::common::MetaTags;
+use crate::application::domain::common::MetaTags as PageMetaTags;
 
 #[component]
-pub fn MetaTags(metatags: MetaTags) -> impl IntoView {
+pub fn SeoMetaTags(metatags: PageMetaTags) -> impl IntoView {
     view! {
         <Link rel="canonical" href=metatags.canonical_url().to_string() />
         <Title text=metatags.title().to_string() />
@@ -24,7 +24,7 @@ pub fn MetaTags(metatags: MetaTags) -> impl IntoView {
         <Meta name="twitter:creator" content=metatags.twitter_creator().to_string() />
         <Meta name="twitter:card" content=metatags.twitter_card().to_string() />
         <Meta name="twitter:title" content=metatags.twitter_title().to_string() />
-        <Meta name="twitter:description" content=metatags.twitter_description().to_string()/>
+        <Meta name="twitter:description" content=metatags.twitter_description().to_string() />
         <Meta name="twitter:image" content=metatags.twitter_image().to_string() />
     }
 }

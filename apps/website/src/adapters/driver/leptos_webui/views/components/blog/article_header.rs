@@ -3,7 +3,7 @@ use leptos::prelude::*;
 use crate::application::domain::article::Article;
 
 #[component]
-pub fn Header(article: Article) -> impl IntoView {
+pub fn ArticleHeader(article: Article) -> impl IntoView {
     let category = article.category();
 
     view! {

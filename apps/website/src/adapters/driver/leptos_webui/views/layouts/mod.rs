@@ -1,3 +1,3 @@
-mod basic_layout;
+mod site_layout;
 
-pub use basic_layout::*;
+pub use site_layout::SiteLayout;

@@ -1,8 +1,7 @@
 use leptos::prelude::*;
-use leptos::{component, view, IntoView};
 
 use crate::adapters::driver::leptos_webui::views::components::common::NotFoundError;
-use crate::adapters::driver::leptos_webui::views::layouts::*;
+use crate::adapters::driver::leptos_webui::views::layouts::SiteLayout;
 
 /// 404 - Not Found
 #[component]
@@ -22,12 +21,12 @@ pub fn NotFoundPage() -> impl IntoView {
     }
 
     view! {
-        <BasicLayout>
+        <SiteLayout>
             <Suspense fallback=move || { view! { <div>"Loading..."</div> } }>
                 <div class="flex flex-col justify-center gap-6 lg:flex-row lg:gap-8 xl:gap-12">
                     <NotFoundError />
                 </div>
             </Suspense>
-        </BasicLayout>
+        </SiteLayout>
     }
 }

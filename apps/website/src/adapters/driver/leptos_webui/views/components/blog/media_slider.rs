@@ -1,10 +1,10 @@
 use leptos::prelude::*;
 
-use crate::adapters::driver::leptos_webui::views::components::common::Img;
+use crate::adapters::driver::leptos_webui::views::components::common::ImageView;
 use crate::application::domain::common::Image;
 
 #[component]
-pub fn Slider(
+pub fn ArticleMediaSlider(
     thumbnails: Vec<Image>,
     images: Vec<Image>,
     #[prop(into)] on_open: Callback<usize>,
@@ -24,7 +24,7 @@ pub fn Slider(
                                 .clone()
                                 .into_iter()
                                 .enumerate()
-                                .map(|(index, img)| {
+                                .map(|(index, image)| {
                                     let on_open = on_open;
 
                                     view! {
@@ -37,8 +37,8 @@ pub fn Slider(
                                                 >
                                                     "Zoom"
                                                 </button>
-                                                <Img
-                                                    image=img.clone()
+                                                <ImageView
+                                                    image=image.clone()
                                                     class="h-full w-full object-contain"
                                                     with_wrapper=false
                                                 />
@@ -54,13 +54,23 @@ pub fn Slider(
                 <div class="splide article-slider-thumbnails mt-4" id=format!("thumbnail-slider-{}", id)>
                     <div class="splide__track">
                         <ul class="splide__list">
-                            {thumbnails.clone().into_iter().map(|img| {view! {
-                                <li class="splide__slide opacity-60 [&.is-active]:opacity-100">
-                                    <div class="overflow-hidden rounded-[0.85rem] bg-white/90">
-                                        <Img image=img.clone() class="h-16 w-full object-cover md:h-20" with_wrapper=false />
-                                    </div>
-                                </li>
-                            }}).collect_view()}
+                            {thumbnails
+                                .clone()
+                                .into_iter()
+                                .map(|image| {
+                                    view! {
+                                        <li class="splide__slide opacity-60 [&.is-active]:opacity-100">
+                                            <div class="overflow-hidden rounded-[0.85rem] bg-white/90">
+                                                <ImageView
+                                                    image=image.clone()
+                                                    class="h-16 w-full object-cover md:h-20"
+                                                    with_wrapper=false
+                                                />
+                                            </div>
+                                        </li>
+                                    }
+                                })
+                                .collect_view()}
                         </ul>
                     </div>
                 </div>

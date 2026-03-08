@@ -3,9 +3,13 @@ use leptos_meta::{Script, Stylesheet};
 use leptos_router::hooks::use_location;
 
 use crate::adapters::driver::leptos_webui::controllers::article_detail_controller;
-use crate::adapters::driver::leptos_webui::views::components::blog::{DynamicContent, Header};
-use crate::adapters::driver::leptos_webui::views::components::common::*;
-use crate::adapters::driver::leptos_webui::views::layouts::BasicLayout;
+use crate::adapters::driver::leptos_webui::views::components::blog::{
+    ArticleContentRenderer, ArticleHeader,
+};
+use crate::adapters::driver::leptos_webui::views::components::common::{
+    SeoMetaTags, UnexpectedError,
+};
+use crate::adapters::driver::leptos_webui::views::layouts::SiteLayout;
 
 #[component]
 pub fn BlogDetailPage() -> impl IntoView {
@@ -16,7 +20,7 @@ pub fn BlogDetailPage() -> impl IntoView {
     );
 
     view! {
-        <BasicLayout>
+        <SiteLayout>
             <Suspense fallback=move || { view! { <div>"Loading..."</div> } }>
                 {move || {
                     page_data
@@ -29,7 +33,7 @@ pub fn BlogDetailPage() -> impl IntoView {
                         let article = data.unwrap();
 
                         view! {
-                            <MetaTags metatags=article.metatags().clone() />
+                            <SeoMetaTags metatags=article.metatags().clone() />
                             <Stylesheet href="/assets/plugins/splidejs/css/splide.min.css" />
                             <Stylesheet href="/assets/plugins/prismjs/prism-tomorrow.min.css" />
                             <Stylesheet href="/assets/plugins/prismjs/prism-toolbar.min.css" />
@@ -45,8 +49,8 @@ pub fn BlogDetailPage() -> impl IntoView {
 
                             <div class="pb-12">
                                 <div class="article-shell -mx-5 w-auto rounded-none bg-white px-5 py-7 shadow-smoke-shadow transition ease-out duration-[160ms] md:px-8 md:py-10 lg:px-10 lg:py-12 xl:mx-auto xl:w-full xl:rounded-lg xl:px-12">
-                                    <Header article=article.clone() />
-                                    <DynamicContent content=article.content().clone() />
+                                    <ArticleHeader article=article.clone() />
+                                    <ArticleContentRenderer content=article.content().clone() />
                                 </div>
                             </div>
 
@@ -171,6 +175,6 @@ pub fn BlogDetailPage() -> impl IntoView {
                     })
                 }}
             </Suspense>
-        </BasicLayout>
+        </SiteLayout>
     }
 }
