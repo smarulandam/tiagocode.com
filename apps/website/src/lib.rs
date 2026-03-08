@@ -1,5 +1,4 @@
 #![recursion_limit = "512"]
-#![feature(random)]
 
 pub mod adapters;
 pub mod application;
