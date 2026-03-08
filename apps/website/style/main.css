@@ -113,4 +113,104 @@
     .loaded .preloader {
         @apply invisible opacity-0;
     }
+
+    .article-prose {
+        @apply mx-auto w-full max-w-[760px] font-opensans text-base leading-8 text-zeus/82;
+    }
+
+    .article-prose > * + * {
+        @apply mt-6;
+    }
+
+    .article-prose h2 {
+        @apply mt-12 font-poppins text-[1.9rem] leading-[1.15] font-semibold text-deepsea;
+    }
+
+    .article-prose h3 {
+        @apply mt-10 font-poppins text-[1.45rem] leading-[1.2] font-semibold text-deepsea;
+    }
+
+    .article-prose a {
+        @apply font-medium text-teal underline decoration-teal/30 underline-offset-4 transition duration-150 ease-out;
+    }
+
+    .article-prose a:hover {
+        @apply text-deepsea decoration-teal/55;
+    }
+
+    .article-prose p,
+    .article-prose p > span,
+    .article-prose li {
+        @apply text-base leading-8 text-zeus/82;
+    }
+
+    .article-prose div,
+    .article-prose p,
+    .article-prose li,
+    .article-prose a {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .article-prose strong {
+        @apply font-semibold text-zeus;
+    }
+
+    .article-prose ul {
+        @apply my-6 list-disc space-y-2 pl-6;
+    }
+
+    .article-prose ol {
+        @apply my-6 list-decimal space-y-2 pl-6;
+    }
+
+    .article-prose blockquote {
+        @apply my-8 rounded-r-[1.1rem] border-l-4 border-teal/35 bg-smoke/70 px-5 py-4;
+    }
+
+    .article-prose blockquote p {
+        @apply m-0 font-poppins text-[1.2rem] font-medium leading-8 text-deepsea/76;
+    }
+
+    .article-prose pre {
+        @apply my-8 overflow-x-auto rounded-[1.1rem] border border-black/8 bg-[#0f1720] p-4 shadow-[0_18px_34px_rgba(15,23,32,0.12)];
+    }
+
+    .article-prose pre code,
+    .article-prose pre code.hljs {
+        @apply block min-w-max bg-transparent p-0 font-mono text-[0.95rem] leading-7 text-white;
+    }
+
+    .article-prose :not(pre) > code {
+        @apply rounded-md bg-smoke px-1.5 py-1 font-mono text-[0.92rem] text-deepsea;
+    }
+
+    .article-media {
+        @apply mx-auto w-full max-w-[880px] px-4 md:px-8;
+    }
+
+    .article-media-frame {
+        @apply relative overflow-hidden rounded-[1.1rem] border border-black/8 bg-smoke/80 p-3 shadow-[0_18px_34px_rgba(36,36,36,0.08)] md:p-4;
+    }
+
+    .article-media-viewport {
+        @apply flex items-center justify-center rounded-[0.9rem] bg-white/85 p-3 md:p-4;
+    }
+
+    .article-slider-main .splide__track {
+        @apply overflow-hidden;
+    }
+
+    .article-slider-main .splide__slide,
+    .article-slider-thumbnails .splide__slide {
+        @apply overflow-hidden rounded-[0.9rem];
+    }
+
+    .article-slider-thumbnails .splide__slide {
+        @apply cursor-pointer rounded-[0.95rem] border border-transparent transition duration-150 ease-out;
+    }
+
+    .article-slider-thumbnails .splide__slide.is-active {
+        @apply border-teal/30 opacity-100;
+    }
 }

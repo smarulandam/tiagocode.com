@@ -2,117 +2,19 @@ html {
     scroll-behavior: smooth;
 }
 
-.article-detail {
-    font-family: Poppins, sans-serif;
-    color: #000; /* Default text color */
-}
-
-.article-detail .category {
-    color: #6B6B6B;
-    text-transform: uppercase;
-    line-height: 18px;
-    letter-spacing: 0.077em;
-    font-weight: 400; /* Default text color */
-}
-
-.article-detail blockquote {
-    padding-left: 30px;
-    margin: 2.75em 0;
-}
-
-.article-detail a,
-.article-detail p,
-.article-detail div {
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-}
-
-.article-detail blockquote p {
-    font-size: 28px;
-    font-weight: 300;
-    line-height: 40px;
-    letter-spacing: -0.009em;
-    color: #6B6B6B;
-}
-
-.article-detail h1 {
-}
-
-.article-detail h2 {
-    font-size: 1.7rem;
-    line-height: 1.7rem;
-    font-weight: 500;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-}
-
-.article-detail h3 {
-    font-size: 1.4rem;
-    line-height: 1.4rem;
-    font-weight: 500;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-}
-
-.article-detail p, .article-detail p > span {
-    line-height: 1.75rem;
-    color: #333;
-}
-
-.article-detail strong {
-    font-weight: 600;
-}
-
-.article-detail a {
-    color: inherit;
-    text-decoration: underline;
-    transition: color 0.2s ease-in-out;
-}
-
-.article-detail a:hover {
-    color: #0056b3; /* Darker shade on hover */
-}
-
-.article-detail ol, .article-detail ul {
-    padding-left: 2rem;
-    margin-top: 1rem;
-    margin-bottom: 1.5rem;
-}
-
-.article-detail ol {
-    list-style-type: decimal;
-}
-
-.article-detail ul {
-    list-style-type: disc;
-}
-
-.article-detail pre {
-
-    margin: 1rem auto;
-}
-
-.article-detail pre {
-    overflow-x: scroll;
-}
-
-
-.article-detail pre code {
-    font-family: "Fira Code", monospace;
-}
-
 .hljs-ln-numbers {
-    width: 2rem;
-    text-align: center;
-    color: #ccc;
-    border-right: 1px solid #CCC;
+    width: 2.75rem;
+    text-align: right;
+    color: rgba(255, 255, 255, 0.34);
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
     vertical-align: top;
-    padding-right: 5px !important;
+    padding-right: 0.75rem !important;
+    user-select: none;
 }
 
 .hljs-ln-code {
-    margin-left: 5px;
-    padding-left: 10px !important;
+    margin-left: 0;
+    padding-left: 1rem !important;
 }
 
 

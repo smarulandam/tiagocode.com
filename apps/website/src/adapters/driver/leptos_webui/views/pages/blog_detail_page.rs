@@ -35,53 +35,78 @@ pub fn BlogDetailPage() -> impl IntoView {
                             <Script src="/assets/plugins/highlightjs/highlight.min.js" />
                             <Script src="/assets/plugins/highlightjs/highlightjs-line-numbers.min.js" />
 
-                            <div class="flex flex-col justify-center gap-6 lg:flex-row lg:gap-8 xl:gap-12">
-                                <div class="lg:w-3/4 pb-12 article-detail section bg-white px-6 py-8 md:px-8 md:py-10 lg:p-12 shadow-smoke-shadow hover:shadow-smoke-shadow-hover transition ease-out duration-[160ms]">
+                            <div class="pb-12">
+                                <div class="article-shell mx-auto w-full max-w-[1040px] rounded-[1.25rem] bg-white px-5 py-7 shadow-smoke-shadow transition ease-out duration-[160ms] md:px-8 md:py-10 lg:px-10 lg:py-12 xl:px-12">
                                     <Header article=article.clone() />
                                     <DynamicContent content=article.content().clone() />
                                 </div>
                             </div>
 
                             <script>
-                                "document.addEventListener('DOMContentLoaded', (event) => {
+                                "const initArticleDetail = () => {
                                     if (window.hljs) {
-                                        window.hljs.highlightAll();
-                                        window.hljs.initLineNumbersOnLoad();
+                                        document.querySelectorAll('pre code').forEach(function(element) {
+                                            if (element.dataset.hljsReady === 'true') {
+                                                return;
+                                            }
+
+                                            window.hljs.highlightElement(element);
+
+                                            if (window.hljs.lineNumbersBlock) {
+                                                window.hljs.lineNumbersBlock(element);
+                                            }
+
+                                            element.dataset.hljsReady = 'true';
+                                        });
                                     }
 
                                     if (window.Splide) {
                                         document.querySelectorAll('[data-slider]').forEach(function(element) {
-                                        let identifier = element.dataset.slider;
+                                            if (element.dataset.sliderMounted === 'true') {
+                                                return;
+                                            }
 
-                                        var main = new Splide(`#main-slider-${identifier}`, {
-                                            type      : 'fade',
-                                            rewind    : true,
-                                            pagination: false,
-                                            arrows    : false,
-                                          } );
+                                            let identifier = element.dataset.slider;
 
-                                          var thumbnails = new Splide(`#thumbnail-slider-${identifier}`, {
-                                            fixedWidth  : 100,
-                                            fixedHeight : 60,
-                                            gap         : 10,
-                                            rewind      : true,
-                                            pagination  : false,
-                                            isNavigation: true,
-                                            focus: 'center',
-                                            breakpoints : {
-                                              600: {
-                                                fixedWidth : 60,
-                                                fixedHeight: 44,
-                                              },
-                                            },
-                                          } );
+                                            var main = new Splide(`#main-slider-${identifier}`, {
+                                                type      : 'fade',
+                                                rewind    : true,
+                                                pagination: false,
+                                                arrows    : false,
+                                                drag      : true,
+                                              } );
 
-                                          main.sync( thumbnails );
-                                          main.mount();
-                                          thumbnails.mount();
+                                              var thumbnails = new Splide(`#thumbnail-slider-${identifier}`, {
+                                                fixedWidth  : 96,
+                                                fixedHeight : 64,
+                                                gap         : 12,
+                                                rewind      : true,
+                                                pagination  : false,
+                                                arrows      : false,
+                                                isNavigation: true,
+                                                focus       : 'center',
+                                                breakpoints : {
+                                                  600: {
+                                                    fixedWidth : 68,
+                                                    fixedHeight: 48,
+                                                    gap        : 8,
+                                                  },
+                                                },
+                                              } );
+
+                                              main.sync( thumbnails );
+                                              main.mount();
+                                              thumbnails.mount();
+                                              element.dataset.sliderMounted = 'true';
                                         });
                                     }
-                                });"
+                                };
+
+                                if (document.readyState === 'loading') {
+                                    document.addEventListener('DOMContentLoaded', initArticleDetail, { once: true });
+                                } else {
+                                    initArticleDetail();
+                                }"
                             </script>
                         }.into_any()
                     })
