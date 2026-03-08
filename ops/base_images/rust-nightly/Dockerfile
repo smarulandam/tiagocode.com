@@ -5,6 +5,7 @@ FROM rustlang/rust:${RUST_VERSION}
 
 ARG WASM_BINDGEN_CLI_VERSION=0.2.108
 ARG CARGO_LEPTOS_VERSION=0.3.4
+ARG CARGO_CHEF_VERSION=0.1.73
 
 RUN set -ex; \
     apt-get update; \
@@ -31,6 +32,7 @@ RUN set -ex; \
         https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh \
         | bash; \
     cargo binstall -y wasm-bindgen-cli@${WASM_BINDGEN_CLI_VERSION}; \
-    cargo binstall -y cargo-leptos@${CARGO_LEPTOS_VERSION}
+    cargo binstall -y cargo-leptos@${CARGO_LEPTOS_VERSION}; \
+    cargo binstall -y cargo-chef@${CARGO_CHEF_VERSION}
 
 WORKDIR /app
