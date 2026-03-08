@@ -184,61 +184,101 @@
         @apply m-0 font-poppins text-[1.2rem] font-medium leading-8 text-deepsea/76;
     }
 
+    .article-prose .code-toolbar {
+        @apply relative my-8;
+    }
+
+    .article-prose .code-toolbar > .toolbar {
+        @apply absolute right-3 top-2.5 z-20 flex items-center gap-2 opacity-100;
+    }
+
+    .article-prose .code-toolbar > .toolbar > .toolbar-item > button,
+    .article-prose .code-toolbar > .toolbar > .toolbar-item > a,
+    .article-prose .code-toolbar > .toolbar > .toolbar-item > span {
+        @apply inline-flex min-h-9 cursor-pointer items-center rounded-full border border-white/12 bg-white/8 px-2.5 py-1.5 font-opensans text-sm font-semibold text-white/84 transition duration-150 ease-out;
+        backdrop-filter: blur(10px);
+    }
+
+    .article-prose .code-toolbar > .toolbar > .toolbar-item > button:hover,
+    .article-prose .code-toolbar > .toolbar > .toolbar-item > a:hover {
+        @apply border-teal/45 bg-teal/18 text-white;
+    }
+
+    .article-prose .code-toolbar > .toolbar > .toolbar-item > button:focus-visible,
+    .article-prose .code-toolbar > .toolbar > .toolbar-item > a:focus-visible {
+        @apply outline-none ring-2 ring-white/55 ring-offset-2 ring-offset-[#07111b];
+    }
+
     .article-prose pre {
-        @apply relative my-8 overflow-x-auto rounded-[1.1rem] border border-[#0f1720]/8 bg-[#0b1320] shadow-[0_20px_36px_rgba(11,19,32,0.18)];
+        @apply relative overflow-x-auto rounded-[1.1rem] border border-[#0f1720]/8 bg-[#07111b] shadow-[0_20px_36px_rgba(11,19,32,0.18)];
+    }
+
+    .article-prose .code-toolbar > pre {
+        @apply my-0;
     }
 
     .article-prose pre[data-language-label]::before {
         content: attr(data-language-label);
-        @apply absolute left-4 top-3 z-10 rounded-full border border-white/10 bg-white/6 px-2.5 py-1 font-mono text-[0.72rem] uppercase tracking-[0.18em] text-white/56;
+        @apply absolute left-4 top-2.5 z-10 rounded-full border border-white/10 bg-[#0f2130] px-2.5 py-1 font-mono text-[0.76rem] tracking-[0.04em] text-white/72;
     }
 
-    .article-prose pre code,
-    .article-prose pre code.hljs {
-        @apply block min-w-max bg-transparent px-4 pb-4 pt-12 font-mono text-[0.95rem] leading-7 text-white;
+    .article-prose pre code[class*="language-"] {
+        @apply block min-w-max bg-transparent px-4 pb-4 pt-11 font-mono text-base leading-8 text-white;
+        text-shadow: none;
     }
 
     .article-prose :not(pre) > code {
-        @apply rounded-md border border-black/6 bg-smoke px-1.5 py-1 font-mono text-[0.92rem] text-deepsea;
+        @apply rounded-lg border border-black/8 bg-[#edf4f7] px-2 py-1 font-mono text-[0.95rem] text-deepsea;
     }
 
-    .article-prose code.hljs:not(pre code) {
-        @apply my-2 inline-flex max-w-full items-center overflow-x-auto rounded-[1rem] border border-[#0f1720]/10 bg-[#0b1320] px-4 py-3 font-mono text-[0.95rem] leading-7 text-white shadow-[0_16px_28px_rgba(11,19,32,0.12)];
+    .article-prose code[class*="language-"]:not(pre code) {
+        @apply my-4 block w-full overflow-x-auto rounded-[1rem] border border-[#0f1720]/10 bg-[#07111b] px-4 py-4 font-mono text-base leading-8 text-white shadow-[0_16px_28px_rgba(11,19,32,0.12)];
     }
 
-    .article-prose .hljs-comment,
-    .article-prose .hljs-quote {
-        color: #8ea0b6;
+    .article-prose .token.comment,
+    .article-prose .token.prolog,
+    .article-prose .token.doctype,
+    .article-prose .token.cdata {
+        color: #7f93ab;
     }
 
-    .article-prose .hljs-keyword,
-    .article-prose .hljs-selector-tag,
-    .article-prose .hljs-literal,
-    .article-prose .hljs-built_in,
-    .article-prose .hljs-type {
+    .article-prose .token.punctuation,
+    .article-prose .token.operator {
+        color: #d6dfeb;
+    }
+
+    .article-prose .token.keyword,
+    .article-prose .token.selector,
+    .article-prose .token.important,
+    .article-prose .token.atrule,
+    .article-prose .token.property,
+    .article-prose .token.tag {
         color: #7dd3fc;
     }
 
-    .article-prose .hljs-title,
-    .article-prose .hljs-section,
-    .article-prose .hljs-title.function_,
-    .article-prose .hljs-title.class_,
-    .article-prose .hljs-variable,
-    .article-prose .hljs-attr,
-    .article-prose .hljs-number,
-    .article-prose .hljs-symbol {
-        color: #fbbf24;
+    .article-prose .token.function,
+    .article-prose .token.class-name,
+    .article-prose .token.constant,
+    .article-prose .token.boolean,
+    .article-prose .token.number,
+    .article-prose .token.symbol,
+    .article-prose .token.attr-name,
+    .article-prose .token.builtin {
+        color: #f7c873;
     }
 
-    .article-prose .hljs-string,
-    .article-prose .hljs-regexp,
-    .article-prose .hljs-template-tag,
-    .article-prose .hljs-template-variable {
-        color: #86efac;
+    .article-prose .token.string,
+    .article-prose .token.char,
+    .article-prose .token.regex,
+    .article-prose .token.attr-value,
+    .article-prose .token.inserted {
+        color: #9ae6b4;
     }
 
-    .article-prose .hljs-meta,
-    .article-prose .hljs-doctag {
+    .article-prose .token.namespace,
+    .article-prose .token.entity,
+    .article-prose .token.url,
+    .article-prose .token.variable {
         color: #c4b5fd;
     }
 

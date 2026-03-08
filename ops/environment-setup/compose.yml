@@ -225,6 +225,7 @@ services:
       WEBSITE_CACHE_PURGE_TOKEN: $WEBSITE_CACHE_PURGE_TOKEN
     volumes:
       - ./../../apps/backoffice:/var/www/html:ro
+      - ./../../apps/backoffice/config/sync:/var/www/html/config/sync:cached
       - ./../../apps/backoffice/private:/var/www/html/private:cached
       - ./../../apps/backoffice/web/sites/default/files:/var/www/html/web/sites/default/files:cached
       - ./../../apps/backoffice/backup:/backup

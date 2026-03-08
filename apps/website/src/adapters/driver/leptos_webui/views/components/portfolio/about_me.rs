@@ -36,8 +36,11 @@ pub fn AboutMeSection(
                     <Decoration text=subtitle />
                     <PrimaryTitle text=title />
                     <Description text=text />
-                    <div class="py-4 flex flex-wrap">
-                        {skills.into_iter().map(|skill| view! { <Pill text=skill.to_string() /> }).collect_view()}
+                    <div class="mt-5 flex flex-wrap gap-3">
+                        {skills
+                            .into_iter()
+                            .map(|skill| view! { <Pill text=skill.to_string() class="me-0" /> })
+                            .collect_view()}
                     </div>
                     // <div class="mb-2 flex justify-end">
                     //     <a

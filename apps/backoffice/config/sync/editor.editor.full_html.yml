@@ -79,6 +79,12 @@ settings:
         -
           label: XML
           language: xml
+        -
+          label: Bash
+          language: bash
+        -
+          label: Rust
+          language: rust
     ckeditor5_heading:
       enabled_headings:
         - heading2

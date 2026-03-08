@@ -17,7 +17,6 @@ pub fn App() -> impl IntoView {
         <Router>
             <Stylesheet id="leptos" href="/pkg/website.css"/>
             <Stylesheet href="/assets/css/custom.css"/>
-            <Stylesheet href="/assets/plugins/highlightjs/default.min.css"/>
             <Stylesheet href="/assets/plugins/bootstrap-icons/bootstrap-icons.min.css"/>
             <Routes fallback=move || "Not found.">
                 <Route ssr=SsrMode::Async path=path!("/") view=|| view! { <Redirect path="/en" /> } />

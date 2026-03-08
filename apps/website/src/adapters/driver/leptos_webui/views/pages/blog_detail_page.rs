@@ -31,12 +31,20 @@ pub fn BlogDetailPage() -> impl IntoView {
                         view! {
                             <MetaTags metatags=article.metatags().clone() />
                             <Stylesheet href="/assets/plugins/splidejs/css/splide.min.css" />
+                            <Stylesheet href="/assets/plugins/prismjs/prism-tomorrow.min.css" />
+                            <Stylesheet href="/assets/plugins/prismjs/prism-toolbar.min.css" />
                             <Script src="/assets/plugins/splidejs/js/splide.min.js" />
-                            <Script src="/assets/plugins/highlightjs/highlight.min.js" />
-                            <Script src="/assets/plugins/highlightjs/highlightjs-line-numbers.min.js" />
+                            <script>
+                                "window.Prism = window.Prism || {};
+                                window.Prism.manual = true;"
+                            </script>
+                            <Script src="/assets/plugins/prismjs/prism-core.min.js" />
+                            <Script src="/assets/plugins/prismjs/prism-toolbar.min.js" />
+                            <Script src="/assets/plugins/prismjs/prism-copy-to-clipboard.min.js" />
+                            <Script src="/assets/plugins/prismjs/prism-autoloader.min.js" />
 
                             <div class="pb-12">
-                                <div class="article-shell -mx-5 w-auto rounded-none bg-white px-5 py-7 shadow-smoke-shadow transition ease-out duration-[160ms] md:px-8 md:py-10 lg:px-10 lg:py-12 xl:mx-auto xl:w-full xl:rounded-[1.25rem] xl:px-12">
+                                <div class="article-shell -mx-5 w-auto rounded-none bg-white px-5 py-7 shadow-smoke-shadow transition ease-out duration-[160ms] md:px-8 md:py-10 lg:px-10 lg:py-12 xl:mx-auto xl:w-full xl:rounded-lg xl:px-12">
                                     <Header article=article.clone() />
                                     <DynamicContent content=article.content().clone() />
                                 </div>
@@ -44,7 +52,7 @@ pub fn BlogDetailPage() -> impl IntoView {
 
                             <script>
                                 "const initArticleDetail = () => {
-                                    if (window.hljs) {
+                                    if (window.Prism) {
                                         const languageAliases = {
                                             sh: 'bash',
                                             shell: 'bash',
@@ -53,12 +61,37 @@ pub fn BlogDetailPage() -> impl IntoView {
                                             ts: 'typescript',
                                             py: 'python',
                                             rs: 'rust',
+                                            plaintext: 'plain',
+                                            text: 'plain',
                                         };
 
+                                        const languageLabels = {
+                                            bash: 'Bash',
+                                            javascript: 'JavaScript',
+                                            typescript: 'TypeScript',
+                                            python: 'Python',
+                                            rust: 'Rust',
+                                            plain: 'Plain text',
+                                            markup: 'HTML',
+                                            html: 'HTML',
+                                            css: 'CSS',
+                                            json: 'JSON',
+                                            yaml: 'YAML',
+                                            toml: 'TOML',
+                                            sql: 'SQL',
+                                        };
+
+                                        if (window.Prism.plugins && window.Prism.plugins.autoloader) {
+                                            window.Prism.plugins.autoloader.languages_path = 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/';
+                                        }
+
                                         document.querySelectorAll('pre code, code[class*=\"language-\"]').forEach(function(element) {
-                                            if (element.dataset.hljsReady === 'true') {
+                                            if (element.dataset.prismReady === 'true') {
                                                 return;
                                             }
+
+                                            element.classList.remove('hljs');
+                                            element.removeAttribute('data-hljs-ready');
 
                                             const languageClass = Array.from(element.classList).find(function(className) {
                                                 return className.startsWith('language-');
@@ -74,19 +107,15 @@ pub fn BlogDetailPage() -> impl IntoView {
                                                 }
 
                                                 if (element.parentElement && element.parentElement.tagName === 'PRE') {
-                                                    element.parentElement.dataset.languageLabel = normalizedLanguage.toUpperCase();
+                                                    element.parentElement.dataset.languageLabel = languageLabels[normalizedLanguage] || normalizedLanguage;
                                                 }
                                             } else if (element.parentElement && element.parentElement.tagName === 'PRE') {
-                                                element.parentElement.dataset.languageLabel = 'TEXT';
+                                                element.classList.add('language-plain');
+                                                element.parentElement.dataset.languageLabel = 'Plain text';
                                             }
 
-                                            window.hljs.highlightElement(element);
-
-                                            if (window.hljs.lineNumbersBlock && element.parentElement && element.parentElement.tagName === 'PRE') {
-                                                window.hljs.lineNumbersBlock(element);
-                                            }
-
-                                            element.dataset.hljsReady = 'true';
+                                            window.Prism.highlightElement(element);
+                                            element.dataset.prismReady = 'true';
                                         });
                                     }
 
