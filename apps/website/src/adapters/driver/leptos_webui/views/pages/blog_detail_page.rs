@@ -35,8 +35,8 @@ pub fn BlogDetailPage() -> impl IntoView {
                             <Script src="/assets/plugins/highlightjs/highlight.min.js" />
                             <Script src="/assets/plugins/highlightjs/highlightjs-line-numbers.min.js" />
 
-                            <div class="flex justify-center">
-                                <div class="article-detail article-detail-panel surface-panel">
+                            <div class="flex flex-col justify-center gap-6 lg:flex-row lg:gap-8 xl:gap-12">
+                                <div class="lg:w-3/4 pb-12 article-detail section bg-white px-6 py-8 md:px-8 md:py-10 lg:p-12 shadow-smoke-shadow hover:shadow-smoke-shadow-hover transition ease-out duration-[160ms]">
                                     <Header article=article.clone() />
                                     <DynamicContent content=article.content().clone() />
                                 </div>

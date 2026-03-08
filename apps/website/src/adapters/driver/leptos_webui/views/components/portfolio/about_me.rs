@@ -15,33 +15,34 @@ pub fn AboutMeSection(
 ) -> impl IntoView {
     view! {
         <Container id="about".into()>
-            <div class="flex flex-col gap-8 lg:flex-row lg:gap-10">
-                <div class="lg:w-[18rem]">
-                    <div class="profile-highlight">
-                        <div class="profile-avatar">
-                            <Img image=profile_picture class="h-full w-full object-cover" />
-                        </div>
-                        <div class="experience-badge">
-                            <div class="experience-badge__number">
+            <div class="flex flex-col gap-5 lg:flex-row lg:gap-10">
+                <div>
+                    <div class="flex justify-center relative h-fit">
+                        <Img image=profile_picture class="min-w-52 min-h-52 max-w-64 max-h-64 rounded-full" />
+                    </div>
+                    <div class="flex items-center justify-center">
+                        <div class="pe-2">
+                            <div class="font-mono font-semibold text-6xl stroke-text">
                                 <span class="counter">{years_of_experience}</span>
                             </div>
-                            <div class="experience-badge__label">Years of Experience</div>
+                        </div>
+                        <div class="py-2">
+                            <span class="block text-2xl font-normal mb-1">+</span>
+                            <p class="font-mono font-medium text-sm uppercase tracking-[0.5px]">Years of Experience</p>
                         </div>
                     </div>
                 </div>
-                <div class="flex-1">
-                    <div class="section-heading">
-                        <Decoration text=subtitle />
-                        <PrimaryTitle text=title />
-                    </div>
+                <div>
+                    <Decoration text=subtitle />
+                    <PrimaryTitle text=title />
                     <Description text=text />
-                    <div class="mt-6 flex flex-wrap gap-3">
+                    <div class="mb-2 flex flex-wrap">
                         {skills.into_iter().map(|skill| view! { <Pill text=skill.to_string() /> }).collect_view()}
                     </div>
-                    <div class="mt-8 flex justify-start">
+                    <div class="mb-2 flex justify-end">
                         <a
                             href=cv_document.url().to_string()
-                            class="button-secondary"
+                            class="inline-flex items-center rounded-full border border-black border-dashed px-6 py-3 font-mono text-sm text-zeus transition ease-out duration-[120ms] hover:bg-black hover:text-white"
                             target="_blank"
                         >
                             <span>"Download cv"</span>

@@ -9,93 +9,61 @@ pub fn Navbar(main_menu: MenuTree, social_menu: MenuTree) -> impl IntoView {
     let (open_mobile_menu, set_open_mobile_menu) = signal(false);
 
     view! {
-        <nav aria-label="Primary navigation">
-            <div class="nav-shell flex-wrap md:flex-nowrap">
+        <nav>
+            <div class="flex flex-wrap items-center justify-between max-w-[1320px] mx-auto py-4 px-5 xl:px-0">
                 <Logo />
-
-                <div class="hidden items-center gap-3 md:flex">
-                    <div>
-                        <Menu
-                            items=main_menu.items().clone()
-                            container_class="nav-links-list"
-                            anchor_class="nav-link"
-                        />
-                    </div>
-                    <div class="border-l border-[rgba(181,200,202,0.68)] pl-3">
+                <div class="flex items-center">
+                    <div class="md:order-2">
                         <Menu
                             items=social_menu.items().clone()
-                            container_class="nav-social-list"
-                            anchor_class="social-link"
+                            item_class="block py-0 px-3 -mr-3"
+                            container_class="flex items-center font-medium"
+                        />
+                    </div>
+                    <div class="md:order-1 hidden md:block">
+                        <Menu
+                            items=main_menu.items().clone()
+                            item_class="block py-0 px-3 uppercase"
+                            container_class="flex items-center font-medium mr-4"
                         />
                     </div>
                 </div>
-
-                <div class="flex items-center gap-2 md:hidden">
-                    <Menu
-                        items=social_menu.items().clone()
-                        container_class="nav-social-list"
-                        anchor_class="social-link"
-                    />
+                <div class="block md:hidden">
                     <button
                         type="button"
-                        class="menu-toggle"
+                        class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-white p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-hidden focus:ring-2 focus:ring-gray-200"
                         aria-controls="mobile-menu"
                         aria-expanded=move || open_mobile_menu.get().to_string()
                         on:click=move |_| set_open_mobile_menu.update(|v| *v = !*v)
                     >
-                        <span class="sr-only">
-                            {move || if open_mobile_menu.get() { "Close main menu" } else { "Open main menu" }}
-                        </span>
-                        {move || {
-                            if open_mobile_menu.get() {
-                                view! {
-                                    <svg
-                                        class="h-5 w-5"
-                                        aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            stroke="currentColor"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M6 6l12 12M18 6L6 18"
-                                        />
-                                    </svg>
-                                }.into_any()
-                            } else {
-                                view! {
-                                    <svg
-                                        class="h-5 w-5"
-                                        aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            stroke="currentColor"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M4 7h16M4 12h16M4 17h16"
-                                        />
-                                    </svg>
-                                }.into_any()
-                            }
-                        }}
+                        <span class="sr-only">Open main menu</span>
+                        <svg
+                            class="w-5 h-5"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 17 14"
+                        >
+                            <path
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M1 1h15M1 7h15M1 13h15"
+                            />
+                        </svg>
                     </button>
                 </div>
                 <div
                     id="mobile-menu"
-                    class="mobile-nav-panel md:hidden"
+                    class="w-full md:hidden md:w-auto"
                     class:hidden=move || !open_mobile_menu.get()
                 >
                     <Menu
                         items=main_menu.items().clone()
-                        anchor_class="mobile-nav-link"
-                        container_class="mobile-nav-list"
+                        anchor_class="block"
+                        item_class="block py-2 px-3 text-gray-900 rounded-xs hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 uppercase"
+                        container_class="font-medium flex flex-col gap-2 p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:gap-8 md:mt-0 md:border-0 md:bg-white"
                     />
                 </div>
             </div>

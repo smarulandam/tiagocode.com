@@ -10,36 +10,33 @@ pub fn ListSection(categories: Vec<Category>, articles: Vec<Article>) -> impl In
 
     view! {
         <Container>
-            <div class="section-heading">
+            <div>
                 <Decoration text="My Tech Articles".to_string() />
                 <PrimaryTitle text="Blog".to_string() />
+                <div class="py-6">
+                    <Pill link="/en/articles".into() text="All".into() />
+                    {categories
+                        .into_iter()
+                        .map(|c| {
+                            view! {
+                                <Pill
+                                    link=c.slug().to_string()
+                                    text=c.title().to_string()
+                                    emoji=c.emoji().to_string()
+                                />
+                            }
+                        }).collect_view()
+                    }
+                </div>
             </div>
-
-            <div class="filters-row">
-                <Pill link="/en/articles".into() text="All".into() />
-                {categories
-                    .into_iter()
-                    .map(|c| {
-                        view! {
-                            <Pill
-                                link=c.slug().to_string()
-                                text=c.title().to_string()
-                                emoji=c.emoji().to_string()
-                            />
-                        }
-                    })
-                    .collect_view()}
-            </div>
-
             <Show
                 when=move || !are_articles_empty
                 fallback=|| view! {
-                    <p class="empty-state">
+                    <p class="font-mono font-medium uppercase text-sm text-center tracking-wider relative pt-4 mb-5 text-asparagus">
                         "No articles available. Check back soon!"
                     </p>
-                }
-            >
-                <div class="mt-8 grid grid-cols-1 gap-5 xl:grid-cols-2">
+                }>
+                <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 mt-6 lg:mt-3">
                     {articles
                         .clone()
                         .into_iter()
@@ -54,11 +51,11 @@ pub fn ListSection(categories: Vec<Category>, articles: Vec<Article>) -> impl In
                                     thumbnail=a.thumbnail().clone()
                                 />
                             }
-                        })
-                        .collect_view()}
+                        }).collect_view()
+                    }
                 </div>
             </Show>
-        </Container>
+    </Container>
     }
 }
 
@@ -72,32 +69,29 @@ pub fn ArticleCard(
     category: Category,
 ) -> impl IntoView {
     view! {
-        <article class="article-list-card">
-            <div class="article-list-card__media">
-                <Img image=thumbnail class="h-full w-full object-cover" />
-                <div class="article-list-card__category">
+        <article class="md:flex md:items-start md:justify-center mt-8">
+            <div class="overflow-hidden relative rounded-lg group  flex-shrink-0">
+                <Img image=thumbnail class="w-full transition ease-custom duration-500 group-hover:scale-105 group-hover:blur-[1.5px]" />
+                <div class="absolute bottom-0 left-0 right-0 rounded-none text-center bg-black/50 px-4 py-3 text-white backdrop-blur-[5px] font-mono font-bold uppercase text-sm tracking-[0.5px]">
                     <a href=category.slug().to_string() target="_self">
                         {category.title().to_string()}
                         <span class="ml-2">{category.emoji().to_string()}</span>
                     </a>
                 </div>
             </div>
-
-            <div class="article-list-card__body">
-                <span class="article-list-card__date">{date}</span>
-                <h2 class="article-list-card__title">{title}</h2>
-                <p class="article-list-card__summary">
-                    {if summary.chars().count() > 110 {
+            <div class="md:pl-7 md:mt-0  flex-grow">
+                <span class="text-zeus dark:text-white/70">{date}</span>
+                <h2 class="font-poppins font-semibold text-lg mt-2">{title}</h2>
+                <p class="text-zeus dark:text-white/70">{
+                    if summary.chars().count() > 110 {
                         summary.chars().take(110).collect::<String>() + "..."
                     } else {
                         summary
-                    }}
-                </p>
-                <div class="pt-1">
-                    <a href=slug target="_self" class="button-primary">
-                        Read More
-                    </a>
-                </div>
+                    }
+                }</p>
+                <a href=slug target="_self" class="inline-block text-white hover:text-zeus bg-black hover:bg-white hover:border hover:border-black border-dashed rounded-full px-6 py-3 mt-3 lg:mt-4 font-mono text-sm transition ease-out duration-[120ms]">
+                    Read More
+                </a>
             </div>
         </article>
     }

@@ -3,9 +3,9 @@ use leptos::prelude::*;
 #[component]
 pub fn Logo() -> impl IntoView {
     view! {
-        <a href="/" target="_self" class="brand-lockup">
-            <img src="/assets/images/logo_teal.svg" class="brand-mark" alt="Tiagocode Logo" />
-            <span class="brand-wordmark">
+        <a href="/" target="_self" class="flex items-center gap-3">
+            <img src="/assets/images/logo_teal.svg" class="h-8" alt="Tiagocode Logo" />
+            <span class="hidden md:block self-center text-2xl font-semibold whitespace-nowrap uppercase tracking-widest text-teal   ">
                 Tiagocode
             </span>
         </a>
