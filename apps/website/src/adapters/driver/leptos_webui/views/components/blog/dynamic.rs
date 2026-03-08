@@ -12,10 +12,10 @@ pub fn DynamicContent(content: Vec<ArticleContent>) -> impl IntoView {
             .map(|content| {
                 match content {
                     ArticleContent::Image(img) => {
-                        EitherOf4::A(view! { <Img image=img.clone() class="mt-6" /> })
+                        EitherOf4::A(view! { <Img image=img.clone() class="article-media" /> })
                     },
                     ArticleContent::Text(text) => {
-                        EitherOf4::B(view! { <RawHtml html=text.to_string() class="mt-6"/> })
+                        EitherOf4::B(view! { <RawHtml html=text.to_string() class="article-prose"/> })
                     },
                     ArticleContent::Slider(thumbnails, images) => {
                         EitherOf4::C(view! { <Slider thumbnails=thumbnails.clone() images=images.clone() /> })

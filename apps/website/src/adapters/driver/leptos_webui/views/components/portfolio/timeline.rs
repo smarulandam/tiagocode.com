@@ -3,8 +3,8 @@ use leptos::prelude::*;
 #[component]
 pub fn Timeline(children: Children, icon: &'static str) -> impl IntoView {
     view! {
-        <div class="relative flex flex-col gap-7 pl-5 before:content-[''] before:absolute before:top-0 before:left-0 before:w-[1px] before:h-full before:border-l before:border-black/20 before:border-dashed">
-            <div class="text-3xl">
+        <div class="timeline-shell">
+            <div class="timeline-icon">
                 <i class=icon></i>
             </div>
             {children()}
@@ -15,14 +15,14 @@ pub fn Timeline(children: Children, icon: &'static str) -> impl IntoView {
 #[component]
 pub fn TimelineItem(date: String, title: String, subtitle: String) -> impl IntoView {
     view! {
-        <div class="group">
-            <div class="relative inline-block px-4 py-2 rounded-full border border-black/20 border-dashed font-mono font-medium uppercase text-sm tracking-[0.5px] text-zeus dark:text-white/70 group-hover:text-black transition ease-linear duration-100 before:content-[''] before:absolute before:top-1/2 before:left-[-20px] before:w-[20px] before:h-[1px] before:border-t before:border-black/20 dark:before:border-white/20 before:border-dashed after:content-[''] after:absolute after:top-1/2 after:left-[-22px] after:-translate-y-1/2 after:bg-black dark:after:bg-white after:w-[5px] after:h-[5px] after:rounded-full">
+        <div class="timeline-item">
+            <div class="timeline-date">
                 {date.clone()}
             </div>
-            <h3 class="font-poppins font-medium text-lg lg:text-xl mt-2 mb-1 lg:mt-3 lg:mb-2">
+            <h3 class="mt-3 font-poppins text-lg font-medium leading-tight text-zeus lg:text-xl">
                 {title.clone()}
             </h3>
-            <span class="text-zeus dark:text-white/70">{subtitle.clone()}</span>
+            <p class="mt-2 leading-relaxed text-[color:var(--color-copy-muted)]">{subtitle.clone()}</p>
         </div>
     }
 }

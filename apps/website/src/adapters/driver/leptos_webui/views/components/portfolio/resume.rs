@@ -14,12 +14,12 @@ pub fn ResumeSection(
 ) -> impl IntoView {
     view! {
         <Container id="resume".into()>
-            <div class="">
+            <div class="section-heading">
                 <Decoration text=subtitle />
                 <SecondaryTitle text=title />
                 <Description text=text />
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 lg:gap-10 mt-6 lg:mt-12">
+            <div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 lg:gap-10">
                 <Timeline icon="bi bi-mortarboard">
                     {education
                     .items()
