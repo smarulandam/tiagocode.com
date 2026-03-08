@@ -1,6 +1,6 @@
 use leptos::prelude::*;
 
-const CONTAINER_CLASS: &'static str = "section bg-white px-6 py-8 md:px-8 md:py-10 lg:p-12 shadow-smoke-shadow hover:shadow-smoke-shadowHover transition ease-out duration-[160ms] rounded-lg";
+const CONTAINER_CLASS: &'static str = "section bg-white px-6 py-8 md:px-8 md:py-10 lg:p-12 shadow-smoke-shadow hover:shadow-smoke-shadow-hover transition ease-out duration-[160ms] rounded-lg";
 
 #[component]
 pub fn Container(

@@ -11,7 +11,7 @@ pub fn PortfolioPage() -> impl IntoView {
 
     view! {
         <BasicLayout>
-            <Suspense fallback=move || { view! { <div class="bg-whitesmoke"></div> } }>
+            <Suspense fallback=move || { view! { <div class="bg-smoke"></div> } }>
                 {move || {
                     page_data
                     .get_untracked()
@@ -23,11 +23,11 @@ pub fn PortfolioPage() -> impl IntoView {
                         let portfolio = data.unwrap();
                         view! {
                             <MetaTags metatags=portfolio.metatags().clone() />
-                            <div class="justify-center lg:flex lg:space-x-8 lg:space-y-0 xl:space-x-12">
-                                <div class="lg:w-1/4 hidden lg:block sticky px-4 lg:px-8 xl:px-10 py-3 lg:py-5 xl:py-7 lg:h-fit top-2 lg:top-[80px] bg-teal shadow-smoke-shadow hover:shadow-smoke-shadowHover rounded-lg">
+                            <div class="flex flex-col justify-center gap-6 lg:flex-row lg:gap-8 xl:gap-12">
+                                <div class="lg:w-1/4 hidden lg:block sticky px-4 lg:px-8 xl:px-10 py-3 lg:py-5 xl:py-7 lg:h-fit top-2 lg:top-[80px] bg-teal shadow-smoke-shadow hover:shadow-smoke-shadow-hover rounded-lg">
                                     <Sidebar />
                                 </div>
-                                <div class="lg:w-3/4 space-y-6">
+                                <div class="flex flex-col gap-6 lg:w-3/4">
                                     <DynamicSections sections=portfolio.sections().clone() />
                                 </div>
                             </div>

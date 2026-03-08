@@ -27,7 +27,7 @@ Of course, you should explore around the project structure, but the best place t
 
 ## Running your project
 
-`cargo leptos watch`  
+`LEPTOS_TAILWIND_VERSION="v4.1.18" cargo leptos watch`  
 By default, you can access your local project at `http://localhost:3000`
 
 ## Installing Additional Tools

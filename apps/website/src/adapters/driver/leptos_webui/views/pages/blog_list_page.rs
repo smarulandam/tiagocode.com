@@ -16,7 +16,7 @@ pub fn BlogListPage() -> impl IntoView {
 
     view! {
         <BasicLayout>
-            <Suspense fallback=move || { view! { <div class="bg-whitesmoke"></div> } }>
+            <Suspense fallback=move || { view! { <div class="bg-smoke"></div> } }>
                 {move || {
                     page_data
                     .get_untracked()
@@ -29,8 +29,8 @@ pub fn BlogListPage() -> impl IntoView {
 
                         view! {
                             <MetaTags metatags=page.metatags().clone() />
-                            <div class="justify-center space-y-6 lg:flex lg:space-x-8 lg:space-y-0 xl:space-x-12">
-                                <div class="w-full space-y-6 mb-12">
+                            <div class="flex flex-col justify-center gap-6 lg:flex-row lg:gap-8 xl:gap-12">
+                                <div class="mb-12 flex w-full flex-col gap-6">
                                     <ListSection articles=articles categories=categories />
                                 </div>
                             </div>

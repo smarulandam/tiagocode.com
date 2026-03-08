@@ -3,7 +3,7 @@ use leptos::prelude::*;
 #[component]
 pub fn Timeline(children: Children, icon: &'static str) -> impl IntoView {
     view! {
-        <div class="relative pl-5 space-y-7 before:content-[''] before:absolute before:top-0 before:left-0 before:w-[1px] before:h-full before:border-l before:border-black/20 before:border-dashed">
+        <div class="relative flex flex-col gap-7 pl-5 before:content-[''] before:absolute before:top-0 before:left-0 before:w-[1px] before:h-full before:border-l before:border-black/20 before:border-dashed">
             <div class="text-3xl">
                 <i class=icon></i>
             </div>

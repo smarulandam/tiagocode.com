@@ -20,7 +20,7 @@ pub fn BlogSection(
                 <SecondaryTitle text=title />
                 <Description text=text />
             </div>
-            <div class="mt-6 lg:mt-12 space-y-8 md:space-y-6">
+            <div class="mt-6 flex flex-col gap-8 lg:mt-12 md:gap-6">
                 <Show
                     when=move || !are_articles_empty
                     fallback=|| view! {

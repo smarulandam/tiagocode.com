@@ -31,7 +31,7 @@ pub fn Navbar(main_menu: MenuTree, social_menu: MenuTree) -> impl IntoView {
                 <div class="block md:hidden">
                     <button
                         type="button"
-                        class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+                        class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-white p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-hidden focus:ring-2 focus:ring-gray-200"
                         aria-controls="mobile-menu"
                         aria-expanded=move || open_mobile_menu.get().to_string()
                         on:click=move |_| set_open_mobile_menu.update(|v| *v = !*v)
@@ -62,8 +62,8 @@ pub fn Navbar(main_menu: MenuTree, social_menu: MenuTree) -> impl IntoView {
                     <Menu
                         items=main_menu.items().clone()
                         anchor_class="block"
-                        item_class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 uppercase"
-                        container_class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white"
+                        item_class="block py-2 px-3 text-gray-900 rounded-xs hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 uppercase"
+                        container_class="font-medium flex flex-col gap-2 p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:gap-8 md:mt-0 md:border-0 md:bg-white"
                     />
                 </div>
             </div>
