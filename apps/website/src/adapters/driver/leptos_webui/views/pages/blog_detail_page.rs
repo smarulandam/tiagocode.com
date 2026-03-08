@@ -36,7 +36,7 @@ pub fn BlogDetailPage() -> impl IntoView {
                             <Script src="/assets/plugins/highlightjs/highlightjs-line-numbers.min.js" />
 
                             <div class="pb-12">
-                                <div class="article-shell mx-auto w-full max-w-[1040px] rounded-[1.25rem] bg-white px-5 py-7 shadow-smoke-shadow transition ease-out duration-[160ms] md:px-8 md:py-10 lg:px-10 lg:py-12 xl:px-12">
+                                <div class="article-shell -mx-5 w-auto rounded-none bg-white px-5 py-7 shadow-smoke-shadow transition ease-out duration-[160ms] md:px-8 md:py-10 lg:px-10 lg:py-12 xl:mx-auto xl:w-full xl:rounded-[1.25rem] xl:px-12">
                                     <Header article=article.clone() />
                                     <DynamicContent content=article.content().clone() />
                                 </div>
@@ -45,14 +45,44 @@ pub fn BlogDetailPage() -> impl IntoView {
                             <script>
                                 "const initArticleDetail = () => {
                                     if (window.hljs) {
-                                        document.querySelectorAll('pre code').forEach(function(element) {
+                                        const languageAliases = {
+                                            sh: 'bash',
+                                            shell: 'bash',
+                                            zsh: 'bash',
+                                            js: 'javascript',
+                                            ts: 'typescript',
+                                            py: 'python',
+                                            rs: 'rust',
+                                        };
+
+                                        document.querySelectorAll('pre code, code[class*=\"language-\"]').forEach(function(element) {
                                             if (element.dataset.hljsReady === 'true') {
                                                 return;
                                             }
 
+                                            const languageClass = Array.from(element.classList).find(function(className) {
+                                                return className.startsWith('language-');
+                                            });
+
+                                            if (languageClass) {
+                                                const rawLanguage = languageClass.replace('language-', '').toLowerCase();
+                                                const normalizedLanguage = languageAliases[rawLanguage] || rawLanguage;
+
+                                                if (normalizedLanguage !== rawLanguage) {
+                                                    element.classList.remove(languageClass);
+                                                    element.classList.add(`language-${normalizedLanguage}`);
+                                                }
+
+                                                if (element.parentElement && element.parentElement.tagName === 'PRE') {
+                                                    element.parentElement.dataset.languageLabel = normalizedLanguage.toUpperCase();
+                                                }
+                                            } else if (element.parentElement && element.parentElement.tagName === 'PRE') {
+                                                element.parentElement.dataset.languageLabel = 'TEXT';
+                                            }
+
                                             window.hljs.highlightElement(element);
 
-                                            if (window.hljs.lineNumbersBlock) {
+                                            if (window.hljs.lineNumbersBlock && element.parentElement && element.parentElement.tagName === 'PRE') {
                                                 window.hljs.lineNumbersBlock(element);
                                             }
 

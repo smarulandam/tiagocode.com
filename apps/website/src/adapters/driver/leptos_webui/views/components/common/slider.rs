@@ -32,7 +32,7 @@ pub fn Slider(
                                             <div class="article-media-viewport relative min-h-[16rem] md:min-h-[28rem]">
                                                 <button
                                                     type="button"
-                                                    class="absolute right-5 top-5 z-10 rounded-full border border-black/10 bg-white/92 px-3.5 py-2 text-sm font-medium text-deepsea shadow-[0_12px_28px_rgba(36,36,36,0.08)] transition duration-[120ms] ease-out hover:border-teal/22 hover:text-teal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal/25 focus-visible:ring-offset-2"
+                                                    class="absolute right-5 top-5 z-10 cursor-pointer rounded-full border border-black/10 bg-white/92 px-3.5 py-2 text-sm font-medium text-deepsea shadow-[0_12px_28px_rgba(36,36,36,0.08)] transition duration-[120ms] ease-out hover:border-teal/22 hover:text-teal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal/25 focus-visible:ring-offset-2"
                                                     on:click=move |_| on_open.run(index)
                                                 >
                                                     "Zoom"

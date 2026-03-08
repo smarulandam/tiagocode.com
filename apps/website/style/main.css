@@ -123,11 +123,23 @@
     }
 
     .article-prose h2 {
-        @apply mt-12 font-poppins text-[1.9rem] leading-[1.15] font-semibold text-deepsea;
+        @apply mt-7 font-poppins text-[1.9rem] leading-[1.12] font-semibold text-deepsea md:text-[2.1rem];
     }
 
     .article-prose h3 {
-        @apply mt-10 font-poppins text-[1.45rem] leading-[1.2] font-semibold text-deepsea;
+        @apply mt-5 font-poppins text-[1.45rem] leading-[1.18] font-semibold text-zeus/92 md:text-[1.6rem];
+    }
+
+    .article-prose h4 {
+        @apply mt-4 font-poppins text-[1.2rem] leading-[1.24] font-semibold text-zeus/82 md:text-[1.3rem];
+    }
+
+    .article-prose h5 {
+        @apply mt-4 font-poppins text-[1.05rem] leading-[1.3] font-semibold text-zeus/72;
+    }
+
+    .article-prose h6 {
+        @apply mt-3 font-poppins text-base leading-[1.35] font-semibold text-zeus/64;
     }
 
     .article-prose a {
@@ -173,28 +185,73 @@
     }
 
     .article-prose pre {
-        @apply my-8 overflow-x-auto rounded-[1.1rem] border border-black/8 bg-[#0f1720] p-4 shadow-[0_18px_34px_rgba(15,23,32,0.12)];
+        @apply relative my-8 overflow-x-auto rounded-[1.1rem] border border-[#0f1720]/8 bg-[#0b1320] shadow-[0_20px_36px_rgba(11,19,32,0.18)];
+    }
+
+    .article-prose pre[data-language-label]::before {
+        content: attr(data-language-label);
+        @apply absolute left-4 top-3 z-10 rounded-full border border-white/10 bg-white/6 px-2.5 py-1 font-mono text-[0.72rem] uppercase tracking-[0.18em] text-white/56;
     }
 
     .article-prose pre code,
     .article-prose pre code.hljs {
-        @apply block min-w-max bg-transparent p-0 font-mono text-[0.95rem] leading-7 text-white;
+        @apply block min-w-max bg-transparent px-4 pb-4 pt-12 font-mono text-[0.95rem] leading-7 text-white;
     }
 
     .article-prose :not(pre) > code {
-        @apply rounded-md bg-smoke px-1.5 py-1 font-mono text-[0.92rem] text-deepsea;
+        @apply rounded-md border border-black/6 bg-smoke px-1.5 py-1 font-mono text-[0.92rem] text-deepsea;
+    }
+
+    .article-prose code.hljs:not(pre code) {
+        @apply my-2 inline-flex max-w-full items-center overflow-x-auto rounded-[1rem] border border-[#0f1720]/10 bg-[#0b1320] px-4 py-3 font-mono text-[0.95rem] leading-7 text-white shadow-[0_16px_28px_rgba(11,19,32,0.12)];
+    }
+
+    .article-prose .hljs-comment,
+    .article-prose .hljs-quote {
+        color: #8ea0b6;
+    }
+
+    .article-prose .hljs-keyword,
+    .article-prose .hljs-selector-tag,
+    .article-prose .hljs-literal,
+    .article-prose .hljs-built_in,
+    .article-prose .hljs-type {
+        color: #7dd3fc;
+    }
+
+    .article-prose .hljs-title,
+    .article-prose .hljs-section,
+    .article-prose .hljs-title.function_,
+    .article-prose .hljs-title.class_,
+    .article-prose .hljs-variable,
+    .article-prose .hljs-attr,
+    .article-prose .hljs-number,
+    .article-prose .hljs-symbol {
+        color: #fbbf24;
+    }
+
+    .article-prose .hljs-string,
+    .article-prose .hljs-regexp,
+    .article-prose .hljs-template-tag,
+    .article-prose .hljs-template-variable {
+        color: #86efac;
+    }
+
+    .article-prose .hljs-meta,
+    .article-prose .hljs-doctag {
+        color: #c4b5fd;
     }
 
     .article-media {
-        @apply mx-auto w-full max-w-[880px] px-4 md:px-8;
+        @apply mx-auto w-full max-w-[760px];
     }
 
     .article-media-frame {
-        @apply relative overflow-hidden rounded-[1.1rem] border border-black/8 bg-smoke/80 p-3 shadow-[0_18px_34px_rgba(36,36,36,0.08)] md:p-4;
+        @apply relative overflow-hidden rounded-[1.1rem] border border-black/8 bg-[#dbe3e8] p-3 shadow-[0_18px_34px_rgba(36,36,36,0.08)] md:p-4;
     }
 
     .article-media-viewport {
-        @apply flex items-center justify-center rounded-[0.9rem] bg-white/85 p-3 md:p-4;
+        @apply flex items-center justify-center rounded-[0.9rem] bg-[#eef3f6] p-3 md:p-4;
     }
 
     .article-slider-main .splide__track {

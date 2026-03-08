@@ -110,7 +110,7 @@ pub fn MediaLightbox(state: LightboxState, #[prop(into)] on_close: Callback<()>)
                     </p>
                     <button
                         type="button"
-                        class="rounded-full border border-white/18 px-4 py-2 text-sm font-medium text-white transition duration-[120ms] ease-out hover:border-white/34 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                        class="cursor-pointer rounded-full border border-white/18 px-4 py-2 text-sm font-medium text-white transition duration-[120ms] ease-out hover:border-white/34 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                         on:click=move |_| on_close.run(())
                     >
                         "Close"
@@ -121,14 +121,14 @@ pub fn MediaLightbox(state: LightboxState, #[prop(into)] on_close: Callback<()>)
                     <Show when=move || { total_images > 1 }>
                         <button
                             type="button"
-                            class="absolute left-4 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/14 bg-black/35 px-4 py-2 text-sm font-medium text-white transition duration-[120ms] ease-out hover:border-white/28 hover:bg-black/55 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0f1720]"
+                            class="absolute left-4 top-1/2 z-10 -translate-y-1/2 cursor-pointer rounded-full border border-white/14 bg-black/35 px-4 py-2 text-sm font-medium text-white transition duration-[120ms] ease-out hover:border-white/28 hover:bg-black/55 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0f1720]"
                             on:click=previous_image
                         >
                             "Prev"
                         </button>
                         <button
                             type="button"
-                            class="absolute right-4 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/14 bg-black/35 px-4 py-2 text-sm font-medium text-white transition duration-[120ms] ease-out hover:border-white/28 hover:bg-black/55 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0f1720]"
+                            class="absolute right-4 top-1/2 z-10 -translate-y-1/2 cursor-pointer rounded-full border border-white/14 bg-black/35 px-4 py-2 text-sm font-medium text-white transition duration-[120ms] ease-out hover:border-white/28 hover:bg-black/55 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0f1720]"
                             on:click=next_image
                         >
                             "Next"

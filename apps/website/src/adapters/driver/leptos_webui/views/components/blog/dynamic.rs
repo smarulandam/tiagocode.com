@@ -13,7 +13,7 @@ fn ArticleImageBlock(image: Image, #[prop(into)] on_zoom: Callback<()>) -> impl 
             <div class="article-media-frame">
                 <button
                     type="button"
-                    class="absolute right-5 top-5 z-10 rounded-full border border-black/10 bg-white/92 px-3.5 py-2 text-sm font-medium text-deepsea shadow-[0_12px_28px_rgba(36,36,36,0.08)] transition duration-[120ms] ease-out hover:border-teal/22 hover:text-teal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal/25 focus-visible:ring-offset-2"
+                    class="absolute right-5 top-5 z-10 cursor-pointer rounded-full border border-black/10 bg-white/92 px-3.5 py-2 text-sm font-medium text-deepsea shadow-[0_12px_28px_rgba(36,36,36,0.08)] transition duration-[120ms] ease-out hover:border-teal/22 hover:text-teal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal/25 focus-visible:ring-offset-2"
                     on:click=move |_| on_zoom.run(())
                 >
                     "Zoom"
@@ -35,7 +35,7 @@ pub fn DynamicContent(content: Vec<ArticleContent>) -> impl IntoView {
     let (lightbox, set_lightbox) = signal(None::<LightboxState>);
 
     view! {
-        <div class="mt-10 flex flex-col gap-10 md:mt-12 md:gap-12">
+        <div class="mt-7 flex flex-col gap-6 md:mt-8 md:gap-8">
             {content
                 .into_iter()
                 .map(|content| {
