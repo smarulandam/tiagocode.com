@@ -50,6 +50,12 @@ ui/
 │  ├─ navbar.rs # The Navbar component that will be used in the layout of every platform's router
 ```
 
+The shared UI crate also owns the canonical website styling:
+
+- `packages/ui/input.css` is the Tailwind input source
+- `packages/ui/assets/tailwind.css` is the generated CSS served by the web app
+- `packages/ui/assets/` stores the canonical images, plugins and static files mirrored from `website`
+
 ## Shared backend logic
 
 The workspace contains a `api` crate with shared backend logic. This crate defines all of the shared server functions for all platforms. Server functions are async functions that expose a public API on the server. They can be called like a normal async function from the client. When you run `dx serve`, all of the server functions will be collected in the server build and hosted on a public API for the client to call. The `api` crate starts out something like this:
@@ -72,4 +78,3 @@ and serve:
 ```bash
 dx serve
 ```
-

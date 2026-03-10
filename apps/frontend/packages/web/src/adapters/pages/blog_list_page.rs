@@ -1,6 +1,7 @@
 use dioxus::prelude::*;
 
-use ui::ArticlesListView;
+use ui::components::blog::ArticleListSection;
+use ui::components::common::SeoMetaTags;
 
 #[component]
 pub fn BlogListPage(lang: String) -> Element {
@@ -35,11 +36,11 @@ fn BlogListContent(lang: String, category: Option<String>) -> Element {
     let (page, categories, articles) = data.read().clone();
 
     rsx! {
-        ArticlesListView {
-            page,
-            categories,
-            articles,
-            selected_category: category,
+        SeoMetaTags { metatags: page.metatags().clone() }
+        div { class: "flex flex-col justify-center gap-6 lg:flex-row lg:gap-8 xl:gap-12",
+            div { class: "mb-12 flex w-full flex-col gap-6",
+                ArticleListSection { categories, articles }
+            }
         }
     }
 }

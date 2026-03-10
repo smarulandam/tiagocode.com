@@ -31,15 +31,9 @@ dx serve
 
 ### Tailwind CSS Setup (Dioxus 0.7)
 
-This crate is configured for Tailwind with:
+The served stylesheet is loaded from the shared `ui` crate:
 
-- `tailwind.css` at the crate root (Tailwind input)
-- `assets/tailwind.css` (generated Tailwind output loaded by `asset!`)
+- `packages/ui/input.css` is the Tailwind input and canonical design source
+- `packages/ui/assets/tailwind.css` is the generated output served by the app
 
-When `dx serve` runs in this crate, Dioxus 0.7 detects `tailwind.css` and runs the Tailwind watcher automatically.
-
-If your local CLI does not auto-run Tailwind, run this fallback command in `packages/web`:
-
-```bash
-npx @tailwindcss/cli -i ./tailwind.css -o ./assets/tailwind.css --watch
-```
+If you need to regenerate the compiled CSS manually, run the build from the `ui` package and keep `packages/web` focused on routes and page composition.

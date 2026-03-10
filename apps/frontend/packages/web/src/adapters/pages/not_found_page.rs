@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 
-use ui::NotFoundView;
+use ui::NotFoundError;
 
 #[component]
 pub fn NotFoundPage(route: Vec<String>) -> Element {
@@ -10,6 +10,8 @@ pub fn NotFoundPage(route: Vec<String>) -> Element {
     );
 
     rsx! {
-        NotFoundView { route: Some(route.join("/")) }
+        div { class: "flex flex-col justify-center gap-6 lg:flex-row lg:gap-8 xl:gap-12",
+            NotFoundError { route: Some(route.join("/")) }
+        }
     }
 }

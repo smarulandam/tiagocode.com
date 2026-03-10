@@ -1,3 +1,3 @@
-mod app_shell;
+mod site_layout;
 
-pub use app_shell::AppShell;
+pub use site_layout::SiteLayout;

@@ -1,10 +1,10 @@
 use dioxus::prelude::*;
 
 #[component]
-pub fn RawHtml(html: String, class: Option<String>) -> Element {
+pub fn RawHtml(html: String, class: String) -> Element {
     rsx! {
         div {
-            class: class.unwrap_or_else(|| "text-base leading-8 text-foreground/85".to_string()),
+            class,
             dangerous_inner_html: html,
         }
     }

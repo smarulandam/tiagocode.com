@@ -1,7 +1,7 @@
 use dioxus::prelude::*;
 
 use crate::Route;
-use ui::{AppShell, NotFoundError, UnexpectedError};
+use ui::{NotFoundError, SiteLayout, UnexpectedError};
 
 #[component]
 pub fn AppLayout() -> Element {
@@ -25,7 +25,7 @@ pub fn AppLayout() -> Element {
                 }
             },
 
-            AppShell {
+            SiteLayout {
                 main_menu: layout.main_menu().clone(),
                 social_menu: layout.social_menu().clone(),
                 Outlet::<Route> {}

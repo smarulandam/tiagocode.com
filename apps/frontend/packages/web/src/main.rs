@@ -3,8 +3,8 @@ use dioxus::prelude::*;
 mod adapters;
 
 use crate::adapters::layouts::AppLayout;
-use crate::adapters::pages::{ArticleDetailPage, BlogCategoryPage};
-use crate::adapters::pages::{BlogListPage, NotFoundPage, PortfolioPage};
+use crate::adapters::pages::{BlogCategoryPage, BlogDetailPage, BlogListPage};
+use crate::adapters::pages::{NotFoundPage, PortfolioPage};
 use ui::{CUSTOM_CSS, FAVICON, TAILWIND_CSS};
 
 #[derive(Debug, Clone, Routable, PartialEq)]
@@ -24,7 +24,7 @@ pub enum Route {
     BlogCategoryPage { lang: String, category: String },
 
     #[route("/:lang/articles/:category/:slug")]
-    ArticleDetailPage {
+    BlogDetailPage {
         lang: String,
         category: String,
         slug: String,
