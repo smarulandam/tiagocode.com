@@ -16,7 +16,6 @@ WORKDIR /app
 COPY --from=planner /app/recipe.json ./recipe.json
 
 ENV LEPTOS_TAILWIND_VERSION="v4.1.18"
-ENV LEPTOS_HASH_FILENAME=true
 
 RUN --mount=type=cache,target=/root/.cache/cargo-leptos \
     --mount=type=cache,target=/usr/local/cargo/registry \
