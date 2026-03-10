@@ -1,8 +1,10 @@
 # syntax=docker/dockerfile:1.7
 ARG RUST_VERSION=nightly-bookworm-slim
+ARG RUST_TOOLCHAIN=nightly-2026-03-07
 
 FROM rustlang/rust:${RUST_VERSION}
 
+ARG RUST_TOOLCHAIN=nightly-2026-03-07
 ARG WASM_BINDGEN_CLI_VERSION=0.2.108
 ARG CARGO_LEPTOS_VERSION=0.3.4
 ARG CARGO_CHEF_VERSION=0.1.73
@@ -11,7 +13,6 @@ RUN set -ex; \
     apt-get update; \
     apt-get install -y \
         bash \
-        binaryen \
         build-essential \
         ca-certificates \
         curl \
@@ -25,7 +26,9 @@ RUN set -ex; \
     rm -rf /var/lib/apt/lists/*
 
 RUN set -ex; \
-    rustup target add wasm32-unknown-unknown
+    rustup toolchain install ${RUST_TOOLCHAIN} --profile minimal; \
+    rustup default ${RUST_TOOLCHAIN}; \
+    rustup target add wasm32-unknown-unknown --toolchain ${RUST_TOOLCHAIN}
 
 RUN set -ex; \
     curl -L --proto '=https' --tlsv1.2 -sSf \

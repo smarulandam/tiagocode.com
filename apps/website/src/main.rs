@@ -10,7 +10,7 @@ async fn main() -> std::io::Result<()> {
     use leptos::config::get_configuration;
     use leptos::prelude::*;
     use leptos_actix::{generate_route_list, LeptosRoutes};
-    use leptos_meta::MetaTags;
+    use leptos_meta::{HashedStylesheet, MetaTags};
     use redis::Client as RedisClient;
     use std::env;
 
@@ -68,6 +68,7 @@ async fn main() -> std::io::Result<()> {
                                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                                 <link rel="preconnect" href=api_base_url.clone() />
                                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                                <HashedStylesheet options=leptos_options.clone() id="leptos"/>
                                 <AutoReload options=leptos_options.clone() />
                                 <HydrationScripts options=leptos_options.clone()/>
                                 <MetaTags/>

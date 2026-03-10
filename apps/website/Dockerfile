@@ -43,6 +43,7 @@ WORKDIR /app
 
 # Copy project builded files
 COPY --from=builder /app/target/release/website /app/
+COPY --from=builder /app/target/release/hash.txt /app/hash.txt
 COPY --from=builder /app/target/site /app/site
 COPY --from=builder /app/Cargo.toml /app/
 
@@ -51,6 +52,8 @@ ENV LEPTOS_SITE_ADDR="0.0.0.0:3000"
 ENV LEPTOS_SITE_ROOT=./site
 ENV LEPTOS_TAILWIND_VERSION="v4.1.18"
 ENV LEPTOS_ENV="prod"
+ENV LEPTOS_HASH_FILES=true
+ENV LEPTOS_HASH_FILE_NAME=hash.txt
 
 EXPOSE 3000
 

@@ -29,6 +29,7 @@ jobs:
       base_image_name: ${{ steps.context.outputs.base_image_name }}
       base_image_version: ${{ steps.context.outputs.base_image_version }}
       rust_version: ${{ steps.context.outputs.rust_version }}
+      rust_toolchain: ${{ steps.context.outputs.rust_toolchain }}
       should_push: ${{ steps.context.outputs.should_push }}
     steps:
       - name: Checkout repository
@@ -51,6 +52,7 @@ jobs:
           echo "base_image_name=${BASE_IMAGE_NAME}" >> "$GITHUB_OUTPUT"
           echo "base_image_version=${BASE_IMAGE_VERSION}" >> "$GITHUB_OUTPUT"
           echo "rust_version=${RUST_VERSION}" >> "$GITHUB_OUTPUT"
+          echo "rust_toolchain=${RUST_TOOLCHAIN}" >> "$GITHUB_OUTPUT"
           echo "should_push=${should_push}" >> "$GITHUB_OUTPUT"
 
   build_and_publish:
@@ -89,6 +91,7 @@ jobs:
             org.opencontainers.image.description=Rust base image with build toolchain for Tiagocode website
             org.opencontainers.image.version=${{ needs.prepare.outputs.base_image_version }}
             io.tiagocode.rust-version=${{ needs.prepare.outputs.rust_version }}
+            io.tiagocode.rust-toolchain=${{ needs.prepare.outputs.rust_toolchain }}
 
       - name: Build and push image
         if: needs.prepare.outputs.should_push == 'true'
@@ -99,6 +102,7 @@ jobs:
           push: true
           build-args: |
             RUST_VERSION=${{ needs.prepare.outputs.rust_version }}
+            RUST_TOOLCHAIN=${{ needs.prepare.outputs.rust_toolchain }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=registry,ref=${{ needs.prepare.outputs.base_image_name }}:buildcache
@@ -113,5 +117,6 @@ jobs:
           push: false
           build-args: |
             RUST_VERSION=${{ needs.prepare.outputs.rust_version }}
+            RUST_TOOLCHAIN=${{ needs.prepare.outputs.rust_toolchain }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
