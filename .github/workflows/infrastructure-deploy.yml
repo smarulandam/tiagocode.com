@@ -1,4 +1,4 @@
-name: "Infrastructure Deploy"
+name: "Deploy Infrastructure"
 
 on:
   workflow_dispatch:
@@ -14,12 +14,12 @@ on:
       - "ops/infrastructure/**"
 
 concurrency:
-  group: infrastructure-deploy-${{ github.ref }}
+  group: deploy-infrastructure-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
   terraform:
-    name: Deploy infrastructure
+    name: Deploy Infrastructure
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 60

@@ -41,6 +41,8 @@ pub fn ArticleMediaSlider(
                                                     image=image.clone()
                                                     class="h-full w-full object-contain"
                                                     with_wrapper=false
+                                                    loading=Some("lazy")
+                                                    decoding=Some("async")
                                                 />
                                             </div>
                                         </li>
@@ -65,6 +67,8 @@ pub fn ArticleMediaSlider(
                                                     image=image.clone()
                                                     class="h-16 w-full object-cover md:h-20"
                                                     with_wrapper=false
+                                                    loading=Some("lazy")
+                                                    decoding=Some("async")
                                                 />
                                             </div>
                                         </li>

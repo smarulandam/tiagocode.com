@@ -25,6 +25,8 @@ fn ArticleImageBlock(image: Image, #[prop(into)] on_zoom: Callback<()>) -> impl 
                         image=image
                         class="max-h-[38rem] w-full object-contain"
                         with_wrapper=false
+                        loading=Some("lazy")
+                        decoding=Some("async")
                     />
                 </div>
             </div>
