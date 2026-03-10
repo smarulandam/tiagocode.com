@@ -1,0 +1,106 @@
+.article-prose,
+.article-prose a,
+.article-prose p,
+.article-prose div {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.article-prose h2 {
+    font-size: 1.7rem;
+    line-height: 1.7rem;
+    font-weight: 500;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.article-prose h3 {
+    font-size: 1.4rem;
+    line-height: 1.4rem;
+    font-weight: 500;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.article-prose p,
+.article-prose p > span {
+    line-height: 1.75rem;
+    color: #333;
+}
+
+.article-prose img {
+    margin-top: 1rem;
+    border-radius: 1rem;
+}
+
+.article-prose strong {
+    font-weight: 600;
+}
+
+.article-prose a {
+    color: inherit;
+    text-decoration: underline;
+    transition: color 0.2s ease-in-out;
+}
+
+.article-prose a:hover {
+    color: #0056b3;
+}
+
+.article-prose blockquote {
+    margin: 1.75rem 0;
+    padding-left: 1rem;
+    border-left: 3px solid color-mix(in oklab, #3a6eb8 55%, transparent);
+    color: #435366;
+    font-style: italic;
+}
+
+.article-prose table {
+    width: 100%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border-collapse: collapse;
+}
+
+.article-prose table td,
+.article-prose table th {
+    border: 1px solid color-mix(in oklab, #7f90a4 32%, transparent);
+    padding: 0.6rem 0.75rem;
+}
+
+.article-prose pre code {
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.article-prose ol,
+.article-prose ul {
+    padding-left: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.article-prose ol {
+    list-style-type: decimal;
+}
+
+.article-prose ul {
+    list-style-type: disc;
+}
+
+.article-prose pre {
+    margin: 1rem auto;
+    overflow-x: auto;
+}
+
+.hljs-ln-numbers {
+    width: 2rem;
+    text-align: center;
+    color: #6f8196;
+    border-right: 1px solid #41566e;
+    vertical-align: top;
+    padding-right: 0.5rem !important;
+}
+
+.hljs-ln-code {
+    padding-left: 0.75rem !important;
+}
