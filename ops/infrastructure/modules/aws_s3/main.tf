@@ -30,7 +30,13 @@ resource "aws_s3_bucket_cors_configuration" "default_cors_configuration" {
   cors_rule {
     allowed_headers = ["*"]
     allowed_methods = ["GET"]
-    allowed_origins = ["${var.project_domain_name}", "*.${var.project_domain_name}"]
+    allowed_origins = [
+      "https://${var.project_domain_name}",
+      "https://www.${var.project_domain_name}",
+      "https://admin.${var.project_domain_name}",
+      "https://local-website.${var.project_domain_name}",
+      "https://local-admin.${var.project_domain_name}",
+    ]
     expose_headers = []
     max_age_seconds = 300
   }
