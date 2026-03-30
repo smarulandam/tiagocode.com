@@ -12,6 +12,7 @@ use crate::application::domain::core::{AppError, Result};
 use crate::application::domain::portfolio::{AboutMeBuilder, BlogsBuilder};
 use crate::application::domain::portfolio::{Portfolio, PortfolioBuilder, PortfolioSection};
 use crate::application::domain::portfolio::{ProjectsBuilder, ResumeBuilder};
+use crate::application::value_objects::Url;
 
 /// Trait for converting external data into a `Portfolio` domain entity.
 /// Ensures separation between external data sources and core domain logic.
@@ -168,6 +169,7 @@ fn image_field_mapper(p: &ImageField) -> Image {
         .height(p.media_image().meta().height().clone())
         .width(p.media_image().meta().width().clone())
         .url(url)
+        .url_high_resolution(None::<Url>)
         .build()
         .unwrap()
 }

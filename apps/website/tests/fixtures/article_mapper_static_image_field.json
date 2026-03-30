@@ -1,0 +1,31 @@
+{
+  "id": "fa4f62e5-1fc5-4684-95c4-fa755dd9ba5f",
+  "type": "media--image",
+  "name": "Linked-List.png",
+  "media_image": {
+    "type": "file--file",
+    "id": "453309d0-81cb-48b7-9c04-69a550af2a75",
+    "uri": {
+      "value": "public://2025-03/Linked-List.png",
+      "url": "/sites/default/files/2025-03/Linked-List.png"
+    },
+    "filemime": "image/png",
+    "filesize": "23729",
+    "image_style_uri": {
+      "max_2600x2600": "https://local-admin.tiagocode.com/sites/default/files/styles/max_2600x2600/public/2025-03/Linked-List.png.webp?itok=eGE3L-nj",
+      "max_900x550": "https://local-admin.tiagocode.com/sites/default/files/styles/max_900x550/public/2025-03/Linked-List.png?itok=mW-yRXXY",
+      "medium": "https://local-admin.tiagocode.com/sites/default/files/styles/medium/public/2025-03/Linked-List.png.webp?itok=J0aS7HEY",
+      "medium_500x500": "https://local-admin.tiagocode.com/sites/default/files/styles/medium_500x500/public/2025-03/Linked-List.png?itok=9m_j_ago",
+      "thumbnail": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail/public/2025-03/Linked-List.png.webp?itok=2aCYnQNv",
+      "thumbnail_800x500": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail_800x500/public/2025-03/Linked-List.png?itok=thumb800",
+      "thumbnail_664x410": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail_664x410/public/2025-03/Linked-List.png?itok=Z9AYOgXp",
+      "thumbnail_260x210": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail_260x210/public/2025-03/Linked-List.png?itok=KYjQiWRd"
+    },
+    "meta": {
+      "alt": "Example image",
+      "title": "",
+      "width": "1081",
+      "height": "611"
+    }
+  }
+}

@@ -46,7 +46,7 @@ module:
   jsonapi_image_styles: 0
   jsonapi_include: 0
   jsonapi_links: 0
-  jsonapi_node_preview_tab: 0
+  jsonapi_preview_tab: 0
   jsonapi_resources: 0
   jsonapi_schema: 0
   language: 0

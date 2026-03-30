@@ -1,0 +1,15 @@
+uuid: d87c0c64-f491-478e-97d4-93d070da1b84
+langcode: en
+status: true
+dependencies: {  }
+name: thumbnail_800x500
+label: 'Thumbnail (800×500)'
+effects:
+  c4113e34-525b-460f-adfc-1f67b3833994:
+    uuid: c4113e34-525b-460f-adfc-1f67b3833994
+    id: image_scale
+    weight: 1
+    data:
+      width: 800
+      height: 500
+      upscale: false

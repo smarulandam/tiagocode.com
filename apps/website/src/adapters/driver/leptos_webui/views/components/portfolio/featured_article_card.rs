@@ -16,8 +16,12 @@ pub fn FeaturedArticleCard(
 
     view! {
         <article class="group rounded-[1.05rem]  transition duration-[160ms] ease-out hover:border-teal/20 sm:flex sm:items-start sm:gap-5">
-            <div class="relative overflow-hidden rounded-[0.9rem] bg-smoke flex-shrink-0">
-                <ImageView image=thumbnail class="w-full sm:w-[300px] lg:w-[320px] transition ease-custom duration-500 group-hover:scale-[1.02] group-hover:saturate-[1.03]" />
+            <div class="relative aspect-[26/21] w-full overflow-hidden rounded-[0.9rem] bg-smoke flex-shrink-0 sm:w-[300px] lg:w-[320px]">
+                <ImageView
+                    image=thumbnail
+                    with_wrapper=false
+                    class="h-full w-full object-cover transition ease-custom duration-500 group-hover:scale-[1.02] group-hover:saturate-[1.03]"
+                />
             </div>
             <div class="mt-4 flex min-w-0 flex-1 flex-col justify-center sm:mt-0">
                 <span class="text-base font-medium leading-6 text-zeus/60">

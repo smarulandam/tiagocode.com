@@ -32,6 +32,7 @@ pub struct TimelineItem {
 pub struct Image {
     id: Identifier,
     url: Url,
+    url_high_resolution: Option<Url>,
     alt: RequiredText,
     title: RequiredText,
     width: u16,
@@ -149,10 +150,26 @@ pub mod tests {
 
         assert!(serialized.contains(i.id().to_string().as_str()));
         assert!(serialized.contains(i.url().as_str()));
+        assert!(serialized.contains(i.url_high_resolution().as_ref().unwrap().as_str()));
         assert!(serialized.contains(i.alt().to_string().as_str()));
         assert!(serialized.contains(i.title().to_string().as_str()));
         assert!(serialized.contains(i.width().to_string().as_str()));
         assert!(serialized.contains(i.height().to_string().as_str()));
+    }
+
+    #[test]
+    fn deserialization_succeeds_when_valid_image() {
+        let i = image_fixture();
+        let serialized = serde_json::json!(&i).to_string();
+        let deserialized: Image = serde_json::from_str(&serialized).unwrap();
+
+        assert_eq!(i.id(), deserialized.id());
+        assert_eq!(i.url(), deserialized.url());
+        assert_eq!(i.url_high_resolution(), deserialized.url_high_resolution());
+        assert_eq!(i.alt(), deserialized.alt());
+        assert_eq!(i.title(), deserialized.title());
+        assert_eq!(i.width(), deserialized.width());
+        assert_eq!(i.height(), deserialized.height());
     }
 
     #[test]
@@ -221,6 +238,9 @@ pub mod tests {
         ImageBuilder::default()
             .id("b2c3d4e5-6f7a-8b9c-0d1e-2f3a4b5c6d7e".try_into().unwrap())
             .url("https://example.com/example.png".try_into().unwrap())
+            .url_high_resolution(Some(
+                "https://example.com/example@2x.png".try_into().unwrap(),
+            ))
             .alt("Dummy image".try_into().unwrap())
             .title("Dummy image".try_into().unwrap())
             .height(500)

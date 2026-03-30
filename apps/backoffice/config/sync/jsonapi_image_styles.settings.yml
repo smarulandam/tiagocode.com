@@ -8,7 +8,9 @@ image_styles:
   thumbnail: thumbnail
   thumbnail_260x210: thumbnail_260x210
   thumbnail_664x410: thumbnail_664x410
+  thumbnail_800x500: thumbnail_800x500
   large: '0'
+  max_1200x630: '0'
   max_1300x1300: '0'
   max_325x325: '0'
   max_650x650: '0'

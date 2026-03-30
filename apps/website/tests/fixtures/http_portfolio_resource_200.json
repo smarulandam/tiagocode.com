@@ -83,6 +83,7 @@
               "max_2600x2600": "https://local-admin.tiagocode.com/sites/default/files/styles/max_2600x2600/public/2025-01/profile500x500.jpg.webp?itok=BuwBM-FK",
               "medium": "https://local-admin.tiagocode.com/sites/default/files/styles/medium/public/2025-01/profile500x500.jpg.webp?itok=CIKwYVmf",
               "thumbnail": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail/public/2025-01/profile500x500.jpg.webp?itok=B4xReXMR",
+              "thumbnail_800x500": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail_800x500/public/2025-01/profile500x500.jpg?itok=thumb800",
               "thumbnail_664x410": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail/public/2025-01/thumbnail_664x410.jpg.webp?itok=B4xReXMR"
             },
             "meta": {
@@ -247,6 +248,7 @@
                   "max_2600x2600": "https://local-admin.tiagocode.com/sites/default/files/styles/max_2600x2600/public/2025-01/videoslots_website.png.webp?itok=q5r95dKa",
                   "medium": "https://local-admin.tiagocode.com/sites/default/files/styles/medium/public/2025-01/videoslots_website.png.webp?itok=ye2udCSQ",
                   "thumbnail": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail/public/2025-01/videoslots_website.png.webp?itok=osvsWrRR",
+                  "thumbnail_800x500": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail_800x500/public/2025-01/videoslots_website.png?itok=thumb800",
                   "thumbnail_664x410": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail/public/2025-01/videoslots_website.png.webp?itok=osvsWrRR"
                 },
                 "meta": {
@@ -295,6 +297,7 @@
                   "max_2600x2600": "https://local-admin.tiagocode.com/sites/default/files/styles/max_2600x2600/public/2025-01/sanvicente_website.png.webp?itok=uVJnCUhS",
                   "medium": "https://local-admin.tiagocode.com/sites/default/files/styles/medium/public/2025-01/sanvicente_website.png.webp?itok=4cY5C1h9",
                   "thumbnail": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail/public/2025-01/sanvicente_website.png.webp?itok=tSv2l6OV",
+                  "thumbnail_800x500": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail_800x500/public/2025-01/sanvicente_website.png?itok=thumb800",
                   "thumbnail_664x410": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail/public/2025-01/sanvicente_website.png.webp?itok=tSv2l6OV"
                 },
                 "meta": {
@@ -343,6 +346,7 @@
                   "max_2600x2600": "https://local-admin.tiagocode.com/sites/default/files/styles/max_2600x2600/public/2025-01/stella_artois_africa_website.png.webp?itok=qLsiE8NI",
                   "medium": "https://local-admin.tiagocode.com/sites/default/files/styles/medium/public/2025-01/stella_artois_africa_website.png.webp?itok=yq54zzmS",
                   "thumbnail": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail/public/2025-01/stella_artois_africa_website.png.webp?itok=30F8StXj",
+                  "thumbnail_800x500": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail_800x500/public/2025-01/stella_artois_africa_website.png?itok=thumb800",
                   "thumbnail_664x410": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail/public/2025-01/stella_artois_africa_website.png.webp?itok=30F8StXj"
                 },
                 "meta": {

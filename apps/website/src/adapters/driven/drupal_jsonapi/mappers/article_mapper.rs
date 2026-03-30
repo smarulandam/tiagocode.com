@@ -8,12 +8,14 @@ use crate::application::domain::article::{Article, ArticleBuilder, Articles};
 use crate::application::domain::article::{ArticleContent, Category, CategoryBuilder};
 use crate::application::domain::common::{Image, ImageBuilder};
 use crate::application::domain::core::{AppError, Result};
-use crate::application::value_objects::RequiredText;
+use crate::application::value_objects::{RequiredText, Url};
 
 lazy_static! {
     static ref BLOCKED_CONTENT_ATTRIBUTES: Regex =
         Regex::new(r#"(style=".*?"|data-\w+=".*?"|data-pm-slice=".*?")"#).unwrap();
 }
+
+const GIF_MIME_TYPE: &str = "image/gif";
 
 /// Trait for converting external data into an `Article` domain entity.
 /// Ensures separation between external data sources and core domain logic.
@@ -90,7 +92,10 @@ fn media_paragraph_adapter(p: &ContentField) -> ArticleContent {
 fn slider_paragraph_adapter(p: &ContentField) -> ArticleContent {
     if let ContentField::ContentSlider(p) = p {
         return ArticleContent::Slider(
-            p.media_list().iter().map(thumbnail_field_mapper).collect(),
+            p.media_list()
+                .iter()
+                .map(slider_thumbnail_field_mapper)
+                .collect(),
             p.media_list().iter().map(image_field_mapper).collect(),
         );
     }
@@ -123,10 +128,45 @@ fn tag_vocabulary_mapper(tag: TagsVocabulary) -> Category {
 }
 
 fn image_field_mapper(p: &ImageField) -> Image {
+    let media = p.media_image();
+    let original_url = absolute_asset_url(
+        media.uri().url().as_str(),
+        media.image_style_uri().max_900x550().as_str(),
+    );
+
+    let url = if media.mime_type() == GIF_MIME_TYPE {
+        original_url.clone()
+    } else {
+        media.image_style_uri().max_900x550().to_string()
+    }
+    .try_into()
+    .unwrap();
+
+    let url_high_resolution = if media.mime_type() == GIF_MIME_TYPE {
+        original_url
+    } else {
+        media.image_style_uri().max_2600x2600().to_string()
+    }
+    .try_into()
+    .unwrap();
+
+    ImageBuilder::default()
+        .id(p.id().to_string().try_into().unwrap())
+        .title(media.meta().alt().to_string().try_into().unwrap())
+        .alt(media.meta().alt().to_string().try_into().unwrap())
+        .height(media.meta().height().clone())
+        .width(media.meta().width().clone())
+        .url(url)
+        .url_high_resolution(Some(url_high_resolution))
+        .build()
+        .unwrap()
+}
+
+fn thumbnail_field_mapper(p: &ImageField) -> Image {
     let url = p
         .media_image()
         .image_style_uri()
-        .max_900x550()
+        .thumbnail_800x500()
         .to_string()
         .try_into()
         .unwrap();
@@ -138,11 +178,12 @@ fn image_field_mapper(p: &ImageField) -> Image {
         .height(p.media_image().meta().height().clone())
         .width(p.media_image().meta().width().clone())
         .url(url)
+        .url_high_resolution(None::<Url>)
         .build()
         .unwrap()
 }
 
-fn thumbnail_field_mapper(p: &ImageField) -> Image {
+fn slider_thumbnail_field_mapper(p: &ImageField) -> Image {
     let url = p
         .media_image()
         .image_style_uri()
@@ -158,6 +199,90 @@ fn thumbnail_field_mapper(p: &ImageField) -> Image {
         .height(p.media_image().meta().height().clone())
         .width(p.media_image().meta().width().clone())
         .url(url)
+        .url_high_resolution(None::<Url>)
         .build()
         .unwrap()
+}
+
+fn absolute_asset_url(asset_path: &str, fallback_absolute_url: &str) -> String {
+    if asset_path.starts_with("http://") || asset_path.starts_with("https://") {
+        return asset_path.to_string();
+    }
+
+    let Some(scheme_end) = fallback_absolute_url.find("://").map(|index| index + 3) else {
+        return asset_path.to_string();
+    };
+
+    let origin = match fallback_absolute_url[scheme_end..].find('/') {
+        Some(path_start) => &fallback_absolute_url[..scheme_end + path_start],
+        None => fallback_absolute_url,
+    };
+
+    if asset_path.starts_with('/') {
+        format!("{origin}{asset_path}")
+    } else {
+        format!("{origin}/{asset_path}")
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::fs;
+
+    fn image_field_fixture(file_name: &str) -> ImageField {
+        let fixture_path = format!("{}/tests/fixtures/{file_name}", env!("CARGO_MANIFEST_DIR"));
+        let content = fs::read_to_string(fixture_path).unwrap();
+
+        serde_json::from_str(&content).unwrap()
+    }
+
+    fn static_image_field_fixture() -> ImageField {
+        image_field_fixture("article_mapper_static_image_field.json")
+    }
+
+    fn gif_image_field_fixture() -> ImageField {
+        image_field_fixture("article_mapper_gif_image_field.json")
+    }
+
+    #[test]
+    fn article_thumbnail_mapper_uses_800x500_style_without_high_resolution() {
+        let image = thumbnail_field_mapper(&static_image_field_fixture());
+
+        assert!(image.url().as_str().contains("/styles/thumbnail_800x500/"));
+        assert!(image.url_high_resolution().is_none());
+    }
+
+    #[test]
+    fn slider_thumbnail_mapper_keeps_260x210_style_without_high_resolution() {
+        let image = slider_thumbnail_field_mapper(&static_image_field_fixture());
+
+        assert!(image.url().as_str().contains("/styles/thumbnail_260x210/"));
+        assert!(image.url_high_resolution().is_none());
+    }
+
+    #[test]
+    fn image_mapper_uses_render_and_high_resolution_styles_for_static_images() {
+        let image = image_field_mapper(&static_image_field_fixture());
+
+        assert!(image.url().as_str().contains("/styles/max_900x550/"));
+        assert!(image
+            .url_high_resolution()
+            .as_ref()
+            .unwrap()
+            .as_str()
+            .contains("/styles/max_2600x2600/"));
+    }
+
+    #[test]
+    fn image_mapper_uses_original_absolute_url_for_gifs() {
+        let image = image_field_mapper(&gif_image_field_fixture());
+        let expected = "https://local-admin.tiagocode.com/sites/default/files/2026-03/dailyfina-hydrangea-26262.gif";
+
+        assert_eq!(image.url().as_str(), expected);
+        assert_eq!(
+            image.url_high_resolution().as_ref().unwrap().as_str(),
+            expected
+        );
+    }
 }

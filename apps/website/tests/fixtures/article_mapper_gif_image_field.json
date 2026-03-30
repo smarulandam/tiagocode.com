@@ -1,0 +1,31 @@
+{
+  "id": "fa4f62e5-1fc5-4684-95c4-fa755dd9ba5f",
+  "type": "media--image",
+  "name": "dailyfina-hydrangea-26262.gif",
+  "media_image": {
+    "type": "file--file",
+    "id": "453309d0-81cb-48b7-9c04-69a550af2a75",
+    "uri": {
+      "value": "public://2026-03/dailyfina-hydrangea-26262.gif",
+      "url": "/sites/default/files/2026-03/dailyfina-hydrangea-26262.gif"
+    },
+    "filemime": "image/gif",
+    "filesize": "23729",
+    "image_style_uri": {
+      "max_2600x2600": "https://local-admin.tiagocode.com/sites/default/files/styles/max_2600x2600/public/2026-03/dailyfina-hydrangea-26262.gif?itok=gif2600",
+      "max_900x550": "https://local-admin.tiagocode.com/sites/default/files/styles/max_900x550/public/2026-03/dailyfina-hydrangea-26262.gif?itok=gif900",
+      "medium": "https://local-admin.tiagocode.com/sites/default/files/styles/medium/public/2026-03/dailyfina-hydrangea-26262.gif?itok=gif500",
+      "medium_500x500": "https://local-admin.tiagocode.com/sites/default/files/styles/medium_500x500/public/2026-03/dailyfina-hydrangea-26262.gif?itok=gif500sq",
+      "thumbnail": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail/public/2026-03/dailyfina-hydrangea-26262.gif?itok=gifthumb",
+      "thumbnail_800x500": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail_800x500/public/2026-03/dailyfina-hydrangea-26262.gif?itok=gifthumb800",
+      "thumbnail_664x410": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail_664x410/public/2026-03/dailyfina-hydrangea-26262.gif?itok=gifthumb664",
+      "thumbnail_260x210": "https://local-admin.tiagocode.com/sites/default/files/styles/thumbnail_260x210/public/2026-03/dailyfina-hydrangea-26262.gif?itok=gifthumb260"
+    },
+    "meta": {
+      "alt": "Animated flower",
+      "title": "",
+      "width": "800",
+      "height": "800"
+    }
+  }
+}

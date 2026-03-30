@@ -25,6 +25,9 @@ pub struct ImageMedia {
     id: String,
     #[serde(rename = "type")]
     entity_type: String,
+    uri: DocumentUriMetadata,
+    #[serde(rename = "filemime")]
+    mime_type: String,
     meta: ImageGeneralMetadata,
     image_style_uri: ImageStylesMetadata,
 }
@@ -36,6 +39,7 @@ pub struct ImageStylesMetadata {
     medium_500x500: String,
     medium: String,
     thumbnail: String,
+    thumbnail_800x500: String,
     thumbnail_664x410: String,
     thumbnail_260x210: String,
 }

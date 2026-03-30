@@ -141,7 +141,11 @@ pub fn MediaLightbox(state: LightboxState, #[prop(into)] on_close: Callback<()>)
                                 <div class="flex h-full w-full flex-col items-center justify-center gap-4">
                                     <img
                                         class="max-h-[75vh] w-full object-contain"
-                                        src=image.url().to_string()
+                                        src=image
+                                            .url_high_resolution()
+                                            .as_ref()
+                                            .unwrap_or(image.url())
+                                            .to_string()
                                         alt=image.alt().to_string()
                                     />
                                     <p class="max-w-[70ch] text-center text-sm leading-6 text-white/70">

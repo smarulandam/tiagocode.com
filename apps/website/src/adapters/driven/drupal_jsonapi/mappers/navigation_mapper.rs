@@ -6,6 +6,7 @@ use crate::adapters::driven::drupal_jsonapi::entities::{Navigation, NavigationIt
 use crate::application::domain::common::{Image, ImageBuilder};
 use crate::application::domain::core::{AppError, Result};
 use crate::application::domain::layout::{MenuItem, MenuItemBuilder, MenuTree, MenuTreeBuilder};
+use crate::application::value_objects::Url;
 
 /// Trait for converting external data into a `MenuTree` domain entity.
 /// Ensures separation between external data sources and core domain logic.
@@ -85,6 +86,7 @@ fn external_image_mapper(image: &NavigationImageMetadata) -> Image {
     ImageBuilder::default()
         .id(Uuid::new_v4().to_string().try_into().unwrap())
         .url(image.url().to_string().try_into().unwrap())
+        .url_high_resolution(None::<Url>)
         .alt(image.alt().to_string().try_into().unwrap())
         .title(image.alt().to_string().try_into().unwrap())
         .width(image.width().clone())
