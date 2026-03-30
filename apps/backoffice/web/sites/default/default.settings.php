@@ -857,7 +857,9 @@ $settings['migrate_node_migrate_type_classic'] = FALSE;
  */
 
 $settings['reverse_proxy'] = TRUE;
-$settings['reverse_proxy_addresses'] = ['traefik', '127.0.0.1'];
+$settings['reverse_proxy_addresses'] = [
+  gethostbyname(getenv('DRUPAL_REVERSE_PROXY_HOST')),
+];
 $settings['reverse_proxy_trusted_headers'] =
   \Symfony\Component\HttpFoundation\Request::HEADER_X_FORWARDED_FOR |
   \Symfony\Component\HttpFoundation\Request::HEADER_X_FORWARDED_HOST |
