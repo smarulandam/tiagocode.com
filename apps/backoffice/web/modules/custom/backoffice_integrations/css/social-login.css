@@ -1,0 +1,189 @@
+body.gin-login .user-form-page .content-header {
+  padding-top: 1.25rem;
+}
+
+body.gin-login .user-form-page__page-title {
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 800px) {
+  body.gin-login .user-form-page__page-title {
+    margin-top: 0.75rem;
+  }
+}
+
+body.gin-login .user-login-form .backoffice-social-login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  margin-top: 1.75rem;
+}
+
+body.gin-login .user-login-form .backoffice-social-login__label {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  width: 100%;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gin-color-text-light, rgba(0, 0, 0, 0.72));
+}
+
+body.gin-login .user-login-form .backoffice-social-login__label::before,
+body.gin-login .user-login-form .backoffice-social-login__label::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--gin-border-color-form-element, rgba(0, 0, 0, 0.12));
+}
+
+body.gin-login .user-login-form .backoffice-social-login__card {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  padding: 0;
+  text-decoration: none;
+  background: var(--gin-bg-layer, #fff);
+  border: 1px solid var(--gin-border-color-form-element, rgba(0, 0, 0, 0.12));
+  border-radius: var(--gin-border-m, 0.875rem);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+body.gin-login .user-login-form .backoffice-social-login__card:hover {
+  border-color: var(--gin-color-primary, #003cc5);
+  box-shadow: 0 8px 20px rgba(0, 60, 197, 0.14);
+  transform: translateY(-1px);
+}
+
+body.gin-login .user-login-form .backoffice-social-login__card:focus-visible {
+  outline: none;
+  border-color: var(--gin-color-primary, #003cc5);
+  box-shadow: 0 0 0 1px var(--gin-color-focus-border, #003cc5), 0 0 0 4px var(--gin-color-focus, rgba(0, 60, 197, 0.18));
+}
+
+body.gin-login .user-login-form .backoffice-social-login__card img {
+  display: block;
+  width: 2rem;
+  height: 2rem;
+}
+
+body.gin-login .user-login-form .backoffice-login-captcha {
+  width: 100%;
+  min-inline-size: 0;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  border: 0;
+}
+
+body.gin-login .user-login-form .backoffice-login-captcha > legend.captcha__title,
+body.gin-login .user-login-form .backoffice-login-captcha > label.captcha__title {
+  margin-bottom: 0.625rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--gin-color-text-light, rgba(0, 0, 0, 0.72));
+}
+
+body.gin-login .user-login-form .backoffice-login-captcha .captcha__description {
+  margin-bottom: 0.75rem;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: var(--gin-color-text-light, rgba(0, 0, 0, 0.68));
+}
+
+body.gin-login .user-login-form .backoffice-login-captcha .captcha__element {
+  display: flex;
+  justify-content: center;
+}
+
+body.gin-login .user-login-form .backoffice-login-captcha .g-recaptcha {
+  display: inline-flex;
+  justify-content: center;
+  max-width: 100%;
+}
+
+body.gin-login .user-login-form .backoffice-login-actions {
+  margin-top: 1.75rem;
+}
+
+body.gin-login .user-login-form .backoffice-login-forgot {
+  display: block;
+  width: 100%;
+  margin-top: 0.875rem;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  text-align: center;
+  color: var(--gin-color-text-light, rgba(0, 0, 0, 0.72));
+  text-decoration: none;
+  text-underline-offset: 0.16em;
+}
+
+body.gin-login .user-login-form .backoffice-login-forgot:hover,
+body.gin-login .user-login-form .backoffice-login-forgot:focus-visible {
+  color: var(--gin-color-primary, #003cc5);
+  text-decoration: underline;
+}
+
+body.gin-login .user-login-form .more-links,
+body.gin-login .user-login-form .backoffice-login-links {
+  justify-content: center;
+  text-align: center;
+}
+
+body.gin-login .user-login-form .more-links .link--more,
+body.gin-login .user-login-form .backoffice-login-links .link--more,
+body.gin-login .user-login-form .backoffice-login-forgot {
+  width: 100%;
+  text-align: center;
+}
+
+body.gin-login .user-login-form .backoffice-login-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+body.gin-login .user-login-form .backoffice-login-links .register-button {
+  width: auto;
+  min-width: 12rem;
+  padding-inline: 1.25rem;
+}
+
+body.gin-login .user-login-form .backoffice-login-links .link--more {
+  margin-top: 0;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  text-align: center;
+  color: var(--gin-color-text-light, rgba(0, 0, 0, 0.72));
+  text-decoration: none;
+  text-underline-offset: 0.16em;
+}
+
+body.gin-login .user-login-form .backoffice-login-links .link--more:hover,
+body.gin-login .user-login-form .backoffice-login-links .link--more:focus-visible {
+  color: var(--gin-color-primary, #003cc5);
+  text-decoration: underline;
+}
+
+@media (max-width: 800px) {
+  body.gin-login .user-form-page .content-header {
+    padding-top: 1rem;
+    margin-bottom: 2.25rem;
+  }
+
+  body.gin-login .user-login-form .backoffice-login-captcha .captcha__element {
+    justify-content: flex-start;
+  }
+}

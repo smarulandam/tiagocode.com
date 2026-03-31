@@ -1,0 +1,4 @@
+social_login:
+  css:
+    theme:
+      css/social-login.css: {}

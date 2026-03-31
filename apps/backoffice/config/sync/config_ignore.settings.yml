@@ -15,3 +15,5 @@ ignored_config_entities:
   - 'smtp.settings:smtp_password'
   - 'smtp.settings:smtp_test_address'
   - 'smtp.settings:smtp_username'
+  - 'social_auth_github.settings:client_id'
+  - 'social_auth_github.settings:client_secret'

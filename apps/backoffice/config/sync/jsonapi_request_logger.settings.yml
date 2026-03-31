@@ -1,0 +1,9 @@
+_core:
+  default_config_hash: 0mpE8MLbT-iVYoh9j0WSjOeGE4W4EbBBU_9L01cEf2I
+enable: true
+exclude_routes: ''
+omit_empty_body: false
+request_methods:
+  GET: GET
+log_output_template: 'Method: {method}, URL: {url}, Status: {status_code}, Headers: {headers}, Query: {query}, Content: {content}'
+log_format: json
