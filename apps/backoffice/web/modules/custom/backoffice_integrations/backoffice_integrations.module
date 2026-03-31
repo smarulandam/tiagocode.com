@@ -22,16 +22,8 @@ function backoffice_integrations_cache_flush(): void {
  * Implements hook_form_FORM_ID_alter() for user_login_form.
  */
 function backoffice_integrations_form_user_login_form_alter(array &$form, FormStateInterface $form_state): void {
-  $modal_complete_url = Url::fromRoute('social_auth_modal.complete')->toString();
-  $github_login_url = Url::fromRoute('social_auth.network.redirect', [
-    'network' => 'github',
-  ], [
-    'query' => [
-      'destination' => $modal_complete_url,
-    ],
-  ]);
+  $github_login_url = Url::fromRoute('social_auth.network.redirect', ['network' => 'github']);
   $github_logo_path = base_path() . \Drupal::service('extension.list.module')->getPath('social_auth_github') . '/img/github_logo.svg';
-  $modal_settings = \Drupal::config('social_auth_modal.settings');
 
   if (isset($form['captcha'])) {
     $form['captcha']['#weight'] = 97;
@@ -90,7 +82,6 @@ function backoffice_integrations_form_user_login_form_alter(array &$form, FormSt
       '#attributes' => [
         'class' => [
           'backoffice-social-login__card',
-          'social-auth-modal__link',
         ],
         'aria-label' => t('Continue with GitHub'),
         'title' => t('Continue with GitHub'),
@@ -98,10 +89,5 @@ function backoffice_integrations_form_user_login_form_alter(array &$form, FormSt
     ],
   ];
 
-  $form['#attached']['library'][] = 'social_auth_modal/modal_open';
   $form['#attached']['library'][] = 'backoffice_integrations/social_login';
-  $form['#attached']['drupalSettings']['socialAuthModal'] = [
-    'width' => (int) $modal_settings->get('modal_width'),
-    'height' => (int) $modal_settings->get('modal_height'),
-  ];
 }
