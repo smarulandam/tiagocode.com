@@ -11,7 +11,7 @@ use crate::application::domain::common::Image;
 #[component]
 fn ArticleImageBlock(image: Image, #[prop(into)] on_zoom: Callback<()>) -> impl IntoView {
     view! {
-        <div class="article-media">
+        <div class="article-media article-media--plain">
             <div class="article-media-frame">
                 <button
                     type="button"
@@ -39,7 +39,7 @@ pub fn ArticleContentRenderer(content: Vec<ArticleContent>) -> impl IntoView {
     let (lightbox, set_lightbox) = signal(None::<LightboxState>);
 
     view! {
-        <div class="mt-7 flex flex-col gap-6 md:mt-8 md:gap-8">
+        <div class="article-content mt-7 flex flex-col gap-6 md:mt-8 md:gap-8" data-article-content="true">
             {content
                 .into_iter()
                 .map(|content_block| match content_block {

@@ -4,7 +4,8 @@ use leptos_router::hooks::use_location;
 
 use crate::adapters::driver::leptos_webui::controllers::article_detail_controller;
 use crate::adapters::driver::leptos_webui::views::components::blog::{
-    ArticleContentRenderer, ArticleHeader,
+    collect_article_table_of_contents_items, ArticleContentRenderer, ArticleContentTable,
+    ArticleHeader,
 };
 use crate::adapters::driver::leptos_webui::views::components::common::{
     SeoMetaTags, UnexpectedError,
@@ -31,6 +32,8 @@ pub fn BlogDetailPage() -> impl IntoView {
                         }
 
                         let article = data.unwrap();
+                        let table_of_contents_items =
+                            collect_article_table_of_contents_items(article.content());
 
                         view! {
                             <SeoMetaTags metatags=article.metatags().clone() />
@@ -49,13 +52,28 @@ pub fn BlogDetailPage() -> impl IntoView {
 
                             <div class="pb-12">
                                 <div class="article-shell -mx-5 w-auto rounded-none bg-white px-5 py-7 shadow-smoke-shadow transition ease-out duration-[160ms] md:px-8 md:py-10 lg:px-10 lg:py-12 xl:mx-auto xl:w-full xl:rounded-lg xl:px-12">
-                                    <ArticleHeader article=article.clone() />
-                                    <ArticleContentRenderer content=article.content().clone() />
+                                    <div class="flex flex-col lg:grid lg:grid-cols-[minmax(0,1fr)_280px] lg:gap-x-10 xl:grid-cols-[minmax(0,1fr)_300px] xl:gap-x-12">
+                                        <div class="lg:col-start-1 lg:row-start-1">
+                                            <ArticleHeader article=article.clone() />
+                                        </div>
+                                        <div class="min-w-0 lg:col-start-1 lg:row-start-2">
+                                            <ArticleContentRenderer content=article.content().clone() />
+                                        </div>
+                                        <div class="lg:col-start-2 lg:row-start-2">
+                                            <ArticleContentTable items=table_of_contents_items />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
                             <script>
                                 "const initArticleDetail = () => {
+                                    if (window.__articleTableOfContentsCleanup) {
+                                        window.__articleTableOfContentsCleanup();
+                                    }
+
+                                    window.__articleTableOfContentsCleanup = null;
+
                                     if (window.Prism) {
                                         const languageAliases = {
                                             sh: 'bash',
@@ -162,6 +180,79 @@ pub fn BlogDetailPage() -> impl IntoView {
                                               thumbnails.mount();
                                               element.dataset.sliderMounted = 'true';
                                         });
+                                    }
+
+                                    const articleContent = document.querySelector('[data-article-content]');
+                                    const tableOfContentsItems = Array.from(document.querySelectorAll('[data-article-table-of-contents-index]'));
+
+                                    if (articleContent && tableOfContentsItems.length > 0) {
+                                        const articleHeadings = Array.from(articleContent.querySelectorAll('h1, h2, h3'));
+                                        const trackedHeadingCount = Math.min(articleHeadings.length, tableOfContentsItems.length);
+                                        const trackedArticleHeadings = articleHeadings.slice(0, trackedHeadingCount);
+
+                                        const getCurrentHeadingIndex = () => {
+                                            for (let index = trackedArticleHeadings.length - 1; index >= 0; index -= 1) {
+                                                if (trackedArticleHeadings[index].getBoundingClientRect().top <= 156) {
+                                                    return index;
+                                                }
+                                            }
+
+                                            return trackedArticleHeadings.length > 0 ? 0 : null;
+                                        };
+
+                                        const setActiveTableOfContentsItem = (headingIndex) => {
+                                            document.querySelectorAll('[data-article-table-of-contents-index].is-active').forEach(function(item) {
+                                                item.classList.remove('is-active');
+                                                item.removeAttribute('aria-current');
+                                            });
+
+                                            if (typeof headingIndex !== 'number' || Number.isNaN(headingIndex)) {
+                                                return;
+                                            }
+
+                                            document.querySelectorAll(`[data-article-table-of-contents-index=\"${headingIndex}\"]`).forEach(function(item) {
+                                                item.classList.add('is-active');
+                                                item.setAttribute('aria-current', 'location');
+                                            });
+                                        };
+
+                                        setActiveTableOfContentsItem(getCurrentHeadingIndex());
+
+                                        if ('IntersectionObserver' in window && trackedArticleHeadings.length > 0) {
+                                            const observer = new IntersectionObserver(function(entries) {
+                                                const visibleHeadingIndexes = entries
+                                                    .filter(function(entry) {
+                                                        return entry.isIntersecting;
+                                                    })
+                                                    .map(function(entry) {
+                                                        return trackedArticleHeadings.indexOf(entry.target);
+                                                    })
+                                                    .filter(function(headingIndex) {
+                                                        return headingIndex >= 0;
+                                                    })
+                                                    .sort(function(a, b) {
+                                                        return a - b;
+                                                    });
+
+                                                if (visibleHeadingIndexes.length > 0) {
+                                                    setActiveTableOfContentsItem(visibleHeadingIndexes[0]);
+                                                    return;
+                                                }
+
+                                                setActiveTableOfContentsItem(getCurrentHeadingIndex());
+                                            }, {
+                                                rootMargin: '-132px 0px -58% 0px',
+                                                threshold: [0, 0.2, 0.5, 1],
+                                            });
+
+                                            trackedArticleHeadings.forEach(function(heading) {
+                                                observer.observe(heading);
+                                            });
+
+                                            window.__articleTableOfContentsCleanup = function() {
+                                                observer.disconnect();
+                                            };
+                                        }
                                     }
                                 };
 

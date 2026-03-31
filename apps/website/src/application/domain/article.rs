@@ -29,6 +29,13 @@ pub enum ArticleContent {
     Unknown,
 }
 
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct ArticleContentTableItem {
+    pub id: Option<String>,
+    pub title: String,
+    pub level: u8,
+}
+
 #[derive(Debug, Clone, Getters, Serialize, Deserialize, Builder)]
 pub struct Category {
     id: Identifier,

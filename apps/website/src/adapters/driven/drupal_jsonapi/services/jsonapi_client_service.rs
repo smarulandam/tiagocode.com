@@ -1,6 +1,6 @@
 use serde::de::DeserializeOwned;
 use serde::Serialize;
-use serde_json::{from_value, Value};
+use serde_json::from_value;
 use std::time::Duration;
 
 use crate::adapters::driven::drupal_jsonapi::entities::ResolvedRoute;
@@ -23,15 +23,15 @@ impl JsonApiClientService {
     pub async fn resolve_external_endpoint(&self, path: &str) -> Result<String> {
         let path = format!("/router/translate-path?path={path}");
 
-        let route_data: Value = self
+        let route_data: ResolvedRoute = self
             .cache_service
             .remember(&path, Duration::from_hours(168), || async {
-                self.http_service.get_json(&path).await
+                let route_data = self.http_service.get_json(&path).await?;
+
+                from_value::<ResolvedRoute>(route_data)
+                    .map_err(|e| AppError::decode("resolved route", e))
             })
             .await?;
-
-        let route_data = from_value::<ResolvedRoute>(route_data)
-            .map_err(|e| AppError::decode("resolved route", e))?;
 
         Ok(format!(
             "/{}/{}/{}/{}",
@@ -46,15 +46,15 @@ impl JsonApiClientService {
     where
         T: Serialize + DeserializeOwned + std::fmt::Debug,
     {
-        let data: Value = self
+        let data: T = self
             .cache_service
             .remember(&endpoint, Duration::from_hours(168), || async {
-                self.http_service.get_json(endpoint).await
+                let data = self.http_service.get_json(endpoint).await?;
+
+                serde_json_path_to_error::from_value::<T>(data)
+                    .map_err(|e| AppError::decode("jsonapi payload", e))
             })
             .await?;
-
-        let data: T = serde_json_path_to_error::from_value::<T>(data)
-            .map_err(|e| AppError::decode("jsonapi payload", e))?;
 
         Ok(data)
     }
