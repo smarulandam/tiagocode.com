@@ -22,6 +22,7 @@ RUN --mount=type=cache,target=/tmp/composer-cache,uid=1000,gid=1000 \
 COPY --chown=tiagocode:tiagocode . .
 COPY --chown=tiagocode:tiagocode ./web/sites/default/default.settings.php ./web/sites/default/settings.php
 COPY ./php.ini-production "$PHP_INI_DIR/php.ini"
+COPY ./zz-performance.ini "$PHP_INI_DIR/conf.d/zz-performance.ini"
 
 RUN set -ex; \
     mkdir -p /var/www/html/web/sites/default/files; \
