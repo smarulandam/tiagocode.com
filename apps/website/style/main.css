@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Roboto+Mono:wght@300;400;500;600;700&display=swap');
 
 @import "tailwindcss";
+
 @source "../src";
 @source inline("hidden");
 @custom-variant dark (&:where(.dark, .dark *));
@@ -188,6 +189,74 @@
         @apply m-0 font-poppins text-[1.2rem] font-medium leading-8 text-deepsea/76;
     }
 
+    .article-prose table,
+    .article-prose .table {
+        @apply my-8 w-full border border-black/8 bg-white;
+        border-collapse: separate;
+        border-spacing: 0;
+        border-radius: 0.95rem;
+    }
+
+    .article-prose table td,
+    .article-prose .table td {
+        @apply border-b border-black/6 px-4 py-3 text-left align-top text-[1rem] leading-7 text-zeus/80 md:px-5 md:py-3;
+        overflow-wrap: break-word;
+        word-break: normal;
+    }
+
+    .article-prose table thead th,
+    .article-prose .table thead th {
+        @apply border-b border-black/8 bg-[#f5f8fa] px-4 py-3 text-left font-poppins text-[0.9rem] font-semibold leading-6 text-deepsea/82 md:px-5;
+        overflow-wrap: break-word;
+        word-break: normal;
+    }
+
+    .article-prose table thead th strong,
+    .article-prose .table thead th strong {
+        color: inherit;
+        font-weight: inherit;
+    }
+
+    .article-prose table thead tr:first-child th:first-child,
+    .article-prose .table thead tr:first-child th:first-child {
+        border-top-left-radius: 0.95rem;
+    }
+
+    .article-prose table thead tr:first-child th:last-child,
+    .article-prose .table thead tr:first-child th:last-child {
+        border-top-right-radius: 0.95rem;
+    }
+
+    .article-prose table tbody tr:last-child td:first-child,
+    .article-prose .table tbody tr:last-child td:first-child {
+        border-bottom-left-radius: 0.95rem;
+    }
+
+    .article-prose table tbody tr:last-child td:last-child,
+    .article-prose .table tbody tr:last-child td:last-child {
+        border-bottom-right-radius: 0.95rem;
+    }
+
+    .article-prose table tbody tr:last-child td,
+    .article-prose .table tbody tr:last-child td {
+        border-bottom-width: 0;
+    }
+
+    .article-prose table tbody tr:nth-child(even) td,
+    .article-prose .table tbody tr:nth-child(even) td {
+        @apply bg-[#fbfcfd];
+    }
+
+    .article-prose table :where(p, div, ul, ol),
+    .article-prose .table :where(p, div, ul, ol) {
+        margin: 0;
+    }
+
+    .article-prose table :where(ul, ol),
+    .article-prose .table :where(ul, ol) {
+        @apply space-y-1.5 pl-5;
+    }
+
     .article-prose .code-toolbar {
         @apply relative my-8;
     }
@@ -237,6 +306,16 @@
 
     .article-prose code[class*="language-"]:not(pre code) {
         @apply my-4 block w-full overflow-x-auto rounded-[1rem] border border-[#0f1720]/10 bg-[#07111b] px-4 py-4 font-mono text-base leading-8 text-white shadow-[0_16px_28px_rgba(11,19,32,0.12)];
+    }
+
+    @media (max-width: 767.98px) {
+        .article-prose table,
+        .article-prose .table {
+            display: block;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            max-width: 100%;
+        }
     }
 
     .article-prose .token.comment,
