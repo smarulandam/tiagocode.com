@@ -92,6 +92,7 @@ module:
   rest_menu_items: 0
   restui: 0
   s3fs: 0
+  save_edit: 0
   schemata: 0
   schemata_json_schema: 0
   search: 0
