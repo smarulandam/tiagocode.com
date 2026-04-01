@@ -1,0 +1,113 @@
+--- a/src/EventSubscriber.php
++++ b/src/EventSubscriber.php
+@@ -8,6 +8,7 @@ use Drupal\Core\Config\ConfigEvents;
+ use Drupal\Core\Config\ConfigFactoryInterface;
+ use Drupal\Core\Routing\RouteBuilderInterface;
+ use Drupal\Core\Routing\RouteBuildEvent;
++use Drupal\Core\Session\AccountInterface;
+ use Drupal\Core\Routing\RouteObjectInterface;
+ use Drupal\Core\Routing\RoutingEvents;
+ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+@@ -45,7 +46,11 @@ class EventSubscriber implements EventSubscriberInterface {
+     'user.register',
+   ];
+ 
+-  public function __construct(protected ConfigFactoryInterface $configFactory, protected RouteBuilderInterface $routeBuilder) {
++  public function __construct(
++    protected ConfigFactoryInterface $configFactory,
++    protected RouteBuilderInterface $routeBuilder,
++    protected AccountInterface $currentUser,
++  ) {
+   }
+ 
+   /**
+@@ -87,6 +92,9 @@ class EventSubscriber implements EventSubscriberInterface {
+     if ($request->getRequestFormat() !== 'html') {
+       return FALSE;
+     }
++    if (in_array('administrator', $this->currentUser->getRoles(), TRUE)) {
++      return FALSE;
++    }
+     /** @var \Symfony\Component\Routing\Route|null $route_object */
+     $route_object = $request->attributes->get(RouteObjectInterface::ROUTE_OBJECT);
+     if ($route_object && $route_object->getOption('_admin_route')) {
+--- a/admin_ui_only.services.yml
++++ b/admin_ui_only.services.yml
+@@ -1,5 +1,5 @@
+ services:
+   Drupal\admin_ui_only\EventSubscriber:
+-    arguments: ['@config.factory', '@router.builder']
++    arguments: ['@config.factory', '@router.builder', '@current_user']
+     tags:
+       - { name: event_subscriber }
+--- a/tests/src/Functional/AdminUiOnlyTest.php
++++ b/tests/src/Functional/AdminUiOnlyTest.php
+@@ -6,6 +6,7 @@ namespace Drupal\Tests\admin_ui_only\Functional;
+ 
+ use Drupal\Core\Url;
+ use Drupal\Tests\admin_ui_only\Traits\ApiRequestTrait;
++use Drupal\user\Entity\Role;
+ use Drupal\Tests\BrowserTestBase;
+ 
+ /**
+@@ -38,7 +39,11 @@ class AdminUiOnlyTest extends BrowserTestBase {
+    * Tests the normal operation of the module.
+    */
+   public function testAdminUiOnlyHappyPath(): void {
+-    $admin_user = $this->createUser([], 'site admin', TRUE);
++    if (!Role::load('administrator')) {
++      $this->createAdminRole('administrator', 'Administrator');
++    }
++    $admin_user = $this->createUser([], 'site admin', FALSE, ['roles' => ['administrator']]);
++    $non_admin_user = $this->createUser(['access content'], 'content user');
+     $this->drupalLogin($admin_user);
+ 
+     // Save a node and ensure we are redirected to admin/content.
+@@ -47,22 +52,29 @@ class AdminUiOnlyTest extends BrowserTestBase {
+     $this->submitForm([], 'Save');
+     $this->assertSession()->addressEquals('admin/content');
+ 
+-    // Ensure accessing the node via HTML results in a 403.
++    // Ensure accessing the node via HTML results in a 200 for administrators.
+     $node_url = Url::fromUserInput('/node/1');
+     $this->drupalGet($node_url);
+-    $this->assertSession()->statusCodeEquals(403);
++    $this->assertSession()->statusCodeEquals(200);
+ 
+-    // POST requests to non admin HTML routes should be rejected too.
+-    $response = $this->makeApiRequest('POST', $node_url, []);
+-    $this->assertSame(403, $response->getStatusCode());
+-
+     $this->drupalGet('user');
+     $this->assertSession()->statusCodeEquals(200);
+ 
+     $this->drupalGet('user/edit');
+     $this->assertSession()->statusCodeEquals(200);
+ 
+     $this->drupalLogout();
++    $this->drupalLogin($non_admin_user);
++
++    // Non-admin users should still be denied.
++    $this->drupalGet($node_url);
++    $this->assertSession()->statusCodeEquals(403);
++
++    // POST requests to non admin HTML routes should be rejected too.
++    $response = $this->makeApiRequest('POST', $node_url, []);
++    $this->assertSame(403, $response->getStatusCode());
++
++    $this->drupalLogout();
+ 
+     // 403 for anonymous users too.
+     $this->drupalGet($node_url);
+@@ -96,10 +108,10 @@ class AdminUiOnlyTest extends BrowserTestBase {
+     $this->assertSession()->statusCodeEquals(200);
+     $this->assertSession()->pageTextMatches('/Module Admin UI Only has been (?:enabled|installed)./');
+ 
+     $this->drupalGet($node_url);
+-    $this->assertSession()->statusCodeEquals(403);
++    $this->assertSession()->statusCodeEquals(200);
+ 
+     // Ensure redirects work as expected.
+     $this->drupalGet('/.well-known/change-password');
+     $this->assertSession()->statusCodeEquals(200);
+     $this->assertSession()->addressEquals('user/2/edit');

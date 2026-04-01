@@ -134,7 +134,7 @@ final class WebsiteCachePurgerTest extends UnitTestCase {
       ->method('addWarning')
       ->with($this->callback(static function ($message): bool {
         return $message instanceof TranslatableMarkup
-          && (string) $message === 'Website cache purge did not complete. Drupal cache was cleared, but website content may still be stale.';
+          && (string) $message === 'Website cache purge did not complete. Website content may still be stale.';
       }));
 
     $purger->purgeWebsiteCache();

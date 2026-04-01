@@ -1,0 +1,6 @@
+backoffice_integrations.flush_website_cache:
+  title: 'Flush website cache'
+  route_name: backoffice_integrations.flush_website_cache
+  parent: admin_toolbar_tools.flush
+  menu_name: admin
+  weight: -1

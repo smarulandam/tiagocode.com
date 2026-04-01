@@ -15,13 +15,13 @@ use GuzzleHttp\ClientInterface;
 /**
  * Purges the website cache through the configured integration endpoint.
  */
-final class WebsiteCachePurger {
+final class WebsiteCachePurger implements WebsiteCachePurgerInterface {
 
   private const SETTING_ENVIRONMENT = 'backoffice_integrations_environment';
   private const SETTING_PURGE_URL = 'backoffice_integrations_website_cache_purge_url';
   private const SETTING_PURGE_TOKEN = 'backoffice_integrations_website_cache_purge_token';
   private const SUCCESS_MESSAGE = 'Website cache purged successfully.';
-  private const WARNING_MESSAGE = 'Website cache purge did not complete. Drupal cache was cleared, but website content may still be stale.';
+  private const WARNING_MESSAGE = 'Website cache purge did not complete. Website content may still be stale.';
 
   /**
    * Constructs the website cache purger.
@@ -44,10 +44,17 @@ final class WebsiteCachePurger {
     $token = trim((string) Settings::get(self::SETTING_PURGE_TOKEN, ''));
 
     if (empty($url) || empty($token)) {
-      $this->report('Website cache purge skipped', [
+      $missing_settings = [];
+      if ($url === '') {
+        $missing_settings[] = self::SETTING_PURGE_URL;
+      }
+      if ($token === '') {
+        $missing_settings[] = self::SETTING_PURGE_TOKEN;
+      }
+
+      $this->report('Website cache purge skipped because the integration is not fully configured.', [
         'environment' => $environment,
-        'url' => $url,
-        'token' => $token,
+        'missing_settings' => implode(', ', $missing_settings),
       ]);
       return;
     }

@@ -23,13 +23,16 @@
         "drupal/advban": "^1.9",
         "drupal/backup_migrate": "^5.1",
         "drupal/ban": "^1.0",
+        "drupal/ckeditor_id_attributes": "^1.0",
         "drupal/config_ignore": "^3.3",
         "drupal/core-composer-scaffold": "11.3.5",
         "drupal/core-project-message": "11.3.5",
         "drupal/core-recommended": "11.3.5",
         "drupal/cors_ui": "^1.2",
         "drupal/crowdsec": "^1.2",
+        "drupal/decoupled_preview_iframe": "^1.0",
         "drupal/decoupled_router": "^2.0",
+        "drupal/editor_advanced_link": "^2.3",
         "drupal/environment_indicator": "^4.0",
         "drupal/gin": "^5.0",
         "drupal/gin_login": "^2.1",
@@ -97,6 +100,12 @@
     "extra": {
         "enable-patching": true,
         "patches": {
+            "drupal/admin_ui_only": {
+                "Allow the administrator role to access frontend HTML routes": "patches/admin_ui_only-bypass-administrator-role.patch"
+            },
+            "drupal/decoupled_preview_iframe": {
+                "Drupal 11 ConfigFormBase constructor compatibility": "patches/decoupled_preview_iframe-drupal-11-config-form-base.patch"
+            }
         },
         "drupal-scaffold": {
             "locations": {

@@ -10,6 +10,7 @@ ENV COMPOSER_MEMORY_LIMIT=-1 \
     COMPOSER_CACHE_DIR=/tmp/composer-cache
 
 COPY --chown=tiagocode:tiagocode ./composer.json ./composer.lock ./
+COPY --chown=tiagocode:tiagocode ./patches ./patches
 
 RUN --mount=type=cache,target=/tmp/composer-cache,uid=1000,gid=1000 \
     set -ex; \

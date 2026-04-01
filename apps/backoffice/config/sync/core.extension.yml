@@ -17,6 +17,7 @@ module:
   breakpoint: 0
   captcha: 0
   ckeditor5: 0
+  ckeditor_id_attributes: 0
   comment: 0
   config: 0
   config_ignore: 0
@@ -27,6 +28,7 @@ module:
   decoupled_router: 0
   dynamic_page_cache: 0
   editor: 0
+  editor_advanced_link: 0
   entity_reference_revisions: 0
   environment_indicator: 0
   environment_indicator_toolbar: 0
