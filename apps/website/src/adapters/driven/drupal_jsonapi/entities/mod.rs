@@ -5,6 +5,7 @@ mod media;
 mod navigation;
 mod nodes;
 mod paragraphs;
+mod sitemap;
 mod taxonomies;
 
 pub use decoupled_router::*;
@@ -14,4 +15,5 @@ pub use media::*;
 pub use navigation::*;
 pub use nodes::*;
 pub use paragraphs::*;
+pub use sitemap::*;
 pub use taxonomies::*;

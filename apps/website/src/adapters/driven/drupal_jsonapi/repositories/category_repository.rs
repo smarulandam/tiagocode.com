@@ -6,7 +6,7 @@ use crate::adapters::driven::drupal_jsonapi::mappers::ExternalCategoryMapper;
 use crate::adapters::driven::drupal_jsonapi::mappers::ExternalTagsVocabularyMapper;
 use crate::adapters::driven::drupal_jsonapi::services::JsonApiClientService;
 use crate::application::domain::article::Category;
-use crate::application::domain::core::AppError;
+use crate::application::domain::core::{AppError, Result};
 use crate::application::ports::driven::ForFetchingCategoriesList;
 use crate::helpers::{Cache, Http};
 
@@ -37,7 +37,7 @@ impl CategoryRepository {
 
 #[async_trait(?Send)]
 impl ForFetchingCategoriesList for CategoryRepository {
-    async fn find_all_categories(&self) -> crate::application::domain::core::Result<Vec<Category>> {
+    async fn find_all_categories(&self) -> Result<Vec<Category>> {
         let adapter = type_name::<Self>();
         let endpoint = &format!("/jsonapi/taxonomy_term/tags?{COLLECTION_QUERY}");
 
@@ -47,10 +47,6 @@ impl ForFetchingCategoriesList for CategoryRepository {
             .await
             .map_err(|e| AppError::external(adapter, e))?;
 
-        Ok(self
-            .api_adapter
-            .adapt_multiple(categories.data().clone())?
-            .into_iter()
-            .collect())
+        self.api_adapter.adapt_multiple(categories.data().clone())
     }
 }

@@ -50,7 +50,7 @@ impl ForFetchingPortfolioData for PortfolioRepository {
             .await
             .map_err(|e| AppError::external(adapter, e))?;
 
-        Ok(self.api_adapter.adapt(portfolio.data().clone())?)
+        self.api_adapter.adapt(portfolio.data().clone())
     }
 }
 

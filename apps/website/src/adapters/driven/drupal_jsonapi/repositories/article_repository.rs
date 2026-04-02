@@ -67,7 +67,7 @@ impl ForFetchingArticlesFeatured for ArticleRepository {
 
 #[async_trait(?Send)]
 impl ForFetchingArticlesList for ArticleRepository {
-    async fn get_list(&self, category_id: Option<String>) -> Result<Vec<Article>> {
+    async fn get_list(&self, category_id: Option<String>) -> Result<Articles> {
         let adapter = type_name::<Self>();
         let mut endpoint = format!("/jsonapi/node/article?{COLLECTION_QUERY}&page[limit]=10");
 
@@ -81,11 +81,7 @@ impl ForFetchingArticlesList for ArticleRepository {
             .await
             .map_err(|e| AppError::external(adapter, e))?;
 
-        Ok(self
-            .api_adapter
-            .adapt_multiple(articles.data().clone())?
-            .into_iter()
-            .collect())
+        self.api_adapter.adapt_multiple(articles.data().clone())
     }
 }
 
@@ -106,7 +102,7 @@ impl ForFetchingArticleData for ArticleRepository {
             .await
             .map_err(|e| AppError::external(adapter, e))?;
 
-        Ok(self.api_adapter.adapt(article.data().clone())?)
+        self.api_adapter.adapt(article.data().clone())
     }
 }
 

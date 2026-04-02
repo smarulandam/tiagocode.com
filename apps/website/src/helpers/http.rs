@@ -39,6 +39,14 @@ impl Http {
         self
     }
 
+    pub fn without_auth(&self) -> Self {
+        Self {
+            client: self.client.clone(),
+            base_url: self.base_url.clone(),
+            auth: None,
+        }
+    }
+
     pub async fn get_json(&self, url: &str) -> Result<Value> {
         self.request(Method::GET, url)
             .await
@@ -133,6 +141,17 @@ pub mod tests {
         assert_eq!(base_url.as_str(), "https://localhost.dev/");
         assert_eq!(basic_auth.username.expose_secret(), "test");
         assert_eq!(basic_auth.password.expose_secret(), "123456");
+    }
+
+    #[test]
+    fn without_auth_preserves_base_url_and_removes_credentials() {
+        let http_client = http_client_mock("https://localhost.dev/").without_auth();
+
+        assert_eq!(
+            http_client.base_url.unwrap().as_str(),
+            "https://localhost.dev/"
+        );
+        assert!(http_client.auth.is_none());
     }
 
     #[test]

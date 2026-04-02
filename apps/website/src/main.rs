@@ -14,6 +14,7 @@ async fn main() -> std::io::Result<()> {
     use redis::Client as RedisClient;
     use std::env;
 
+    use website::adapters::driver::leptos_webui::controllers::sitemap;
     use website::adapters::driver::leptos_webui::views::app::*;
     use website::helpers::{Cache, Http};
 
@@ -31,6 +32,8 @@ async fn main() -> std::io::Result<()> {
         let api_username = env::var("JSONAPI_USERNAME").expect("JSONAPI_USERNAME is undefined");
         let api_password =
             env::var("JSONAPI_PASSWORD").expect("JSONAPI_PASSWORD is undefined");
+        let sitemap_public_host =
+            env::var("WEBSITE_PUBLIC_URL").expect("WEBSITE_PUBLIC_URL is undefined");
         let redis_host = env::var("WEBSITE_REDIS_HOST").expect("WEBSITE_REDIS_HOST is undefined");
         let redis_port = env::var("WEBSITE_REDIS_PORT").expect("WEBSITE_REDIS_PORT is undefined");
         let redis_password =
@@ -54,6 +57,7 @@ async fn main() -> std::io::Result<()> {
             .wrap(Compress::default())
             .service(favicon)
             .service(robots)
+            .service(sitemap)
             .service(health)
             .service(cache_purge)
             .service(Files::new("/assets", &site_root))
@@ -83,6 +87,9 @@ async fn main() -> std::io::Result<()> {
             })
             .app_data(web::Data::new(cache.to_owned()))
             .app_data(web::Data::new(http.to_owned()))
+            .app_data(web::Data::new(
+                sitemap_public_host.trim_end_matches('/').to_string(),
+            ))
             .app_data(web::Data::new(leptos_options.to_owned()))
     })
         .bind(&addr)?

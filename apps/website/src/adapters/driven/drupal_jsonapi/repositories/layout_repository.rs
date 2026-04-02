@@ -37,6 +37,6 @@ impl ForFetchingMenuData for LayoutRepository {
             .await
             .map_err(|e| AppError::external(adapter, e))?;
 
-        Ok(self.api_mapper.adapt(menu_tree)?)
+        self.api_mapper.adapt(menu_tree)
     }
 }

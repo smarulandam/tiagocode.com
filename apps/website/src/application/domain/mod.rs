@@ -4,3 +4,4 @@ pub mod core;
 pub mod layout;
 pub mod page;
 pub mod portfolio;
+pub mod sitemap;

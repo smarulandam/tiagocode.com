@@ -1,3 +1,21 @@
+backoffice_integrations.sitemap_entries:
+  path: '/jsonapi/nodes/sitemap'
+  options:
+    _auth: ['basic_auth', 'cookie']
+  defaults:
+    _controller: '\Drupal\backoffice_integrations\Controller\SitemapEntriesController::list'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+
+backoffice_integrations.sitemap_entries_alias:
+  path: '/api/sitemap/entries'
+  options:
+    _auth: ['basic_auth', 'cookie']
+  defaults:
+    _controller: '\Drupal\backoffice_integrations\Controller\SitemapEntriesController::list'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+
 backoffice_integrations.flush_website_cache:
   path: '/admin/flush/website-cache'
   defaults:

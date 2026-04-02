@@ -2,12 +2,15 @@ use derive_getters::Getters;
 use serde::{Deserialize, Serialize};
 
 use crate::adapters::driven::drupal_jsonapi::entities::{ArticleNode, PageNode};
-use crate::adapters::driven::drupal_jsonapi::entities::{PortfolioNode, TagsVocabulary};
+use crate::adapters::driven::drupal_jsonapi::entities::{
+    PortfolioNode, SitemapNode, TagsVocabulary,
+};
 
 pub type NodePageResource = JsonApiDocument<PageNode>;
 pub type NodePortfolioResource = JsonApiDocument<PortfolioNode>;
 pub type NodeArticleResource = JsonApiDocument<ArticleNode>;
 pub type NodeArticleCollection = JsonApiDocument<Vec<ArticleNode>>;
+pub type SitemapEntriesCollection = JsonApiDocument<Vec<SitemapNode>>;
 pub type VocabularyTagCollection = JsonApiDocument<Vec<TagsVocabulary>>;
 
 #[derive(Debug, Clone, Deserialize, Serialize, Getters)]
