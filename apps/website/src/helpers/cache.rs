@@ -75,4 +75,24 @@ impl Cache {
 
         Ok(())
     }
+
+    pub async fn clear_paths(&self, paths: &[String]) -> Result<()> {
+        if paths.is_empty() {
+            return Ok(());
+        }
+
+        let mut connection = self
+            .client
+            .get_multiplexed_async_connection()
+            .await
+            .map_err(|e| AppError::external("redis", e))?;
+
+        let _: usize = redis::cmd("DEL")
+            .arg(paths)
+            .query_async(&mut connection)
+            .await
+            .map_err(|e| AppError::external("redis", e))?;
+
+        Ok(())
+    }
 }

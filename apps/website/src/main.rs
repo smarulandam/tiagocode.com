@@ -16,7 +16,7 @@ async fn main() -> std::io::Result<()> {
     use redis::Client as RedisClient;
     use std::env;
 
-    use website::adapters::driver::leptos_webui::controllers::sitemap;
+    use website::adapters::driver::leptos_webui::controllers::{cache_purge, sitemap};
     use website::adapters::driver::leptos_webui::views::app::*;
     use website::helpers::{Cache, Http};
 
@@ -152,43 +152,6 @@ async fn health() -> actix_web::HttpResponse {
     }
 
     actix_web::HttpResponse::InternalServerError().finish()
-}
-
-#[cfg(feature = "ssr")]
-#[actix_web::post("/internal/cache/purge")]
-async fn cache_purge(
-    request: actix_web::HttpRequest,
-    cache: actix_web::web::Data<website::helpers::Cache>,
-) -> actix_web::HttpResponse {
-    let expected_token = match std::env::var("WEBSITE_CACHE_PURGE_TOKEN") {
-        Ok(value) if !value.trim().is_empty() => value,
-        _ => {
-            return actix_web::HttpResponse::InternalServerError()
-                .content_type(actix_web::http::header::ContentType::plaintext())
-                .body("WEBSITE_CACHE_PURGE_TOKEN is not configured");
-        }
-    };
-
-    let provided_token = request
-        .headers()
-        .get("x-webhook-token")
-        .and_then(|value| value.to_str().ok())
-        .unwrap_or_default();
-
-    if provided_token != expected_token {
-        return actix_web::HttpResponse::Unauthorized()
-            .content_type(actix_web::http::header::ContentType::plaintext())
-            .body("Invalid webhook token");
-    }
-
-    match cache.clear_all().await {
-        Ok(()) => actix_web::HttpResponse::Ok()
-            .content_type(actix_web::http::header::ContentType::plaintext())
-            .body("Cache purged"),
-        Err(error) => actix_web::HttpResponse::InternalServerError()
-            .content_type(actix_web::http::header::ContentType::plaintext())
-            .body(error.to_string()),
-    }
 }
 
 #[cfg(feature = "ssr")]

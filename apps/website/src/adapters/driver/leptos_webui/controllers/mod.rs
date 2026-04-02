@@ -1,10 +1,14 @@
 mod article_controller;
+#[cfg(feature = "ssr")]
+mod cache_purge_controller;
 mod layout_controller;
 mod portfolio_controller;
 #[cfg(feature = "ssr")]
 mod sitemap_controller;
 
 pub use article_controller::*;
+#[cfg(feature = "ssr")]
+pub use cache_purge_controller::*;
 pub use layout_controller::*;
 pub use portfolio_controller::*;
 #[cfg(feature = "ssr")]

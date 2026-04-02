@@ -202,6 +202,60 @@ final class WebsiteCachePurgerTest extends UnitTestCase {
   }
 
   /**
+   * Verifies targeted purges send the expected JSON payload.
+   */
+  public function testTargetedPurgeSendsPathsPayload(): void {
+    $purger = $this->createPurger([
+      'backoffice_integrations_environment' => 'staging',
+      'backoffice_integrations_website_cache_purge_url' => 'http://website:3000/internal/cache/purge',
+      'backoffice_integrations_website_cache_purge_token' => 'token',
+    ]);
+
+    $this->httpClient
+      ->expects($this->once())
+      ->method('request')
+      ->with(
+        'POST',
+        'http://website:3000/internal/cache/purge',
+        $this->callback(static function (array $options): bool {
+          return $options['headers']['x-webhook-token'] === 'token'
+            && $options['json'] === ['paths' => ['/en/articles/example', '/es/portfolio/item']]
+            && $options['http_errors'] === FALSE
+            && $options['timeout'] === 3.0
+            && $options['connect_timeout'] === 1.5;
+        }),
+      )
+      ->willReturn(new Response(200, [], 'Cache purged'));
+    $this->loggerFactory->expects($this->never())->method('get');
+    $this->messenger->expects($this->never())->method('addWarning');
+    $this->messenger->expects($this->never())->method('addStatus');
+
+    $purger->purgeWebsitePaths([
+      '/en/articles/example',
+      '/es/portfolio/item',
+      '/en/articles/example',
+    ]);
+  }
+
+  /**
+   * Verifies targeted purges skip invalid paths without making a request.
+   */
+  public function testTargetedPurgeSkipsWhenNoValidPathsRemain(): void {
+    $purger = $this->createPurger([
+      'backoffice_integrations_environment' => 'staging',
+      'backoffice_integrations_website_cache_purge_url' => 'http://website:3000/internal/cache/purge',
+      'backoffice_integrations_website_cache_purge_token' => 'token',
+    ]);
+
+    $this->httpClient->expects($this->never())->method('request');
+    $this->loggerFactory->expects($this->never())->method('get');
+    $this->messenger->expects($this->never())->method('addWarning');
+    $this->messenger->expects($this->never())->method('addStatus');
+
+    $purger->purgeWebsitePaths(['', 'relative/path', '//invalid']);
+  }
+
+  /**
    * Verifies non-200 responses are logged and shown in admin routes.
    */
   public function testUnexpectedResponseLogsAndWarnsInAdmin(): void {

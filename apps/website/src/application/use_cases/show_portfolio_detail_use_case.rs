@@ -29,10 +29,7 @@ impl ShowPortfolioDetailUseCase {
 #[async_trait(?Send)]
 impl ForDisplayingPortfolio for ShowPortfolioDetailUseCase {
     async fn execute(&self) -> Result<Portfolio> {
-        let mut portfolio = self
-            .portfolio_repository
-            .find_by_slug("/en/portfolio/santiago-marulanda")
-            .await?;
+        let mut portfolio = self.portfolio_repository.find_by_slug("/en").await?;
 
         if portfolio.status().eq(&ModerationStatus::Unpublished) {
             return Err(AppError::Forbidden {

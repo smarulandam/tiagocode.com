@@ -7,3 +7,9 @@ services:
       - '@messenger'
       - '@router.admin_context'
       - '@current_route_match'
+
+  backoffice_integrations.website_cache_node_invalidator:
+    class: Drupal\backoffice_integrations\Integration\WebsiteCacheNodeInvalidator
+    arguments:
+      - '@entity_type.manager'
+      - '@backoffice_integrations.website_cache_purger'

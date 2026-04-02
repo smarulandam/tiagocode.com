@@ -39,6 +39,32 @@ final class WebsiteCachePurger implements WebsiteCachePurgerInterface {
    * Purges the website cache for the current environment.
    */
   public function purgeWebsiteCache(): void {
+    $this->purgeRequest([]);
+  }
+
+  /**
+   * Purges the website cache entries for the provided paths.
+   *
+   * @param string[] $paths
+   *   The website paths to purge.
+   */
+  public function purgeWebsitePaths(array $paths): void {
+    $paths = $this->normalizePaths($paths);
+
+    if ($paths === []) {
+      return;
+    }
+
+    $this->purgeRequest($paths);
+  }
+
+  /**
+   * Sends the purge request to the website integration endpoint.
+   *
+   * @param string[] $paths
+   *   The website paths to purge. An empty array purges the full cache.
+   */
+  private function purgeRequest(array $paths): void {
     $environment = $this->getEnvironment();
     $url = trim((string) Settings::get(self::SETTING_PURGE_URL, ''));
     $token = trim((string) Settings::get(self::SETTING_PURGE_TOKEN, ''));
@@ -60,27 +86,42 @@ final class WebsiteCachePurger implements WebsiteCachePurgerInterface {
     }
 
     try {
-      $response = $this->httpClient->request('POST', $url, [
+      $options = [
         'headers' => [
           'x-webhook-token' => $token,
         ],
         'http_errors' => FALSE,
         'timeout' => 3.0,
         'connect_timeout' => 1.5,
-      ]);
+      ];
+
+      if ($paths !== []) {
+        $options['json'] = ['paths' => $paths];
+      }
+
+      $response = $this->httpClient->request('POST', $url, $options);
     }
     catch (\Throwable $exception) {
-      $this->report('Website cache purge request failed.', [
+      $context = [
         'environment' => $environment,
         'endpoint' => $url,
         'exception_class' => $exception::class,
         'exception_message' => $exception->getMessage(),
-      ]);
+      ];
+
+      if ($paths !== []) {
+        $context['paths'] = implode(', ', $paths);
+      }
+
+      $this->report('Website cache purge request failed.', $context);
       return;
     }
 
-    if ($response->getStatusCode() === 200 && $this->isAdminRequest()) {
-      $this->messenger->addStatus(new TranslatableMarkup(self::SUCCESS_MESSAGE));
+    if ($response->getStatusCode() === 200) {
+      if ($this->isAdminRequest()) {
+        $this->messenger->addStatus(new TranslatableMarkup(self::SUCCESS_MESSAGE));
+      }
+
       return;
     }
 
@@ -89,6 +130,11 @@ final class WebsiteCachePurger implements WebsiteCachePurgerInterface {
       'endpoint' => $url,
       'status_code' => $response->getStatusCode(),
     ];
+
+    if ($paths !== []) {
+      $context['paths'] = implode(', ', $paths);
+    }
+
     $response_body = $this->truncateBody((string) $response->getBody());
 
     if (!empty($response_body)) {
@@ -139,6 +185,31 @@ final class WebsiteCachePurger implements WebsiteCachePurgerInterface {
     }
 
     return substr($body, 0, 500);
+  }
+
+  /**
+   * Normalizes the website paths before sending them to the purge endpoint.
+   *
+   * @param string[] $paths
+   *   The input paths.
+   *
+   * @return string[]
+   *   The normalized, unique paths.
+   */
+  private function normalizePaths(array $paths): array {
+    $normalized = [];
+
+    foreach ($paths as $path) {
+      $path = trim((string) $path);
+
+      if ($path === '' || !str_starts_with($path, '/') || str_starts_with($path, '//')) {
+        continue;
+      }
+
+      $normalized[$path] = $path;
+    }
+
+    return array_values($normalized);
   }
 
 }

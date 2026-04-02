@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Url;
 
@@ -16,6 +17,51 @@ use Drupal\Core\Url;
  */
 function backoffice_integrations_cache_flush(): void {
   \Drupal::service('backoffice_integrations.website_cache_purger')->purgeWebsiteCache();
+}
+
+/**
+ * Implements hook_entity_presave().
+ */
+function backoffice_integrations_entity_presave(EntityInterface $entity): void {
+  \Drupal::service('backoffice_integrations.website_cache_node_invalidator')
+    ->captureNodeUpdateState($entity);
+}
+
+/**
+ * Implements hook_entity_update().
+ */
+function backoffice_integrations_entity_update(EntityInterface $entity): void {
+  \Drupal::service('backoffice_integrations.website_cache_node_invalidator')
+    ->invalidateUpdatedNode($entity);
+}
+
+/**
+ * Implements hook_entity_predelete().
+ */
+function backoffice_integrations_entity_predelete(EntityInterface $entity): void {
+  \Drupal::service('backoffice_integrations.website_cache_node_invalidator')
+    ->captureNodeDeleteState($entity);
+}
+
+/**
+ * Implements hook_entity_delete().
+ */
+function backoffice_integrations_entity_delete(EntityInterface $entity): void {
+  \Drupal::service('backoffice_integrations.website_cache_node_invalidator')
+    ->invalidateDeletedNode($entity);
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ */
+function backoffice_integrations_module_implements_alter(array &$implementations, string $hook): void {
+  if ($hook !== 'entity_update' || !isset($implementations['backoffice_integrations'])) {
+    return;
+  }
+
+  $group = $implementations['backoffice_integrations'];
+  unset($implementations['backoffice_integrations']);
+  $implementations['backoffice_integrations'] = $group;
 }
 
 /**

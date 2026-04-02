@@ -14,4 +14,12 @@ interface WebsiteCachePurgerInterface {
    */
   public function purgeWebsiteCache(): void;
 
+  /**
+   * Purges the website cache entries for the provided paths.
+   *
+   * @param string[] $paths
+   *   The website paths to purge.
+   */
+  public function purgeWebsitePaths(array $paths): void;
+
 }
