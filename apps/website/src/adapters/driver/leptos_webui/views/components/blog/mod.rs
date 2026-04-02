@@ -10,6 +10,6 @@ pub use article_card::ArticleCard;
 pub use article_content_renderer::ArticleContentRenderer;
 pub use article_header::ArticleHeader;
 pub use article_list_section::ArticleListSection;
-pub use article_table_of_contents::{collect_article_table_of_contents_items, ArticleContentTable};
+pub use article_table_of_contents::ArticleContentTable;
 pub use media_lightbox::{LightboxState, MediaLightbox};
 pub use media_slider::ArticleMediaSlider;

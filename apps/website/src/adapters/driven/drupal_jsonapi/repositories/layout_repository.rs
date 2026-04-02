@@ -1,5 +1,6 @@
 use async_trait::async_trait;
 use std::any::type_name;
+use std::time::Duration;
 
 use crate::adapters::driven::drupal_jsonapi::entities::Navigation;
 use crate::adapters::driven::drupal_jsonapi::mappers::{ExternalMenuTreeMapper, NavigationAdapter};
@@ -14,6 +15,7 @@ use crate::helpers::{Cache, Http};
 /// This struct implements the `ForFetchingMenuData` output port of the hexagonal architecture
 /// by integrating with a CMS API client to retrieve menu items and transform them into domain entities.
 pub struct LayoutRepository {
+    cache_client: Box<Cache>,
     api_client: Box<JsonApiClientService>,
     api_mapper: Box<dyn ExternalMenuTreeMapper<Input = Navigation>>,
 }
@@ -21,7 +23,8 @@ pub struct LayoutRepository {
 impl LayoutRepository {
     pub fn new(http_client: Http, cache_client: Cache) -> Self {
         Self {
-            api_client: Box::new(JsonApiClientService::new(http_client, cache_client)),
+            cache_client: Box::new(cache_client.clone()),
+            api_client: Box::new(JsonApiClientService::new(http_client)),
             api_mapper: Box::new(NavigationAdapter::default()),
         }
     }
@@ -30,13 +33,18 @@ impl LayoutRepository {
 #[async_trait(?Send)]
 impl ForFetchingMenuData for LayoutRepository {
     async fn find_by_id(&self, id: &str) -> Result<MenuTree> {
-        let adapter = type_name::<Self>();
-        let menu_tree = self
-            .api_client
-            .get_external_data::<Navigation>(&format!("/api/menu_items/{id}"))
-            .await
-            .map_err(|e| AppError::external(adapter, e))?;
+        let endpoint = format!("/api/menu_items/{id}");
 
-        self.api_mapper.adapt(menu_tree)
+        self.cache_client
+            .remember(endpoint.as_str(), Duration::from_days(7), || async {
+                let menu_tree = self
+                    .api_client
+                    .get_external_data::<Navigation>(endpoint.as_str())
+                    .await
+                    .map_err(|e| AppError::external(type_name::<Self>(), e))?;
+
+                self.api_mapper.adapt(menu_tree)
+            })
+            .await
     }
 }

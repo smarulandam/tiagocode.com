@@ -1,5 +1,6 @@
 use async_trait::async_trait;
 use std::any::type_name;
+use std::time::Duration;
 
 use crate::adapters::driven::drupal_jsonapi::entities::{TagsVocabulary, VocabularyTagCollection};
 use crate::adapters::driven::drupal_jsonapi::mappers::ExternalCategoryMapper;
@@ -22,6 +23,7 @@ const COLLECTION_QUERY: &str = "\
 /// to retrieve category information and transform it into domain entities using
 /// the adapter pattern.
 pub struct CategoryRepository {
+    cache_client: Box<Cache>,
     api_client: Box<JsonApiClientService>,
     api_adapter: Box<dyn ExternalCategoryMapper<Input = TagsVocabulary>>,
 }
@@ -29,7 +31,8 @@ pub struct CategoryRepository {
 impl CategoryRepository {
     pub fn new(http_client: Http, cache_client: Cache) -> Self {
         Self {
-            api_client: Box::new(JsonApiClientService::new(http_client, cache_client)),
+            cache_client: Box::new(cache_client.clone()),
+            api_client: Box::new(JsonApiClientService::new(http_client)),
             api_adapter: Box::new(ExternalTagsVocabularyMapper::default()),
         }
     }
@@ -38,19 +41,22 @@ impl CategoryRepository {
 #[async_trait(?Send)]
 impl ForFetchingCategoriesList for CategoryRepository {
     async fn find_all_categories(&self) -> crate::application::domain::core::Result<Vec<Category>> {
-        let adapter = type_name::<Self>();
-        let endpoint = &format!("/jsonapi/taxonomy_term/tags?{COLLECTION_QUERY}");
+        let endpoint = format!("/jsonapi/taxonomy_term/tags?{COLLECTION_QUERY}");
 
-        let categories = self
-            .api_client
-            .get_external_data::<VocabularyTagCollection>(endpoint)
+        self.cache_client
+            .remember(endpoint.as_str(), Duration::from_hours(168), || async {
+                let categories = self
+                    .api_client
+                    .get_external_data::<VocabularyTagCollection>(endpoint.as_str())
+                    .await
+                    .map_err(|e| AppError::external(type_name::<Self>(), e))?;
+
+                Ok(self
+                    .api_adapter
+                    .adapt_multiple(categories.data().clone())?
+                    .into_iter()
+                    .collect())
+            })
             .await
-            .map_err(|e| AppError::external(adapter, e))?;
-
-        Ok(self
-            .api_adapter
-            .adapt_multiple(categories.data().clone())?
-            .into_iter()
-            .collect())
     }
 }

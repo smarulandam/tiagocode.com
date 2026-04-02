@@ -1,3 +1,4 @@
+#![feature(duration_constructors)]
 #![recursion_limit = "512"]
 
 pub mod adapters;

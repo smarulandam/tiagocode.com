@@ -12,7 +12,7 @@ pub fn FeaturedArticleCard(
     thumbnail: Image,
     category: String,
 ) -> impl IntoView {
-    let cta_label = format!("Read more: {}", title.clone());
+    let cta_label = format!("Read article: {}", title.clone());
 
     view! {
         <article class="group rounded-[1.05rem]  transition duration-[160ms] ease-out hover:border-teal/20 sm:flex sm:items-start sm:gap-5">
@@ -46,7 +46,7 @@ pub fn FeaturedArticleCard(
                     aria-label=cta_label
                     class="mt-3 inline-block self-start rounded-full border border-black border-dashed px-6 py-3 font-mono text-sm transition duration-[120ms] ease-out hover:bg-black hover:text-white dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-black lg:mt-4"
                 >
-                    "Read More"
+                    "Read article"
                 </a>
             </div>
         </article>

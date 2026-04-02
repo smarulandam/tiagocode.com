@@ -10,6 +10,7 @@ pub fn ImageView(
     #[prop(default = true)] with_wrapper: bool,
     #[prop(default = None)] loading: Option<&'static str>,
     #[prop(default = None)] decoding: Option<&'static str>,
+    #[prop(default = None)] fetchpriority: Option<&'static str>,
 ) -> impl IntoView {
     let src = image.url().to_string();
     let alt = image.alt().to_string();
@@ -27,6 +28,7 @@ pub fn ImageView(
                     height=height
                     loading=loading
                     decoding=decoding
+                    fetchpriority=fetchpriority
                 />
                 <figcaption class="hidden">
                     {alt.clone()}
@@ -43,6 +45,7 @@ pub fn ImageView(
                 height=height
                 loading=loading
                 decoding=decoding
+                fetchpriority=fetchpriority
             />
         })
     }

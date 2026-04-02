@@ -1,10 +1,84 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Roboto+Mono:wght@300;400;500;600;700&display=swap');
-
 @import "tailwindcss";
+
+@font-face {
+    font-family: "Open Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("/assets/fonts/open-sans-latin.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Open Sans";
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url("/assets/fonts/open-sans-latin.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Open Sans";
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url("/assets/fonts/open-sans-latin.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("/assets/fonts/poppins-400-latin.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url("/assets/fonts/poppins-500-latin.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url("/assets/fonts/poppins-600-latin.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Roboto Mono";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("/assets/fonts/roboto-mono-latin.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Roboto Mono";
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url("/assets/fonts/roboto-mono-latin.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Roboto Mono";
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url("/assets/fonts/roboto-mono-latin.woff2") format("woff2");
+}
 
 @source "../src";
 @source inline("hidden");
 @custom-variant dark (&:where(.dark, .dark *));
+
+html {
+    scroll-behavior: smooth;
+}
 
 @theme {
     --font-opensans: "Open Sans", sans-serif;
@@ -45,6 +119,172 @@
 
     100% {
         opacity: 0;
+    }
+}
+
+.area {
+    background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.circles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.circles li {
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: rgba(0, 0, 0, 0.2);
+    animation: animate 30s alternate infinite;
+    bottom: -150px;
+}
+
+.circles li:nth-child(1) {
+    left: 5%;
+    width: 60px;
+    height: 60px;
+    animation-delay: 0s;
+}
+
+.circles li:nth-child(2) {
+    left: 10%;
+    width: 30px;
+    height: 30px;
+    animation-delay: 2s;
+}
+
+.circles li:nth-child(3) {
+    left: 15%;
+    width: 15px;
+    height: 15px;
+    animation-delay: 0s;
+}
+
+.circles li:nth-child(4) {
+    left: 35%;
+    width: 25px;
+    height: 25px;
+    animation-delay: 4s;
+}
+
+.circles li:nth-child(5) {
+    left: 45%;
+    width: 45px;
+    height: 45px;
+    animation-delay: 2s;
+}
+
+.circles li:nth-child(6) {
+    left: 35%;
+    width: 15px;
+    height: 15px;
+    animation-delay: 1s;
+}
+
+.circles li:nth-child(7) {
+    left: 1%;
+    width: 25px;
+    height: 25px;
+    animation-delay: 3s;
+}
+
+.circles li:nth-child(8) {
+    left: 20%;
+    width: 45px;
+    height: 45px;
+    animation-delay: 4s;
+}
+
+.circles li:nth-child(9) {
+    right: 30%;
+    width: 30px;
+    height: 30px;
+    animation-delay: 0s;
+}
+
+.circles li:nth-child(10) {
+    right: 35%;
+    width: 15px;
+    height: 15px;
+    animation-delay: 0s;
+}
+
+.circles li:nth-child(11) {
+    right: 1%;
+    width: 25px;
+    height: 25px;
+    animation-delay: 4s;
+}
+
+.circles li:nth-child(12) {
+    right: 15%;
+    width: 45px;
+    height: 45px;
+    animation-delay: 2s;
+}
+
+.circles li:nth-child(13) {
+    right: 10%;
+    width: 30px;
+    height: 30px;
+    animation-delay: 3s;
+}
+
+.circles li:nth-child(14) {
+    right: 10%;
+    width: 15px;
+    height: 15px;
+    animation-delay: 1s;
+}
+
+.circles li:nth-child(15) {
+    right: 35%;
+    width: 25px;
+    height: 25px;
+    animation-delay: 3s;
+}
+
+.circles li:nth-child(16) {
+    right: 20%;
+    width: 45px;
+    height: 45px;
+    animation-delay: 4s;
+}
+
+@keyframes animate {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.4;
+        border-radius: 50%;
+    }
+
+    25% {
+        border-radius: 30%;
+    }
+
+    50% {
+        border-radius: 50%;
+    }
+
+    75% {
+        border-radius: 30%;
+    }
+
+    100% {
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+        border-radius: 50%;
     }
 }
 

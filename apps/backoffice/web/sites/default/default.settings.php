@@ -896,6 +896,7 @@ $settings['s3fs.access_key'] = getenv('DRUPAL_S3FS_ACCESS_KEY');
 $settings['s3fs.secret_key'] = getenv('DRUPAL_S3FS_SECRET_KEY');
 $config['s3fs.settings']['bucket'] = getenv("DRUPAL_S3FS_BUCKET");
 $config['s3fs.settings']['region'] = getenv("DRUPAL_S3FS_REGION");
+$config['s3fs.settings']['cache_control_header'] = getenv('DRUPAL_S3FS_CACHE_CONTROL_HEADER') ?: '';
 $settings['php_storage']['twig']['directory'] = '/tmp/drupal/php_storage';
 
 

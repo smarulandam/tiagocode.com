@@ -22,7 +22,7 @@ pub fn ResumeSection(
                 <SectionDescription text=text />
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 lg:gap-10 mt-6 lg:mt-12">
-                <TimelineGroup icon="bi bi-mortarboard">
+                <TimelineGroup icon="mortarboard">
                     {education
                         .items()
                         .into_iter()
@@ -37,7 +37,7 @@ pub fn ResumeSection(
                         })
                         .collect_view()}
                 </TimelineGroup>
-                <TimelineGroup icon="bi bi-briefcase">
+                <TimelineGroup icon="briefcase">
                     {experience
                         .items()
                         .into_iter()

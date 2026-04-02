@@ -1,16 +1,14 @@
 use leptos::prelude::*;
-use leptos_meta::{Script, Stylesheet};
 use leptos_router::hooks::use_location;
 
 use crate::adapters::driver::leptos_webui::controllers::article_detail_controller;
-use crate::adapters::driver::leptos_webui::views::components::blog::{
-    collect_article_table_of_contents_items, ArticleContentRenderer, ArticleContentTable,
-    ArticleHeader,
-};
-use crate::adapters::driver::leptos_webui::views::components::common::{
-    SeoMetaTags, UnexpectedError,
-};
+use crate::adapters::driver::leptos_webui::views::components::blog::ArticleContentRenderer;
+use crate::adapters::driver::leptos_webui::views::components::blog::ArticleContentTable;
+use crate::adapters::driver::leptos_webui::views::components::blog::ArticleHeader;
+use crate::adapters::driver::leptos_webui::views::components::common::SeoMetaTags;
+use crate::adapters::driver::leptos_webui::views::components::common::UnexpectedError;
 use crate::adapters::driver::leptos_webui::views::layouts::SiteLayout;
+use crate::application::domain::article::Article;
 
 #[component]
 pub fn BlogDetailPage() -> impl IntoView {
@@ -31,24 +29,19 @@ pub fn BlogDetailPage() -> impl IntoView {
                             return view! { <UnexpectedError /> }.into_any();
                         }
 
-                        let article = data.unwrap();
-                        let table_of_contents_items =
-                            collect_article_table_of_contents_items(article.content());
+                        let article: Article = data.unwrap();
+                        let table_of_contents_items = article.content_table().clone();
 
                         view! {
                             <SeoMetaTags metatags=article.metatags().clone() />
-                            <Stylesheet href="/assets/plugins/splidejs/css/splide.min.css" />
-                            <Stylesheet href="/assets/plugins/prismjs/prism-tomorrow.min.css" />
-                            <Stylesheet href="/assets/plugins/prismjs/prism-toolbar.min.css" />
-                            <Script src="/assets/plugins/splidejs/js/splide.min.js" />
-                            <script>
-                                "window.Prism = window.Prism || {};
-                                window.Prism.manual = true;"
-                            </script>
-                            <Script src="/assets/plugins/prismjs/prism-core.min.js" />
-                            <Script src="/assets/plugins/prismjs/prism-toolbar.min.js" />
-                            <Script src="/assets/plugins/prismjs/prism-copy-to-clipboard.min.js" />
-                            <Script src="/assets/plugins/prismjs/prism-autoloader.min.js" />
+                            <link rel="stylesheet" href="/assets/plugins/prismjs/prism-tomorrow.min.css" />
+                            <link rel="stylesheet" href="/assets/plugins/prismjs/prism-toolbar.min.css" />
+                            {article.has_slider().then(|| {
+                                view! {
+                                    <link rel="stylesheet" href="/assets/plugins/splidejs/css/splide.min.css" />
+                                    <script src="/assets/plugins/splidejs/js/splide.min.js"></script>
+                                }
+                            })}
 
                             <div class="pb-12">
                                 <div class="article-shell -mx-5 w-auto rounded-none bg-white px-5 py-7 shadow-smoke-shadow transition ease-out duration-[160ms] md:px-8 md:py-10 lg:px-10 lg:py-12 xl:mx-auto xl:w-full xl:rounded-lg xl:px-12">
@@ -67,7 +60,17 @@ pub fn BlogDetailPage() -> impl IntoView {
                             </div>
 
                             <script>
-                                "const initArticleDetail = () => {
+                                "window.Prism = window.Prism || {};
+                                window.Prism.manual = true;"
+                            </script>
+                            <script src="/assets/plugins/prismjs/prism-core.min.js"></script>
+                            <script src="/assets/plugins/prismjs/prism-toolbar.min.js"></script>
+                            <script src="/assets/plugins/prismjs/prism-copy-to-clipboard.min.js"></script>
+                            <script src="/assets/plugins/prismjs/prism-autoloader.min.js"></script>
+
+                            <script>
+                                "
+                                const initArticleDetail = () => {
                                     if (window.__articleTableOfContentsCleanup) {
                                         window.__articleTableOfContentsCleanup();
                                     }

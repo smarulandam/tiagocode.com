@@ -1,5 +1,6 @@
 use async_trait::async_trait;
 use std::any::type_name;
+use std::time::Duration;
 
 use crate::adapters::driven::drupal_jsonapi::entities::NodeArticleResource;
 use crate::adapters::driven::drupal_jsonapi::entities::{ArticleNode, NodeArticleCollection};
@@ -32,6 +33,7 @@ const RESOURCE_QUERY: &str = "\
 /// - `api_client`: A connector to the CMS API for fetching portfolio data
 /// - `api_mapper`: A mapper to convert external portfolio items into domain `Article` objects
 pub struct ArticleRepository {
+    cache_client: Box<Cache>,
     api_client: Box<JsonApiClientService>,
     api_adapter: Box<dyn ExternalArticleMapper<Input = ArticleNode>>,
 }
@@ -39,7 +41,8 @@ pub struct ArticleRepository {
 impl ArticleRepository {
     pub fn new(http_client: Http, cache_client: Cache) -> Self {
         Self {
-            api_client: Box::new(JsonApiClientService::new(http_client, cache_client)),
+            cache_client: Box::new(cache_client.clone()),
+            api_client: Box::new(JsonApiClientService::new(http_client)),
             api_adapter: Box::new(ArticleNodeMapper::default()),
         }
     }
@@ -49,64 +52,73 @@ impl ArticleRepository {
 impl ForFetchingArticlesFeatured for ArticleRepository {
     async fn get_featured(&self) -> Result<Articles> {
         let endpoint =
-            &format!("/jsonapi/node/article?{COLLECTION_QUERY}&filter[promoted]=1&page[limit]=2");
+            format!("/jsonapi/node/article?{COLLECTION_QUERY}&filter[promoted]=1&page[limit]=2");
 
-        let external_articles = self
-            .api_client
-            .get_external_data::<NodeArticleCollection>(endpoint)
+        self.cache_client
+            .remember(endpoint.as_str(), Duration::from_hours(168), || async {
+                let external_articles = self
+                    .api_client
+                    .get_external_data::<NodeArticleCollection>(endpoint.as_str())
+                    .await
+                    .map_err(|e| AppError::external(type_name::<Self>(), e))?;
+
+                self.api_adapter
+                    .adapt_multiple(external_articles.data().clone())
+            })
             .await
-            .map_err(|e| AppError::external(type_name::<Self>(), e))?;
-
-        let articles = self
-            .api_adapter
-            .adapt_multiple(external_articles.data().clone())?;
-
-        Ok(articles)
     }
 }
 
 #[async_trait(?Send)]
 impl ForFetchingArticlesList for ArticleRepository {
     async fn get_list(&self, category_id: Option<String>) -> Result<Vec<Article>> {
-        let adapter = type_name::<Self>();
         let mut endpoint = format!("/jsonapi/node/article?{COLLECTION_QUERY}&page[limit]=10");
 
         if let Some(category) = category_id {
             endpoint.push_str(&format!("&filter[tags][condition][path]=tags.machine_name&filter[tags][condition][value]={category}"));
         }
 
-        let articles = self
-            .api_client
-            .get_external_data::<NodeArticleCollection>(endpoint.as_str())
-            .await
-            .map_err(|e| AppError::external(adapter, e))?;
+        self.cache_client
+            .remember(endpoint.as_str(), Duration::from_hours(168), || async {
+                let articles = self
+                    .api_client
+                    .get_external_data::<NodeArticleCollection>(endpoint.as_str())
+                    .await
+                    .map_err(|e| AppError::external(type_name::<Self>(), e))?;
 
-        Ok(self
-            .api_adapter
-            .adapt_multiple(articles.data().clone())?
-            .into_iter()
-            .collect())
+                Ok(self
+                    .api_adapter
+                    .adapt_multiple(articles.data().clone())?
+                    .into_iter()
+                    .collect())
+            })
+            .await
     }
 }
 
 #[async_trait(?Send)]
 impl ForFetchingArticleData for ArticleRepository {
     async fn find_by_slug(&self, slug: &str) -> Result<Article> {
-        let adapter = type_name::<Self>();
-        let endpoint = self
-            .api_client
-            .resolve_external_endpoint(slug)
-            .await
-            .map_err(|e| AppError::external(adapter, e))?;
-        let endpoint = &format!("{endpoint}?{RESOURCE_QUERY}");
+        self.cache_client
+            .remember(slug, Duration::from_hours(168), || async {
+                let adapter = type_name::<Self>();
+                let endpoint = self
+                    .api_client
+                    .resolve_external_endpoint(slug)
+                    .await
+                    .map_err(|e| AppError::external(adapter, e))?;
 
-        let article = self
-            .api_client
-            .get_external_data::<NodeArticleResource>(endpoint)
-            .await
-            .map_err(|e| AppError::external(adapter, e))?;
+                let endpoint = format!("{endpoint}?{RESOURCE_QUERY}");
 
-        Ok(self.api_adapter.adapt(article.data().clone())?)
+                let article = self
+                    .api_client
+                    .get_external_data::<NodeArticleResource>(&endpoint)
+                    .await
+                    .map_err(|e| AppError::external(adapter, e))?;
+
+                self.api_adapter.adapt(article.data().clone())
+            })
+            .await
     }
 }
 

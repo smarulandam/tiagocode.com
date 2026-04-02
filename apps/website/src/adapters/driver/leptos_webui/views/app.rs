@@ -1,6 +1,5 @@
 use leptos::prelude::*;
 use leptos_meta::provide_meta_context;
-use leptos_meta::Stylesheet;
 use leptos_router::components::{Redirect, Route, Router, Routes};
 use leptos_router::{path, SsrMode, WildcardSegment};
 
@@ -15,8 +14,6 @@ pub fn App() -> impl IntoView {
 
     view! {
         <Router>
-            <Stylesheet href="/assets/css/custom.css"/>
-            <Stylesheet href="/assets/plugins/bootstrap-icons/bootstrap-icons.min.css"/>
             <Routes fallback=move || "Not found.">
                 <Route ssr=SsrMode::Async path=path!("/") view=|| view! { <Redirect path="/en" /> } />
                 <Route ssr=SsrMode::Async path=path!("/en") view=PortfolioPage/>

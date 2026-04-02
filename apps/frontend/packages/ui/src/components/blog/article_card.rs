@@ -13,7 +13,7 @@ pub fn ArticleCard(
     thumbnail: Image,
     category: Category,
 ) -> Element {
-    let cta_label = format!("Read more: {}", title);
+    let cta_label = format!("Read article: {}", title);
     let category_href = category.slug().to_string();
     let category_label = format!(
         "{} {}",
@@ -26,7 +26,8 @@ pub fn ArticleCard(
             div { class: "relative aspect-[16/10] overflow-hidden rounded-[0.9rem] bg-smoke",
                 ImageView {
                     image: thumbnail,
-                    class: "h-full w-full object-cover transition ease-custom duration-500 group-hover:scale-[1.02] group-hover:saturate-[1.03]".to_string(),
+                    class: "h-full w-full object-cover transition ease-custom duration-500 group-hover:scale-[1.02] group-hover:saturate-[1.03]"
+                        .to_string(),
                 }
             }
             div { class: "mt-4 flex min-w-0 flex-1 flex-col",
@@ -47,14 +48,16 @@ pub fn ArticleCard(
                         "{category_label}"
                     }
                 }
-                p { class: "mt-2.5 line-clamp-3 text-base leading-7 text-zeus/72", "{summary}" }
+                p { class: "mt-2.5 line-clamp-3 text-base leading-7 text-zeus/72",
+                    "{summary}"
+                }
                 div { class: "mt-auto pt-4",
                     a {
                         href: slug,
                         target: "_self",
                         aria_label: cta_label,
                         class: "inline-block self-start rounded-full border border-black border-dashed px-6 py-3 font-mono text-sm transition duration-[120ms] ease-out hover:bg-black hover:text-white dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-black",
-                        "Read More"
+                        "Read article"
                     }
                 }
             }

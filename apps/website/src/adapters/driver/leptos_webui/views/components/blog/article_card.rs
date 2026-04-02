@@ -13,7 +13,7 @@ pub fn ArticleCard(
     thumbnail: Image,
     category: Category,
 ) -> impl IntoView {
-    let cta_label = format!("Read more: {}", title.clone());
+    let cta_label = format!("Read article: {}", title.clone());
     let category_href = category.slug().to_string();
     let category_label = format!(
         "{} {}",
@@ -54,7 +54,7 @@ pub fn ArticleCard(
                         aria-label=cta_label
                         class="inline-block self-start rounded-full border border-black border-dashed px-6 py-3 font-mono text-sm transition duration-[120ms] ease-out hover:bg-black hover:text-white dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-black"
                     >
-                        "Read More"
+                        "Read article"
                     </a>
                 </div>
             </div>

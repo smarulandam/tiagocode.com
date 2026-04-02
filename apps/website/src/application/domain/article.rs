@@ -17,6 +17,7 @@ pub struct Article {
     created_at: Date,
     thumbnail: Image,
     content: Vec<ArticleContent>,
+    content_table: ContentTable,
     category: Category,
     metatags: MetaTags,
 }
@@ -29,8 +30,10 @@ pub enum ArticleContent {
     Unknown,
 }
 
-#[derive(Clone, Debug, PartialEq, Eq)]
-pub struct ArticleContentTableItem {
+pub type ContentTable = Vec<ContentTableItem>;
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub struct ContentTableItem {
     pub id: Option<String>,
     pub title: String,
     pub level: u8,
@@ -45,11 +48,20 @@ pub struct Category {
     status: ModerationStatus,
 }
 
+impl Article {
+    pub fn has_slider(&self) -> bool {
+        self.content
+            .iter()
+            .any(|content| matches!(content, ArticleContent::Slider(_, _)))
+    }
+}
+
 #[cfg(test)]
 pub mod tests {
     use super::*;
     use crate::application::domain::common::tests::image_fixture;
     use crate::application::domain::common::tests::metatags_fixture;
+    use crate::application::value_objects::RequiredText;
 
     #[test]
     fn creation_succeeds_when_valid_article() {
@@ -94,6 +106,7 @@ pub mod tests {
         assert_eq!(a.title(), deserialized.title());
         assert_eq!(a.status(), deserialized.status());
         assert_eq!(a.content().len(), deserialized.content().len());
+        assert_eq!(a.content_table().len(), deserialized.content_table().len());
         assert_eq!(a.thumbnail().url(), deserialized.thumbnail().url());
         assert_eq!(a.thumbnail().alt(), deserialized.thumbnail().alt());
         assert_eq!(a.thumbnail().title(), deserialized.thumbnail().title());
@@ -121,6 +134,7 @@ pub mod tests {
             .thumbnail(image_fixture())
             .metatags(metatags_fixture())
             .content(vec![])
+            .content_table(vec![])
             .build()
             .unwrap()
     }
@@ -137,6 +151,7 @@ pub mod tests {
             .thumbnail(image_fixture())
             .metatags(metatags_fixture())
             .content(vec![])
+            .content_table(vec![])
             .build()
             .unwrap()
     }
@@ -151,6 +166,7 @@ pub mod tests {
             .thumbnail(image_fixture())
             .metatags(metatags_fixture())
             .content(vec![])
+            .content_table(vec![])
             .build()
             .unwrap()
     }

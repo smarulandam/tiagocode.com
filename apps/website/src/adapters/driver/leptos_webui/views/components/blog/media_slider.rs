@@ -5,19 +5,15 @@ use crate::application::domain::common::Image;
 
 #[component]
 pub fn ArticleMediaSlider(
+    slider_id: String,
     thumbnails: Vec<Image>,
     images: Vec<Image>,
     #[prop(into)] on_open: Callback<usize>,
 ) -> impl IntoView {
-    let mut buffer = [0u8; 4];
-    getrandom::fill(&mut buffer).unwrap();
-
-    let id = u32::from_le_bytes(buffer);
-
     view! {
-        <div class="article-media" data-slider=id>
+        <div class="article-media" data-slider=slider_id.clone()>
             <div class="article-media-frame">
-                <div class="splide article-slider-main" id=format!("main-slider-{}", id)>
+                <div class="splide article-slider-main" id=format!("main-slider-{}", slider_id)>
                     <div class="splide__track">
                         <ul class="splide__list">
                             {images
@@ -53,7 +49,7 @@ pub fn ArticleMediaSlider(
                     </div>
                 </div>
 
-                <div class="splide article-slider-thumbnails mt-4" id=format!("thumbnail-slider-{}", id)>
+                <div class="splide article-slider-thumbnails mt-4" id=format!("thumbnail-slider-{}", slider_id)>
                     <div class="splide__track">
                         <ul class="splide__list">
                             {thumbnails

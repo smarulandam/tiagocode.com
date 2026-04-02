@@ -42,7 +42,8 @@ pub fn ArticleContentRenderer(content: Vec<ArticleContent>) -> impl IntoView {
         <div class="article-content mt-7 flex flex-col gap-6 md:mt-8 md:gap-8" data-article-content="true">
             {content
                 .into_iter()
-                .map(|content_block| match content_block {
+                .enumerate()
+                .map(|(index, content_block)| match content_block {
                     ArticleContent::Image(image) => {
                         let zoom_image = image.clone();
 
@@ -64,6 +65,7 @@ pub fn ArticleContentRenderer(content: Vec<ArticleContent>) -> impl IntoView {
 
                         EitherOf4::C(view! {
                             <ArticleMediaSlider
+                                slider_id=format!("article-slider-{}", index)
                                 thumbnails=thumbnails.clone()
                                 images=images.clone()
                                 on_open=move |index| {

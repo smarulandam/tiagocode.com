@@ -1,5 +1,6 @@
 use async_trait::async_trait;
 use std::any::type_name;
+use std::time::Duration;
 
 use crate::adapters::driven::drupal_jsonapi::entities::{NodePortfolioResource, PortfolioNode};
 use crate::adapters::driven::drupal_jsonapi::mappers::ExternalPortfolioAdapter;
@@ -19,6 +20,7 @@ const RESOURCE_QUERY: &str = "\
 /// This struct implements the `ForFetchingPortfolioData` output port of the hexagonal architecture
 /// by integrating with a CMS API client to retrieve portfolio items and transform them into domain entities.
 pub struct PortfolioRepository {
+    cache_client: Box<Cache>,
     api_client: Box<JsonApiClientService>,
     api_adapter: Box<dyn ExternalPortfolioAdapter<Input = PortfolioNode>>,
 }
@@ -26,7 +28,8 @@ pub struct PortfolioRepository {
 impl PortfolioRepository {
     pub fn new(http_client: Http, cache_client: Cache) -> Self {
         Self {
-            api_client: Box::new(JsonApiClientService::new(http_client, cache_client)),
+            cache_client: Box::new(cache_client.clone()),
+            api_client: Box::new(JsonApiClientService::new(http_client)),
             api_adapter: Box::new(PortfolioNodeMapper::default()),
         }
     }
@@ -35,22 +38,26 @@ impl PortfolioRepository {
 #[async_trait(?Send)]
 impl ForFetchingPortfolioData for PortfolioRepository {
     async fn find_by_slug(&self, slug: &str) -> Result<Portfolio> {
-        let adapter = type_name::<Self>();
-        let endpoint = self
-            .api_client
-            .resolve_external_endpoint(slug)
+        self.cache_client
+            .remember(slug, Duration::from_hours(168), || async {
+                let adapter = type_name::<Self>();
+                let endpoint = self
+                    .api_client
+                    .resolve_external_endpoint(slug)
+                    .await
+                    .map_err(|e| AppError::external(adapter, e))?;
+
+                let endpoint = format!("{endpoint}?{RESOURCE_QUERY}");
+
+                let portfolio = self
+                    .api_client
+                    .get_external_data::<NodePortfolioResource>(&endpoint)
+                    .await
+                    .map_err(|e| AppError::external(adapter, e))?;
+
+                self.api_adapter.adapt(portfolio.data().clone())
+            })
             .await
-            .map_err(|e| AppError::external(adapter, e))?;
-
-        let endpoint = format!("{endpoint}?{RESOURCE_QUERY}");
-
-        let portfolio = self
-            .api_client
-            .get_external_data::<NodePortfolioResource>(&endpoint)
-            .await
-            .map_err(|e| AppError::external(adapter, e))?;
-
-        Ok(self.api_adapter.adapt(portfolio.data().clone())?)
     }
 }
 

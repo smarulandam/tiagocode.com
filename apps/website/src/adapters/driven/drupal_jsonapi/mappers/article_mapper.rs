@@ -1,11 +1,14 @@
 use lazy_static::lazy_static;
 use regex::Regex;
+use voca_rs::strip::strip_tags;
 
 use crate::adapters::driven::drupal_jsonapi::entities::{ArticleNode, ContentField};
 use crate::adapters::driven::drupal_jsonapi::entities::{ImageField, TagsVocabulary};
 use crate::adapters::driven::drupal_jsonapi::mappers::metatags_field_mapper;
-use crate::application::domain::article::{Article, ArticleBuilder, Articles};
-use crate::application::domain::article::{ArticleContent, Category, CategoryBuilder};
+use crate::application::domain::article::{
+    Article, ArticleBuilder, ArticleContent, Articles, Category, CategoryBuilder, ContentTable,
+    ContentTableItem,
+};
 use crate::application::domain::common::{Image, ImageBuilder};
 use crate::application::domain::core::{AppError, Result};
 use crate::application::value_objects::{RequiredText, Url};
@@ -13,6 +16,12 @@ use crate::application::value_objects::{RequiredText, Url};
 lazy_static! {
     static ref BLOCKED_CONTENT_ATTRIBUTES: Regex =
         Regex::new(r#"(style=".*?"|data-\w+=".*?"|data-pm-slice=".*?")"#).unwrap();
+    static ref ARTICLE_SECTION_HEADING_REGEX: Regex = Regex::new(
+        r#"(?is)<h(?<level>[1-3])(?<attrs>[^>]*)>(?<html>.*?)</h(?<closing_level>[1-3])>"#,
+    )
+    .unwrap();
+    static ref HEADING_ID_ATTRIBUTE_REGEX: Regex =
+        Regex::new(r#"(?i)\bid\s*=\s*["']([^"']+)["']"#).unwrap();
 }
 
 const GIF_MIME_TYPE: &str = "image/gif";
@@ -54,6 +63,9 @@ impl ExternalArticleMapper for ArticleNodeMapper {
 }
 
 fn article_node_mapper(node: ArticleNode) -> Result<Article> {
+    let content = content_field_mapper(&node);
+    let content_table = content_table_mapper(&content);
+
     ArticleBuilder::default()
         .id(node.id().to_string().try_into()?)
         .slug(node.path().alias().to_string().try_into()?)
@@ -64,13 +76,67 @@ fn article_node_mapper(node: ArticleNode) -> Result<Article> {
         .category(tag_vocabulary_mapper(node.tags().clone()))
         .thumbnail(thumbnail_field_mapper(node.thumbnail()))
         .metatags(metatags_field_mapper(node.metatags()))
-        .content(content_field_mapper(node))
+        .content(content)
+        .content_table(content_table)
         .build()
         .map_err(|e| AppError::unexpected(e))
 }
 
-fn content_field_mapper(data: ArticleNode) -> Vec<ArticleContent> {
+fn content_field_mapper(data: &ArticleNode) -> Vec<ArticleContent> {
     data.content().iter().map(content_elements_mapper).collect()
+}
+
+fn content_table_mapper(content: &[ArticleContent]) -> ContentTable {
+    let mut table_of_contents_items = Vec::new();
+
+    for content_block in content {
+        let ArticleContent::Text(text) = content_block else {
+            continue;
+        };
+
+        for capture in ARTICLE_SECTION_HEADING_REGEX.captures_iter(text.as_str()) {
+            let Some(level_match) = capture.name("level") else {
+                continue;
+            };
+
+            let Some(closing_level_match) = capture.name("closing_level") else {
+                continue;
+            };
+
+            if level_match.as_str() != closing_level_match.as_str() {
+                continue;
+            }
+
+            let Some(attrs_match) = capture.name("attrs") else {
+                continue;
+            };
+
+            let Some(inner_html_match) = capture.name("html") else {
+                continue;
+            };
+
+            let title = strip_tags(inner_html_match.as_str())
+                .split_whitespace()
+                .collect::<Vec<_>>()
+                .join(" ");
+
+            if title.is_empty() {
+                continue;
+            }
+
+            table_of_contents_items.push(ContentTableItem {
+                title,
+                level: level_match.as_str().parse::<u8>().unwrap_or(2),
+                id: HEADING_ID_ATTRIBUTE_REGEX
+                    .captures(attrs_match.as_str())
+                    .and_then(|capture| capture.get(1))
+                    .map(|value| value.as_str().trim().to_string())
+                    .filter(|value| !value.is_empty()),
+            });
+        }
+    }
+
+    table_of_contents_items
 }
 
 fn content_elements_mapper(content: &ContentField) -> ArticleContent {
@@ -228,6 +294,8 @@ fn absolute_asset_url(asset_path: &str, fallback_absolute_url: &str) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::application::domain::article::ArticleContent;
+    use crate::application::value_objects::RequiredText;
     use std::fs;
 
     fn image_field_fixture(file_name: &str) -> ImageField {
@@ -243,6 +311,10 @@ mod tests {
 
     fn gif_image_field_fixture() -> ImageField {
         image_field_fixture("article_mapper_gif_image_field.json")
+    }
+
+    fn text_block(value: &str) -> ArticleContent {
+        ArticleContent::Text(RequiredText::try_from(value).unwrap())
     }
 
     #[test]
@@ -284,5 +356,62 @@ mod tests {
             image.url_high_resolution().as_ref().unwrap().as_str(),
             expected
         );
+    }
+
+    #[test]
+    fn content_table_mapper_collects_headings_from_text_blocks_without_touching_non_text_blocks() {
+        let content = vec![
+            ArticleContent::Unknown,
+            text_block(
+                r#"
+                    <h2 id="intro"><span>Hello</span> <strong>World</strong> 🧠</h2>
+                    <p>Body</p>
+                    <h3>Inner topic</h3>
+                    <h4>Ignored</h4>
+                "#,
+            ),
+        ];
+
+        let table_of_contents_items = content_table_mapper(&content);
+
+        assert_eq!(table_of_contents_items.len(), 2);
+        assert_eq!(table_of_contents_items[0].title, "Hello World 🧠");
+        assert_eq!(table_of_contents_items[0].level, 2);
+        assert_eq!(table_of_contents_items[0].id.as_deref(), Some("intro"));
+        assert_eq!(table_of_contents_items[1].title, "Inner topic");
+        assert_eq!(table_of_contents_items[1].level, 3);
+        assert_eq!(table_of_contents_items[1].id, None);
+    }
+
+    #[test]
+    fn content_table_mapper_keeps_headings_without_ids_visible() {
+        let content = vec![text_block(
+            "<h2>Overview</h2><h3 id=\"details\">Details</h3>",
+        )];
+
+        let table_of_contents_items = content_table_mapper(&content);
+
+        assert_eq!(table_of_contents_items.len(), 2);
+        assert_eq!(table_of_contents_items[0].title, "Overview");
+        assert_eq!(table_of_contents_items[0].id, None);
+        assert_eq!(table_of_contents_items[1].title, "Details");
+        assert_eq!(table_of_contents_items[1].id.as_deref(), Some("details"));
+    }
+
+    #[test]
+    fn content_table_mapper_preserves_heading_order_across_text_blocks_and_ignores_h4() {
+        let content = vec![
+            text_block("<h2 id=\"intro\">Intro</h2><h4>Ignore me</h4>"),
+            text_block("<h3>Second step</h3><h1 id=\"final\">Final</h1>"),
+        ];
+
+        let table_of_contents_items = content_table_mapper(&content);
+
+        assert_eq!(table_of_contents_items.len(), 3);
+        assert_eq!(table_of_contents_items[0].title, "Intro");
+        assert_eq!(table_of_contents_items[1].title, "Second step");
+        assert_eq!(table_of_contents_items[2].title, "Final");
+        assert_eq!(table_of_contents_items[2].level, 1);
+        assert_eq!(table_of_contents_items[2].id.as_deref(), Some("final"));
     }
 }

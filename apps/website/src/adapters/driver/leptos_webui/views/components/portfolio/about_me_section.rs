@@ -22,7 +22,13 @@ pub fn AboutMeSection(
             <div class="flex flex-col gap-5 lg:flex-row lg:gap-10">
                 <div>
                     <div class="flex justify-center relative h-fit">
-                        <ImageView image=profile_picture class="min-w-52 min-h-52 max-w-64 max-h-64 rounded-full" />
+                        <ImageView
+                            image=profile_picture
+                            class="min-w-52 min-h-52 max-w-64 max-h-64 rounded-full"
+                            loading=Some("eager")
+                            decoding=Some("async")
+                            fetchpriority=Some("high")
+                        />
                     </div>
                     <div class="flex items-center justify-center">
                         <div class="pe-2">

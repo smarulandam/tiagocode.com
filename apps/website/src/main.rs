@@ -4,6 +4,8 @@
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     use actix_files::Files;
+    use actix_web::dev::Service;
+    use actix_web::http::header::{HeaderValue, CACHE_CONTROL};
     use actix_web::middleware::Compress;
     use actix_web::*;
     use dotenvy::dotenv;
@@ -55,13 +57,50 @@ async fn main() -> std::io::Result<()> {
 
         App::new()
             .wrap(Compress::default())
+            .wrap_fn(|request, service| {
+                let path = request.path().to_string();
+                let response = service.call(request);
+
+                async move {
+                    let mut response = response.await?;
+
+                    if response.status().is_success() {
+                        let cache_control = if path.starts_with("/pkg/")
+                            || path.starts_with("/assets/fonts/")
+                        {
+                            Some("public, max-age=31536000, immutable")
+                        } else if path.starts_with("/assets/") {
+                            Some("public, max-age=604800, stale-while-revalidate=86400")
+                        } else {
+                            None
+                        };
+
+                        if let Some(cache_control) = cache_control {
+                            response.headers_mut().insert(
+                                CACHE_CONTROL,
+                                HeaderValue::from_static(cache_control),
+                            );
+                        }
+                    }
+
+                    Ok(response)
+                }
+            })
             .service(favicon)
             .service(robots)
             .service(sitemap)
             .service(health)
             .service(cache_purge)
-            .service(Files::new("/assets", &site_root))
-            .service(Files::new("/pkg", format!("{site_root}/pkg")))
+            .service(
+                Files::new("/assets", &site_root)
+                    .use_etag(true)
+                    .use_last_modified(true),
+            )
+            .service(
+                Files::new("/pkg", format!("{site_root}/pkg"))
+                    .use_etag(true)
+                    .use_last_modified(true),
+            )
             .leptos_routes(routes, {
                 let leptos_options = leptos_options.clone();
                 move || {
@@ -70,8 +109,6 @@ async fn main() -> std::io::Result<()> {
                         <html lang="en">
                             <head>
                                 <meta charset="utf-8"/>
-                                <link rel="preconnect" href="https://fonts.googleapis.com" />
-                                <link rel="preconnect" href=api_base_url.clone() />
                                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
                                 <HashedStylesheet options=leptos_options.clone() id="leptos"/>
                                 <AutoReload options=leptos_options.clone() />

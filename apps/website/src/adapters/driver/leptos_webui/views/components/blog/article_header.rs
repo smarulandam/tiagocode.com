@@ -19,7 +19,7 @@ pub fn ArticleHeader(article: Article) -> impl IntoView {
             <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div class="flex items-center gap-4">
                     <img
-                        src="/assets/images/author.png"
+                        src="/assets/images/author.jpg"
                         alt="Santiago Marulanda"
                         class="h-14 w-14 rounded-full object-cover ring-2 ring-teal/10"
                     />
