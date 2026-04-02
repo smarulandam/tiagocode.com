@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /health
+Disallow: /internal/
+Sitemap: https://www.tiagocode.com/sitemap.xml

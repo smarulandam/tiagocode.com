@@ -53,6 +53,7 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .wrap(Compress::default())
             .service(favicon)
+            .service(robots)
             .service(health)
             .service(cache_purge)
             .service(Files::new("/assets", &site_root))
@@ -155,6 +156,19 @@ async fn favicon(
     let site_root = &leptos_options.site_root;
     Ok(actix_files::NamedFile::open(format!(
         "{site_root}/favicon.ico"
+    ))?)
+}
+
+#[cfg(feature = "ssr")]
+#[actix_web::get("/robots.txt")]
+async fn robots(
+    leptos_options: actix_web::web::Data<leptos::config::LeptosOptions>,
+) -> actix_web::Result<actix_files::NamedFile> {
+    let leptos_options = leptos_options.into_inner();
+    let site_root = &leptos_options.site_root;
+
+    Ok(actix_files::NamedFile::open(format!(
+        "{site_root}/robots.txt"
     ))?)
 }
 
