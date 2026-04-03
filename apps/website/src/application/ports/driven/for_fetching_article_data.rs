@@ -11,5 +11,5 @@ use crate::application::domain::core::Result;
 #[async_trait(?Send)]
 pub trait ForFetchingArticleData {
     /// Retrieves the article from the data source.
-    async fn find_by_slug(&self, slug: &str) -> Result<Article>;
+    async fn find_by_slug(&self, language: &str, slug: &str) -> Result<Article>;
 }

@@ -14,7 +14,10 @@ pub fn PortfolioPage() -> impl IntoView {
         .get("lang")
         .unwrap_or("en".into());
 
-    let page_data = OnceResource::new(portfolio_detail_controller(language));
+    let page_data = OnceResource::new(portfolio_detail_controller(
+        language.clone(),
+        format!("/{language}"),
+    ));
 
     view! {
         <Suspense fallback=move || { view! { <div class="bg-smoke"></div> } }>

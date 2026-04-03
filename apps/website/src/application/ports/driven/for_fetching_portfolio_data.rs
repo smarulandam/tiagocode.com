@@ -18,5 +18,5 @@ pub trait ForFetchingPortfolioData {
     /// # Returns
     /// * `AppError<Portfolio>` - A result wrapping the `Portfolio` if found, or an error
     ///   if the portfolio could not be retrieved.
-    async fn find_by_slug(&self, slug: &str) -> Result<Portfolio>;
+    async fn find_by_slug(&self, language: &str, slug: &str) -> Result<Portfolio>;
 }

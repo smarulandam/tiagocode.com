@@ -28,8 +28,11 @@ impl ShowPortfolioDetailUseCase {
 
 #[async_trait(?Send)]
 impl ForDisplayingPortfolio for ShowPortfolioDetailUseCase {
-    async fn execute(&self, language: &str) -> Result<Portfolio> {
-        let mut portfolio = self.portfolio_repository.find_by_slug(&language).await?;
+    async fn execute(&self, language: &str, slug: &str) -> Result<Portfolio> {
+        let mut portfolio = self
+            .portfolio_repository
+            .find_by_slug(language, slug)
+            .await?;
 
         if portfolio.status().eq(&ModerationStatus::Unpublished) {
             return Err(AppError::Forbidden {
@@ -87,7 +90,7 @@ mod tests {
 
     #[async_trait(?Send)]
     impl ForFetchingPortfolioData for PortfolioRepositoryMock {
-        async fn find_by_slug(&self, _slug: &str) -> Result<Portfolio> {
+        async fn find_by_slug(&self, _language: &str, _slug: &str) -> Result<Portfolio> {
             Ok(self.fixture.clone())
         }
     }
@@ -106,7 +109,7 @@ mod tests {
         let article_repo_mock = Box::new(ArticleRepositoryMock::with_fixture(vec![]));
 
         let use_case = ShowPortfolioDetailUseCase::new(portfolio_repo_mock, article_repo_mock);
-        let fetched_portfolio = use_case.execute("/en").await.unwrap();
+        let fetched_portfolio = use_case.execute("/en", "/portfolio").await.unwrap();
 
         assert_eq!(fetched_portfolio.id(), fixture.id());
         assert_eq!(fetched_portfolio.title(), fixture.title());
@@ -121,7 +124,7 @@ mod tests {
         let article_repo_mock = Box::new(ArticleRepositoryMock::with_fixture(vec![]));
 
         let use_case = ShowPortfolioDetailUseCase::new(portfolio_repo_mock, article_repo_mock);
-        let fetched_portfolio = use_case.execute("/en").await;
+        let fetched_portfolio = use_case.execute("/en", "/portfolio").await;
 
         assert!(matches!(fetched_portfolio, Err(AppError::Forbidden { .. })));
     }

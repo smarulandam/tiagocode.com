@@ -36,7 +36,7 @@ impl ForFetchingMenuData for LayoutRepository {
         let endpoint = if language.eq("en") {
             format!("/api/menu_items/{id}") // the API uses English by default
         } else {
-            format!("{language}/api/menu_items/{id}")
+            format!("/{language}/api/menu_items/{id}")
         };
 
         self.cache_client

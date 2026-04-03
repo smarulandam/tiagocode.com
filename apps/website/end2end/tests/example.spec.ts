@@ -66,3 +66,12 @@ test("language switcher stays visible on mobile and redirects to english home", 
     page.locator('[data-language-option="en"]').click(),
   ]);
 });
+
+test("logo preserves spanish home when browsing spanish routes", async ({ page }) => {
+  await page.goto("http://localhost:3000/es/articulos");
+
+  await Promise.all([
+    page.waitForURL("http://localhost:3000/es"),
+    page.getByRole("link", { name: "Tiagocode Logo" }).click(),
+  ]);
+});

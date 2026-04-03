@@ -2,7 +2,7 @@ use lazy_static::lazy_static;
 use regex::Regex;
 use voca_rs::strip::strip_tags;
 
-use crate::adapters::driven::drupal_jsonapi::entities::{ArticleNode, ContentField};
+use crate::adapters::driven::drupal_jsonapi::entities::{ArticleNode, ContentField, PathField};
 use crate::adapters::driven::drupal_jsonapi::entities::{ImageField, TagsVocabulary};
 use crate::adapters::driven::drupal_jsonapi::mappers::metatags_field_mapper;
 use crate::application::domain::article::{
@@ -68,7 +68,7 @@ fn article_node_mapper(node: ArticleNode) -> Result<Article> {
 
     ArticleBuilder::default()
         .id(node.id().to_string().try_into()?)
-        .slug(node.path().alias().to_string().try_into()?)
+        .slug(slug_field_mapper(node.path())?)
         .status(node.status().clone().into())
         .title(node.title().to_string().try_into()?)
         .summary(node.body().to_string().try_into()?)
@@ -80,6 +80,16 @@ fn article_node_mapper(node: ArticleNode) -> Result<Article> {
         .content_table(content_table)
         .build()
         .map_err(|e| AppError::unexpected(e))
+}
+
+pub fn slug_field_mapper(field: &PathField) -> Result<Url> {
+    let lang_code = field.langcode();
+
+    if lang_code.ne("en") {
+        format!("/{lang_code}{}", field.alias().to_string()).try_into()
+    } else {
+        field.alias().to_string().try_into()
+    }
 }
 
 fn content_field_mapper(data: &ArticleNode) -> Vec<ArticleContent> {

@@ -10,18 +10,18 @@ label: ' Node: Article [ES]'
 type: 'canonical_entities:node'
 pattern: 'articulos/[node:field_tags:entity:name]/[node:title]'
 selection_criteria:
-  55973d59-24f9-4941-9932-23f3df03e6df:
+  2f506599-0460-4b84-a920-899f2d75024d:
     id: 'entity_bundle:node'
     negate: false
-    uuid: 55973d59-24f9-4941-9932-23f3df03e6df
+    uuid: 2f506599-0460-4b84-a920-899f2d75024d
     context_mapping:
       node: node
     bundles:
       article: article
-  2a169863-80cb-4647-b9a4-725834e4db4b:
+  44ad26a8-0bca-4b4b-a30b-c8d871dd11d8:
     id: language
     negate: false
-    uuid: 2a169863-80cb-4647-b9a4-725834e4db4b
+    uuid: 44ad26a8-0bca-4b4b-a30b-c8d871dd11d8
     context_mapping:
       language: 'node:langcode:language'
     langcodes:

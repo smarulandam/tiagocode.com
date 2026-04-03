@@ -1,3 +1,4 @@
+use leptos::attr::language;
 use leptos::prelude::ServerFnError;
 use leptos::prelude::*;
 
@@ -53,7 +54,10 @@ pub async fn articles_list_controller(
 }
 
 #[server]
-pub async fn article_detail_controller(slug: String) -> Result<Article, ServerFnError> {
+pub async fn article_detail_controller(
+    language: String,
+    slug: String,
+) -> Result<Article, ServerFnError> {
     use actix_web::web::Data;
     use leptos::logging::error;
     use leptos_actix::extract;
@@ -76,10 +80,13 @@ pub async fn article_detail_controller(slug: String) -> Result<Article, ServerFn
 
     let use_case = ShowArticleDetailUseCase::new(Box::new(article_repository));
 
-    let result = use_case.execute(slug.as_str()).await.map_err(|e| {
-        error!("{}", e.to_string());
-        ServerFnError::<AppError>::ServerError(e.to_string())
-    })?;
+    let result = use_case
+        .execute(language.as_str(), slug.as_str())
+        .await
+        .map_err(|e| {
+            error!("{}", e.to_string());
+            ServerFnError::<AppError>::ServerError(e.to_string())
+        })?;
 
     Ok(result)
 }

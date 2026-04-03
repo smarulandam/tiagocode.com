@@ -1,5 +1,6 @@
+use leptos::attr::language;
 use leptos::prelude::*;
-use leptos_router::hooks::use_location;
+use leptos_router::hooks::{use_location, use_params_map};
 
 use crate::adapters::driver::leptos_webui::controllers::article_detail_controller;
 use crate::adapters::driver::leptos_webui::views::components::blog::ArticleContentRenderer;
@@ -11,8 +12,13 @@ use crate::application::domain::article::Article;
 
 #[component]
 pub fn BlogDetailPage() -> impl IntoView {
+    let language = use_params_map()
+        .get_untracked()
+        .get("lang")
+        .unwrap_or("en".into());
     let slug = use_location().pathname.read_untracked().to_string();
-    let page_data = OnceResource::new(article_detail_controller(slug));
+
+    let page_data = OnceResource::new(article_detail_controller(language, slug));
 
     view! {
         <Suspense fallback=move || { view! { <div>"Loading..."</div> } }>

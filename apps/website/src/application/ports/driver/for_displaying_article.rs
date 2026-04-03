@@ -15,5 +15,5 @@ pub trait ForDisplayingArticle {
     /// # Returns
     /// * `AppError<Article>` - A result wrapping the `Articles` if found,
     /// or an error if the article could not be retrieved.
-    async fn execute(&self, slug: &str) -> Result<Article>;
+    async fn execute(&self, language: &str, slug: &str) -> Result<Article>;
 }

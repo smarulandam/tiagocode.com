@@ -14,5 +14,5 @@ pub trait ForDisplayingPortfolio {
     /// # Returns
     /// * `AppError<Portfolio>` - A result wrapping the `Portfolio` if found, or an error
     ///   if the portfolio could not be retrieved.
-    async fn execute(&self, language: &str) -> Result<Portfolio>;
+    async fn execute(&self, language: &str, slug: &str) -> Result<Portfolio>;
 }

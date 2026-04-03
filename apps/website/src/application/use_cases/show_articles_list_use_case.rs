@@ -42,7 +42,7 @@ impl ForDisplayingArticlesList for ShowArticlesListUseCase {
         slug: &str,
         category_id: Option<String>,
     ) -> Result<(Page, Vec<Category>, Vec<Article>)> {
-        let page = self.page_repository.find_by_slug(slug).await?;
+        let page = self.page_repository.find_by_slug(language, slug).await?;
 
         let articles = self
             .article_repository
@@ -100,7 +100,7 @@ mod tests {
 
     #[async_trait(?Send)]
     impl ForFetchingPageData for PageRepositoryMock {
-        async fn find_by_slug(&self, slug: &str) -> Result<Page> {
+        async fn find_by_slug(&self, language: &str, slug: &str) -> Result<Page> {
             Ok(self.fixture.clone())
         }
     }

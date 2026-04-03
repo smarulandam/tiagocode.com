@@ -24,7 +24,7 @@ pub fn App() -> impl IntoView {
                     <Route ssr=SsrMode::Async path=path!("articles/:category") view=BlogListPage/>
                     <Route ssr=SsrMode::Async path=path!("articles/:category/:slug") view=BlogDetailPage/>
                     <Route ssr=SsrMode::Async path=path!(":lang") view=PortfolioPage />
-                    <Route ssr=SsrMode::Async path=path!(":lang/articulos") view=BlogListPage/>
+                    <Route ssr=SsrMode::Async path=path!(":lang/:page") view=BlogListPage/>
                     <Route ssr=SsrMode::Async path=path!(":lang/articulos/:category") view=BlogListPage/>
                     <Route ssr=SsrMode::Async path=path!(":lang/articulos/:category/:slug") view=BlogDetailPage/>
                     <Route path=WildcardSegment("any") view=NotFoundPage/>

@@ -23,8 +23,8 @@ impl ShowArticleDetailUseCase {
 
 #[async_trait(?Send)]
 impl ForDisplayingArticle for ShowArticleDetailUseCase {
-    async fn execute(&self, slug: &str) -> Result<Article> {
-        let article = self.article_repository.find_by_slug(slug).await?;
+    async fn execute(&self, language: &str, slug: &str) -> Result<Article> {
+        let article = self.article_repository.find_by_slug(language, slug).await?;
 
         if article.status().eq(&ModerationStatus::Unpublished) {
             return Err(AppError::Forbidden {
@@ -55,7 +55,7 @@ mod tests {
 
     #[async_trait(?Send)]
     impl ForFetchingArticleData for ArticleRepositoryMock {
-        async fn find_by_slug(&self, _slug: &str) -> Result<Article> {
+        async fn find_by_slug(&self, _language: &str, _slug: &str) -> Result<Article> {
             Ok(self.fixture.clone())
         }
     }
@@ -67,7 +67,7 @@ mod tests {
 
         let use_case = ShowArticleDetailUseCase::new(Box::new(article_repository));
         let result = use_case
-            .execute(article_fixture.slug().as_str())
+            .execute("en", article_fixture.slug().as_str())
             .await
             .unwrap();
 
@@ -86,7 +86,9 @@ mod tests {
         let article_repository = ArticleRepositoryMock::with_fixture(article_fixture.clone());
 
         let use_case = ShowArticleDetailUseCase::new(Box::new(article_repository));
-        let result = use_case.execute(article_fixture.slug().as_str()).await;
+        let result = use_case
+            .execute("en", article_fixture.slug().as_str())
+            .await;
 
         assert!(matches!(result, Err(AppError::Forbidden { .. })));
     }

@@ -11,5 +11,5 @@ use crate::application::domain::page::Page;
 #[async_trait(?Send)]
 pub trait ForFetchingPageData {
     /// Retrieves the article from the data source.
-    async fn find_by_slug(&self, slug: &str) -> Result<Page>;
+    async fn find_by_slug(&self, language: &str, slug: &str) -> Result<Page>;
 }

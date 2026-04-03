@@ -37,13 +37,13 @@ impl PortfolioRepository {
 
 #[async_trait(?Send)]
 impl ForFetchingPortfolioData for PortfolioRepository {
-    async fn find_by_slug(&self, slug: &str) -> Result<Portfolio> {
+    async fn find_by_slug(&self, language: &str, slug: &str) -> Result<Portfolio> {
         self.cache_client
             .remember(slug, Duration::from_days(7), || async {
                 let adapter = type_name::<Self>();
                 let endpoint = self
                     .api_client
-                    .resolve_external_endpoint(slug)
+                    .resolve_external_endpoint(language, slug)
                     .await
                     .map_err(|e| AppError::external(adapter, e))?;
 

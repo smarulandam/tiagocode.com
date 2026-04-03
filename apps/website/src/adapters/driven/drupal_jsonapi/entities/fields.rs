@@ -47,6 +47,7 @@ pub struct PathField {
     alias: String,
     #[serde(deserialize_with = "deserialize_number_from_string")]
     pid: u16,
+    langcode: String,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize, Getters)]

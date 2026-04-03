@@ -107,13 +107,13 @@ impl ForFetchingArticlesList for ArticleRepository {
 
 #[async_trait(?Send)]
 impl ForFetchingArticleData for ArticleRepository {
-    async fn find_by_slug(&self, slug: &str) -> Result<Article> {
+    async fn find_by_slug(&self, language: &str, slug: &str) -> Result<Article> {
         self.cache_client
             .remember(slug, Duration::from_days(7), || async {
                 let adapter = type_name::<Self>();
                 let endpoint = self
                     .api_client
-                    .resolve_external_endpoint(slug)
+                    .resolve_external_endpoint(language, slug)
                     .await
                     .map_err(|e| AppError::external(adapter, e))?;
 
