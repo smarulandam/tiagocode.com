@@ -27,9 +27,12 @@ impl GetLayoutUseCase {
 
 #[async_trait(?Send)]
 impl ForDisplayingLayout for GetLayoutUseCase {
-    async fn execute(&self) -> Result<Layout> {
-        let main_menu = self.repository.find_by_id("main").await?;
-        let social_menu = self.repository.find_by_id("social-network").await?;
+    async fn execute(&self, language: &str) -> Result<Layout> {
+        let main_menu = self.repository.find_by_id(language, "main").await?;
+        let social_menu = self
+            .repository
+            .find_by_id(language, "social-network")
+            .await?;
 
         let layout = LayoutBuilder::default()
             .logo(None)

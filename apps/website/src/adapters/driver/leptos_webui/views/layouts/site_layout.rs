@@ -1,27 +1,41 @@
+use leptos::either::Either;
 use leptos::prelude::*;
 use leptos_router::components::Outlet;
+use leptos_router::hooks::use_params_map;
 
 use crate::adapters::driver::leptos_webui::controllers::layout_controller;
 use crate::adapters::driver::leptos_webui::views::components::common::Navbar;
 
 #[component]
 pub fn SiteLayout() -> impl IntoView {
+    let language = use_params_map()
+        .get_untracked()
+        .get("lang")
+        .unwrap_or_else(|| "en".into());
+    let layout = OnceResource::new(layout_controller(language));
+
     view! {
-        <header class="fixed w-full z-20 top-0 start-0 bg-white border-b border-gray-200 shadow-smoke-shadow hover:shadow-smoke-shadow-hover transition ease-out duration-[160ms]" id="header">
-            <Suspense fallback=move || view! { <div class="h-[72px]"></div> }>
-                <Await future=layout_controller() let:data>
-                    {match data {
-                        Ok(data) => view! {
-                            <Navbar
-                                main_menu=data.main_menu().clone()
-                                social_menu=data.social_menu().clone()
-                            />
-                        }.into_any(),
-                        Err(_) => view! { <span></span> }.into_any(),
-                    }}
-                </Await>
-            </Suspense>
-        </header>
+        <Transition fallback=move || { view! { <div class="flex flex-wrap items-center justify-between max-w-[1320px] mx-auto py-4 px-5 xl:px-0"></div> }}>
+            <header class="fixed w-full z-20 top-0 start-0 bg-white border-b border-gray-200 shadow-smoke-shadow hover:shadow-smoke-shadow-hover transition ease-out duration-[160ms]" id="header">
+                {move || {
+                    layout
+                    .get()
+                    .map(|data| {
+                        match data {
+                            Err(_) => Either::Left(view! { <span></span> }),
+                            Ok(data) => Either::Right(
+                                view! {
+                                    <Navbar
+                                        main_menu=data.main_menu().clone()
+                                        social_menu=data.social_menu().clone()
+                                    />
+                                },
+                            ),
+                        }
+                    })
+                }}
+            </header>
+        </Transition>
         <main class="bg-smoke">
             <div class="container max-w-[1320px] mx-auto px-5 xl:px-0 pt-[110px] lg:pt-[128px] min-h-[100vh]">
                 <Outlet/>

@@ -14,5 +14,5 @@ pub trait ForFetchingArticlesFeatured {
     ///
     /// Returns a collection of articles sorted by recency, typically used
     /// for displaying latest content in feeds or home pages.
-    async fn get_featured(&self) -> Result<Articles>;
+    async fn get_featured(&self, language: &str) -> Result<Articles>;
 }

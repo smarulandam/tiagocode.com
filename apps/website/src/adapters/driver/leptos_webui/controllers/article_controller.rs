@@ -6,6 +6,7 @@ use crate::application::domain::page::Page;
 
 #[server]
 pub async fn articles_list_controller(
+    language: String,
     slug: String,
 ) -> Result<(Page, Vec<Category>, Vec<Article>), ServerFnError> {
     use actix_web::web::Data;
@@ -41,7 +42,7 @@ pub async fn articles_list_controller(
 
     let category = slug.clone().split("/").nth(3).map(|s| s.to_owned());
     let result = use_case
-        .execute("/en/articles", category)
+        .execute(language.as_str(), slug.as_str(), category)
         .await
         .map_err(|e| {
             error!("{}", e.to_string());

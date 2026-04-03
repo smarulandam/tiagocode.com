@@ -32,8 +32,12 @@ impl LayoutRepository {
 
 #[async_trait(?Send)]
 impl ForFetchingMenuData for LayoutRepository {
-    async fn find_by_id(&self, id: &str) -> Result<MenuTree> {
-        let endpoint = format!("/api/menu_items/{id}");
+    async fn find_by_id(&self, language: &str, id: &str) -> Result<MenuTree> {
+        let endpoint = if language.eq("en") {
+            format!("/api/menu_items/{id}") // the API uses English by default
+        } else {
+            format!("{language}/api/menu_items/{id}")
+        };
 
         self.cache_client
             .remember(endpoint.as_str(), Duration::from_days(7), || async {

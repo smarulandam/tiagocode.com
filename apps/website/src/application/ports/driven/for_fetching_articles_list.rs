@@ -14,5 +14,5 @@ pub trait ForFetchingArticlesList {
     ///
     /// Returns a collection of articles sorted by recency, typically used
     /// for displaying latest content in feeds or home pages.
-    async fn get_list(&self, category_id: Option<String>) -> Result<Vec<Article>>;
+    async fn get_list(&self, language: &str, category_id: Option<String>) -> Result<Vec<Article>>;
 }

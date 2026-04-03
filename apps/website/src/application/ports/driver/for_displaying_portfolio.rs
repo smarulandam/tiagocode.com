@@ -1,7 +1,6 @@
-use async_trait::async_trait;
-
 use crate::application::domain::core::Result;
 use crate::application::domain::portfolio::Portfolio;
+use async_trait::async_trait;
 
 /// Input port for retrieving portfolio data.
 ///
@@ -15,5 +14,5 @@ pub trait ForDisplayingPortfolio {
     /// # Returns
     /// * `AppError<Portfolio>` - A result wrapping the `Portfolio` if found, or an error
     ///   if the portfolio could not be retrieved.
-    async fn execute(&self) -> Result<Portfolio>;
+    async fn execute(&self, language: &str) -> Result<Portfolio>;
 }

@@ -38,6 +38,7 @@ impl ShowArticlesListUseCase {
 impl ForDisplayingArticlesList for ShowArticlesListUseCase {
     async fn execute(
         &self,
+        language: &str,
         slug: &str,
         category_id: Option<String>,
     ) -> Result<(Page, Vec<Category>, Vec<Article>)> {
@@ -45,7 +46,7 @@ impl ForDisplayingArticlesList for ShowArticlesListUseCase {
 
         let articles = self
             .article_repository
-            .get_list(category_id)
+            .get_list(language, category_id)
             .await?
             .into_iter()
             .filter(|a| a.status().eq(&ModerationStatus::Published))
@@ -65,7 +66,7 @@ mod tests {
     };
     use crate::application::domain::article::{Article, Category};
     use crate::application::domain::page::tests::page_fixture;
-    use crate::application::domain::page::{self, Page};
+    use crate::application::domain::page::Page;
 
     struct PageRepositoryMock {
         fixture: Page,
@@ -106,7 +107,11 @@ mod tests {
 
     #[async_trait(?Send)]
     impl ForFetchingArticlesList for ArticleRepositoryMock {
-        async fn get_list(&self, _category_id: Option<String>) -> Result<Vec<Article>> {
+        async fn get_list(
+            &self,
+            language: &str,
+            _category_id: Option<String>,
+        ) -> Result<Vec<Article>> {
             Ok(self.fixture.clone())
         }
     }
@@ -133,7 +138,7 @@ mod tests {
             Box::new(page_repo_mock),
         );
         let (fetched_page, fetched_categories, fetched_articles) =
-            use_case.execute("/articles", None).await.unwrap();
+            use_case.execute("en", "/articles", None).await.unwrap();
 
         assert_eq!(fetched_page.title(), page_fixture.title());
         assert_eq!(fetched_articles.len(), articles_fixture.len());
@@ -155,7 +160,7 @@ mod tests {
             Box::new(page_repo_mock),
         );
         let (_fetched_page, fetched_categories, fetched_articles) =
-            use_case.execute("/articles", None).await.unwrap();
+            use_case.execute("en", "/articles", None).await.unwrap();
 
         assert_eq!(fetched_articles.len(), 1);
         assert_eq!(fetched_categories.len(), categories_fixture.len());

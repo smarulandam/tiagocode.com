@@ -54,9 +54,14 @@ impl ArticleRepository {
 
 #[async_trait(?Send)]
 impl ForFetchingArticlesFeatured for ArticleRepository {
-    async fn get_featured(&self) -> Result<Articles> {
-        let endpoint =
-            format!("/jsonapi/node/article?{COLLECTION_QUERY}&filter[promoted]=1&page[limit]=2");
+    async fn get_featured(&self, language: &str) -> Result<Articles> {
+        let endpoint = if language.eq("en") {
+            format!("/jsonapi/node/article?{COLLECTION_QUERY}&filter[promoted]=1&page[limit]=2")
+        } else {
+            format!(
+                "/{language}/jsonapi/node/article?{COLLECTION_QUERY}&filter[promoted]=1&page[limit]=2"
+            )
+        };
 
         self.cache_client
             .remember(endpoint.as_str(), Duration::from_days(7), || async {
@@ -75,8 +80,12 @@ impl ForFetchingArticlesFeatured for ArticleRepository {
 
 #[async_trait(?Send)]
 impl ForFetchingArticlesList for ArticleRepository {
-    async fn get_list(&self, category_id: Option<String>) -> Result<Articles> {
+    async fn get_list(&self, language: &str, category_id: Option<String>) -> Result<Articles> {
         let mut endpoint = format!("/jsonapi/node/article?{COLLECTION_QUERY}&page[limit]=10");
+
+        if language.ne("en") {
+            endpoint = format!("/{language}{endpoint}");
+        }
 
         if let Some(category) = category_id {
             endpoint.push_str(&format!("{CATEGORY_FILTER_QUERY}={category}"));

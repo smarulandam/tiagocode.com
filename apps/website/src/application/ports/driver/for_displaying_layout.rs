@@ -15,5 +15,5 @@ pub trait ForDisplayingLayout {
     /// # Returns
     /// * `ApplicationResult<Layout>` - A result wrapping the `Layout` if successful, or an error
     ///   if the layout data could not be retrieved.
-    async fn execute(&self) -> Result<Layout>;
+    async fn execute(&self, language: &str) -> Result<Layout>;
 }

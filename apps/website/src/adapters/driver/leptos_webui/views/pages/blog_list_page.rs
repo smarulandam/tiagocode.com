@@ -1,5 +1,5 @@
 use leptos::prelude::*;
-use leptos_router::hooks::use_location;
+use leptos_router::hooks::{use_location, use_params_map};
 
 use crate::adapters::driver::leptos_webui::controllers::articles_list_controller;
 use crate::adapters::driver::leptos_webui::views::components::blog::ArticleListSection;
@@ -10,9 +10,14 @@ use crate::adapters::driver::leptos_webui::views::components::common::{
 #[component]
 pub fn BlogListPage() -> impl IntoView {
     let route = use_location();
+    let language = use_params_map()
+        .get_untracked()
+        .get("lang")
+        .unwrap_or_else(|| "en".into());
+
     let page_data = Resource::new(
-        move || route.pathname.read().to_string(),
-        |slug| articles_list_controller(slug),
+        move || (language.clone(), route.pathname.read().to_string()),
+        |(language, slug)| articles_list_controller(language, slug),
     );
 
     view! {

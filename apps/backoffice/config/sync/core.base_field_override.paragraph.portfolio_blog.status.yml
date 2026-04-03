@@ -1,0 +1,22 @@
+uuid: 4a28fe9e-b993-48f8-b1df-04b703890079
+langcode: en
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.portfolio_blog
+id: paragraph.portfolio_blog.status
+field_name: status
+entity_type: paragraph
+bundle: portfolio_blog
+label: Published
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

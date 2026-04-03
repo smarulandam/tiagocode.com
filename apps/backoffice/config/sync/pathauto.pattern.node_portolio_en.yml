@@ -1,32 +1,31 @@
-uuid: 2992015a-a3c5-42cb-9262-424cf8983b9b
+uuid: 05a62bde-c30e-400b-8602-50b2aac4b372
 langcode: en
 status: true
 dependencies:
   module:
     - language
     - node
-id: node_article
-label: 'Node: Article'
+id: node_portolio_en
+label: 'Node: Portolio [EN]'
 type: 'canonical_entities:node'
-pattern: '[node:langcode]/articles/[node:field_tags:entity:name]/[node:title]'
+pattern: 'portfolio/[node:title]'
 selection_criteria:
-  fef53b56-8825-40c1-aac4-3277eb206797:
+  12d84d86-3f6f-4494-8955-55c8127b9d1c:
     id: 'entity_bundle:node'
     negate: false
-    uuid: fef53b56-8825-40c1-aac4-3277eb206797
+    uuid: 12d84d86-3f6f-4494-8955-55c8127b9d1c
     context_mapping:
       node: node
     bundles:
-      article: article
-  274f7928-da59-42cb-80db-e0660ceff359:
+      portfolio: portfolio
+  e99ae457-4021-4dd9-af4a-5b15c6f383c5:
     id: language
     negate: false
-    uuid: 274f7928-da59-42cb-80db-e0660ceff359
+    uuid: e99ae457-4021-4dd9-af4a-5b15c6f383c5
     context_mapping:
       language: 'node:langcode:language'
     langcodes:
       en: en
-      es: es
 selection_logic: and
 weight: -10
 relationships:

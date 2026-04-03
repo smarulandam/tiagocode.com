@@ -11,11 +11,8 @@ use crate::application::domain::article::Article;
 
 #[component]
 pub fn BlogDetailPage() -> impl IntoView {
-    let route = use_location();
-    let page_data = Resource::new(
-        move || route.pathname.read().to_string(),
-        |slug| article_detail_controller(slug),
-    );
+    let slug = use_location().pathname.read_untracked().to_string();
+    let page_data = OnceResource::new(article_detail_controller(slug));
 
     view! {
         <Suspense fallback=move || { view! { <div>"Loading..."</div> } }>

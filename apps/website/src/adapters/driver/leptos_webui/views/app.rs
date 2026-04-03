@@ -17,12 +17,16 @@ pub fn App() -> impl IntoView {
         <Router>
             <Routes fallback=move || "Not found.">
                 <ParentRoute path=path!("") view=SiteLayout>
-                    <Route path=path!("") view=|| view! { <Redirect path="/en" /> } />
-                    <Route ssr=SsrMode::Async path=path!("en") view=PortfolioPage/>
-                    <Route ssr=SsrMode::Async path=path!("es") view=PortfolioPage/>
-                    <Route ssr=SsrMode::Async path=path!(":lang/articles") view=BlogListPage/>
-                    <Route ssr=SsrMode::Async path=path!(":lang/articles/:category") view=BlogListPage/>
-                    <Route ssr=SsrMode::Async path=path!(":lang/articles/:category/:slug") view=BlogDetailPage/>
+                    <Route path=path!("/portfolio/santiago-marulanda") view=|| view! { <Redirect path="/" /> } />
+                    <Route path=path!("es/portafolio/santiago-marulanda") view=|| view! { <Redirect path="/es" /> } />
+                    <Route ssr=SsrMode::Async path=path!("") view=PortfolioPage />
+                    <Route ssr=SsrMode::Async path=path!("articles") view=BlogListPage/>
+                    <Route ssr=SsrMode::Async path=path!("articles/:category") view=BlogListPage/>
+                    <Route ssr=SsrMode::Async path=path!("articles/:category/:slug") view=BlogDetailPage/>
+                    <Route ssr=SsrMode::Async path=path!(":lang") view=PortfolioPage />
+                    <Route ssr=SsrMode::Async path=path!(":lang/articulos") view=BlogListPage/>
+                    <Route ssr=SsrMode::Async path=path!(":lang/articulos/:category") view=BlogListPage/>
+                    <Route ssr=SsrMode::Async path=path!(":lang/articulos/:category/:slug") view=BlogDetailPage/>
                     <Route path=WildcardSegment("any") view=NotFoundPage/>
                 </ParentRoute>
             </Routes>

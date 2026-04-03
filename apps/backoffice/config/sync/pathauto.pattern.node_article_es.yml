@@ -1,31 +1,30 @@
-uuid: badbfa59-73a4-4330-86a2-fdb34bc6bd3f
-langcode: en
+uuid: 9c66092e-806d-43fb-a210-1838a1f6a509
+langcode: es
 status: true
 dependencies:
   module:
     - language
     - node
-id: node_page
-label: 'Node: Page'
+id: node_article_es
+label: ' Node: Article [ES]'
 type: 'canonical_entities:node'
-pattern: '[node:title]'
+pattern: 'articulos/[node:field_tags:entity:name]/[node:title]'
 selection_criteria:
-  e16b8251-e151-4203-9f61-5097b5219998:
+  55973d59-24f9-4941-9932-23f3df03e6df:
     id: 'entity_bundle:node'
     negate: false
-    uuid: e16b8251-e151-4203-9f61-5097b5219998
+    uuid: 55973d59-24f9-4941-9932-23f3df03e6df
     context_mapping:
       node: node
     bundles:
-      page: page
-  cc4cddd8-b762-477b-aee0-ee1ee86e0fd3:
+      article: article
+  2a169863-80cb-4647-b9a4-725834e4db4b:
     id: language
     negate: false
-    uuid: cc4cddd8-b762-477b-aee0-ee1ee86e0fd3
+    uuid: 2a169863-80cb-4647-b9a4-725834e4db4b
     context_mapping:
       language: 'node:langcode:language'
     langcodes:
-      en: en
       es: es
 selection_logic: and
 weight: -10

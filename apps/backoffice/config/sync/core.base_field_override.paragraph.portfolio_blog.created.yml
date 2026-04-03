@@ -1,0 +1,18 @@
+uuid: e3b7b7ef-36d8-4032-9bd5-6ff774f0bf79
+langcode: en
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.portfolio_blog
+id: paragraph.portfolio_blog.created
+field_name: created
+entity_type: paragraph
+bundle: portfolio_blog
+label: 'Authored on'
+description: 'The time that the Paragraph was created.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

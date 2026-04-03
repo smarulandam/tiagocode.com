@@ -1,16 +1,20 @@
 use leptos::prelude::*;
+use leptos_router::hooks::use_params_map;
 
 use crate::adapters::driver::leptos_webui::controllers::portfolio_detail_controller;
-use crate::adapters::driver::leptos_webui::views::components::common::{
-    SeoMetaTags, UnexpectedError,
-};
-use crate::adapters::driver::leptos_webui::views::components::portfolio::{
-    PortfolioSectionRenderer, PortfolioSidebar,
-};
+use crate::adapters::driver::leptos_webui::views::components::common::SeoMetaTags;
+use crate::adapters::driver::leptos_webui::views::components::common::UnexpectedError;
+use crate::adapters::driver::leptos_webui::views::components::portfolio::PortfolioSectionRenderer;
+use crate::adapters::driver::leptos_webui::views::components::portfolio::PortfolioSidebar;
 
 #[component]
 pub fn PortfolioPage() -> impl IntoView {
-    let page_data = OnceResource::new(portfolio_detail_controller());
+    let language = use_params_map()
+        .get_untracked()
+        .get("lang")
+        .unwrap_or_else(|| "en".into());
+
+    let page_data = OnceResource::new(portfolio_detail_controller(language));
 
     view! {
         <Suspense fallback=move || { view! { <div class="bg-smoke"></div> } }>

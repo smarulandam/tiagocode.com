@@ -51,7 +51,7 @@ pub fn FeaturedArticlesSection(
                             .collect_view()}
                         <div class="flex justify-center pt-6">
                             <A
-                                href="/en/articles"
+                                href="/articles"
                                 attr:aria-label="View all articles"
                                 attr:class="inline-flex items-center justify-center border-b border-teal/35 px-1 pb-1 pt-4 text-base font-medium text-teal transition duration-[120ms] ease-out hover:border-teal hover:text-deepsea focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal/25 focus-visible:ring-offset-2"
                             >

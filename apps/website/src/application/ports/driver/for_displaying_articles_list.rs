@@ -25,6 +25,7 @@ pub trait ForDisplayingArticlesList {
     /// Returns an error if the articles or categories could not be retrieved.
     async fn execute(
         &self,
+        language: &str,
         slug: &str,
         category_id: Option<String>,
     ) -> Result<(Page, Vec<Category>, Vec<Article>)>;

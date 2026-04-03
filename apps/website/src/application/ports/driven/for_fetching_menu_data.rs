@@ -17,5 +17,5 @@ pub trait ForFetchingMenuData {
     ///
     /// # Returns
     /// - `AppError<MenuTree>`: The menu tree if found, or an error if retrieval fails
-    async fn find_by_id(&self, id: &str) -> Result<MenuTree>;
+    async fn find_by_id(&self, language: &str, id: &str) -> Result<MenuTree>;
 }

@@ -17,7 +17,6 @@ impl JsonApiClientService {
 
     pub async fn resolve_external_endpoint(&self, path: &str) -> Result<String> {
         let path = format!("/router/translate-path?path={path}");
-
         let route_data = self.http_service.get_json(&path).await?;
         let route_data = from_value::<ResolvedRoute>(route_data)
             .map_err(|e| AppError::decode("resolved route", e))?;

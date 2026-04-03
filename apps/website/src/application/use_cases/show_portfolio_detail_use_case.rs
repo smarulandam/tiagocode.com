@@ -28,8 +28,8 @@ impl ShowPortfolioDetailUseCase {
 
 #[async_trait(?Send)]
 impl ForDisplayingPortfolio for ShowPortfolioDetailUseCase {
-    async fn execute(&self) -> Result<Portfolio> {
-        let mut portfolio = self.portfolio_repository.find_by_slug("/en").await?;
+    async fn execute(&self, language: &str) -> Result<Portfolio> {
+        let mut portfolio = self.portfolio_repository.find_by_slug(&language).await?;
 
         if portfolio.status().eq(&ModerationStatus::Unpublished) {
             return Err(AppError::Forbidden {
@@ -37,7 +37,7 @@ impl ForDisplayingPortfolio for ShowPortfolioDetailUseCase {
             });
         }
 
-        let articles = self.articles_repository.get_featured().await?;
+        let articles = self.articles_repository.get_featured(language).await?;
 
         for section in portfolio.sections_mut() {
             if let PortfolioSection::Blogs(b) = section {
@@ -94,7 +94,7 @@ mod tests {
 
     #[async_trait(?Send)]
     impl ForFetchingArticlesFeatured for ArticleRepositoryMock {
-        async fn get_featured(&self) -> Result<Articles> {
+        async fn get_featured(&self, language: &str) -> Result<Articles> {
             Ok(self.fixture.clone())
         }
     }
@@ -106,7 +106,7 @@ mod tests {
         let article_repo_mock = Box::new(ArticleRepositoryMock::with_fixture(vec![]));
 
         let use_case = ShowPortfolioDetailUseCase::new(portfolio_repo_mock, article_repo_mock);
-        let fetched_portfolio = use_case.execute().await.unwrap();
+        let fetched_portfolio = use_case.execute("/en").await.unwrap();
 
         assert_eq!(fetched_portfolio.id(), fixture.id());
         assert_eq!(fetched_portfolio.title(), fixture.title());
@@ -121,7 +121,7 @@ mod tests {
         let article_repo_mock = Box::new(ArticleRepositoryMock::with_fixture(vec![]));
 
         let use_case = ShowPortfolioDetailUseCase::new(portfolio_repo_mock, article_repo_mock);
-        let fetched_portfolio = use_case.execute().await;
+        let fetched_portfolio = use_case.execute("/en").await;
 
         assert!(matches!(fetched_portfolio, Err(AppError::Forbidden { .. })));
     }

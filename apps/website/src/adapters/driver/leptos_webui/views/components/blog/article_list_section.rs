@@ -16,7 +16,7 @@ pub fn ArticleListSection(categories: Vec<Category>, articles: Vec<Article>) -> 
                 <SectionEyebrow text="My Tech Articles".to_string() />
                 <PrimarySectionTitle text="Blog".to_string() />
                 <div class="py-6">
-                    <Pill link="/en/articles".into() text="All".into() />
+                    <Pill link="/articles".into() text="All".into() />
                     {categories
                         .into_iter()
                         .map(|category| {

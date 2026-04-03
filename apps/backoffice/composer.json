@@ -76,6 +76,7 @@
         "drupal/social_auth_modal": "^2.0",
         "drupal/subrequests": "^3.0",
         "drupal/tfa": "^1.9",
+        "drupal/translatable_menu_link_uri": "^2.1",
         "drush/drush": "^13.3",
         "ifsnop/mysqldump-php": "^2.12",
         "mnsami/composer-custom-directory-installer": "^2.0"
@@ -103,6 +104,10 @@
         "patches": {
             "drupal/admin_ui_only": {
                 "Allow the administrator role to access frontend HTML routes": "patches/admin_ui_only-bypass-administrator-role.patch"
+            },
+            "drupal/decoupled_router": {
+                "Fix multilingual path translation issues for decoupled router": "https://www.drupal.org/files/issues/2026-01-26/decoupled_router-language_issues-3111456-103.patch",
+                "Resolve prefixed translated aliases in decoupled router": "patches/decoupled_router-resolve-prefixed-translated-aliases.patch"
             },
             "drupal/decoupled_preview_iframe": {
                 "Drupal 11 ConfigFormBase constructor compatibility": "patches/decoupled_preview_iframe-drupal-11-config-form-base.patch"

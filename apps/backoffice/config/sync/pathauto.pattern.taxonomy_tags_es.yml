@@ -1,31 +1,30 @@
-uuid: e9754546-4903-419a-9c0d-a7fb4aedd0fb
+uuid: 53ed75fa-bb99-42a9-967a-1d4467a85c34
 langcode: en
 status: true
 dependencies:
   module:
     - language
     - taxonomy
-id: taxonomy_tags
-label: 'Taxonomy: Tags'
+id: taxonomy_tags_es
+label: 'Taxonomy: Tags [ES]'
 type: 'canonical_entities:taxonomy_term'
-pattern: '[term:language:langcode]/articles/[term:name]'
+pattern: '/articulos/[term:name]'
 selection_criteria:
-  fbd1765a-2113-4ce4-a5fe-cc03884ca2fc:
+  c2929cfb-5956-4738-b825-0348738b8678:
     id: 'entity_bundle:taxonomy_term'
     negate: false
-    uuid: fbd1765a-2113-4ce4-a5fe-cc03884ca2fc
+    uuid: c2929cfb-5956-4738-b825-0348738b8678
     context_mapping:
       taxonomy_term: taxonomy_term
     bundles:
       tags: tags
-  ce30b476-b386-4922-9c4c-c2eb834d3cdb:
+  fa20bc39-d711-4256-a448-a5fc3817d5c2:
     id: language
     negate: false
-    uuid: ce30b476-b386-4922-9c4c-c2eb834d3cdb
+    uuid: fa20bc39-d711-4256-a448-a5fc3817d5c2
     context_mapping:
       language: 'taxonomy_term:langcode:language'
     langcodes:
-      en: en
       es: es
 selection_logic: and
 weight: -10

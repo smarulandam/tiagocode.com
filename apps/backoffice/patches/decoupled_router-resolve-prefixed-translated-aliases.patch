@@ -1,0 +1,57 @@
+diff --git a/src/EventSubscriber/RouterPathTranslatorSubscriber.php b/src/EventSubscriber/RouterPathTranslatorSubscriber.php
+--- a/src/EventSubscriber/RouterPathTranslatorSubscriber.php
++++ b/src/EventSubscriber/RouterPathTranslatorSubscriber.php
+@@ -513,11 +513,16 @@
+     $prefix = $config['prefixes'][$langcode] ?? NULL;
+     if ($prefix && ($decoded_path == "/$prefix" || str_starts_with($decoded_path, "/$prefix/"))) {
+       $this->langcode = $langcode;
++      // Some sites store translated aliases with the language prefix as part
++      // of the alias itself (e.g. /es/articulos/...). Resolve that case first
++      // before stripping the prefix for sites that store aliases without it.
++      $system_path = $this->aliasManager->getPathByAlias($decoded_path, $langcode);
++      if ($system_path !== $decoded_path) {
++        return $system_path;
++      }
++
+       $path_without_prefix = $language_negotiation_url->processInbound($decoded_path, $router_request);
+       $system_path = $this->aliasManager->getPathByAlias($path_without_prefix, $langcode);
+-      // Return the system path WITHOUT the language prefix.
+-      // The router expects paths without language prefix - language is handled
+-      // via $this->langcode property.
+       return $system_path;
+     }
+ 
+diff --git a/tests/src/Functional/DecoupledRouterFunctionalTest.php b/tests/src/Functional/DecoupledRouterFunctionalTest.php
+--- a/tests/src/Functional/DecoupledRouterFunctionalTest.php
++++ b/tests/src/Functional/DecoupledRouterFunctionalTest.php
+@@ -177,6 +177,30 @@
+   }
+ 
+   /**
++   * Tests a translated alias stored with the language prefix.
++   */
++  public function testNegotiationWithPrefixedAliasStoredInDatabase() {
++    $translated = $this->nodes[0]->getTranslation('ca');
++    $translated->set('path', '/ca/node--0--ca');
++    $translated->save();
++    \Drupal::service('path_alias.manager')->cacheClear();
++
++    $res = $this->drupalGet(
++      Url::fromRoute('decoupled_router.path_translation'),
++      [
++        'query' => [
++          'path' => $this->addBasePath('ca/node--0--ca'),
++          '_format' => 'json',
++        ],
++      ]
++    );
++    $this->assertSession()->statusCodeEquals(200);
++    $output = Json::decode($res);
++    $this->assertSame($this->nodes[0]->id(), $output['entity']['id']);
++    $this->assertSame('ca', $output['langcode']);
++  }
++
++  /**
+    * Tests reading external redirect.
+    */
+   public function testExternalRedirect() {
