@@ -86,11 +86,17 @@ class SitemapEntriesController implements ContainerInjectionInterface {
         continue;
       }
 
-      $existingLastmod = $items[$alias]['attributes']['lastmod'] ?? '';
+      $publicPath = $item['attributes']['path'] ?? $alias;
+
+      if (in_array($publicPath, ['/portfolio/santiago-marulanda', '/es/portafolio/santiago-marulanda'], TRUE)) {
+        continue;
+      }
+
+      $existingLastmod = $items[$publicPath]['attributes']['lastmod'] ?? '';
       $currentLastmod = $item['attributes']['lastmod'] ?? '';
 
-      if (!isset($items[$alias]) || strcmp($currentLastmod, $existingLastmod) > 0) {
-        $items[$alias] = $item;
+      if (!isset($items[$publicPath]) || strcmp($currentLastmod, $existingLastmod) > 0) {
+        $items[$publicPath] = $item;
       }
     }
 
@@ -124,7 +130,7 @@ class SitemapEntriesController implements ContainerInjectionInterface {
    * Returns whether the alias should be considered for the sitemap.
    */
   private function isIncludedAlias(string $alias): bool {
-    return $alias !== '' && preg_match('@^/(en|es)(/|$)@', $alias) === 1;
+    return $alias !== '' && str_starts_with($alias, '/');
   }
 
   /**
@@ -162,6 +168,12 @@ class SitemapEntriesController implements ContainerInjectionInterface {
     object $nodeStorage,
     object $termStorage,
   ): ?array {
+    $publicPath = $alias === '/en'
+      ? '/'
+      : ($langcode === 'es' && preg_match('@^/es(/|$)@', $alias) !== 1
+      ? "/es{$alias}"
+      : $alias);
+
     if (preg_match('@^/node/(\d+)$@', $resolvedPath, $matches) === 1) {
       $node = $nodeStorage->load((int) $matches[1]);
 
@@ -187,7 +199,7 @@ class SitemapEntriesController implements ContainerInjectionInterface {
         'id' => hash('sha256', $alias),
         'type' => self::RESOURCE_TYPE,
         'attributes' => [
-          'path' => $alias,
+          'path' => $publicPath,
           'lastmod' => gmdate(DATE_ATOM, $translation->getChangedTime()),
         ],
       ];
@@ -218,7 +230,7 @@ class SitemapEntriesController implements ContainerInjectionInterface {
         'id' => hash('sha256', $alias),
         'type' => self::RESOURCE_TYPE,
         'attributes' => [
-          'path' => $alias,
+          'path' => $publicPath,
           'lastmod' => $lastmod,
         ],
       ];
