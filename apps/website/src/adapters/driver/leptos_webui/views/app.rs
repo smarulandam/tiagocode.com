@@ -17,13 +17,13 @@ pub fn App() -> impl IntoView {
         <Router>
             <Routes fallback=move || "Not found.">
                 <ParentRoute path=path!("") view=SiteLayout>
-                    <Route ssr=SsrMode::Async path=path!("") view=|| view! { <Redirect path="/en" /> } />
+                    <Route path=path!("") view=|| view! { <Redirect path="/en" /> } />
                     <Route ssr=SsrMode::Async path=path!("en") view=PortfolioPage/>
                     <Route ssr=SsrMode::Async path=path!("es") view=PortfolioPage/>
                     <Route ssr=SsrMode::Async path=path!(":lang/articles") view=BlogListPage/>
                     <Route ssr=SsrMode::Async path=path!(":lang/articles/:category") view=BlogListPage/>
                     <Route ssr=SsrMode::Async path=path!(":lang/articles/:category/:slug") view=BlogDetailPage/>
-                    <Route ssr=SsrMode::Async path=WildcardSegment("any") view=NotFoundPage/>
+                    <Route path=WildcardSegment("any") view=NotFoundPage/>
                 </ParentRoute>
             </Routes>
         </Router>

@@ -68,14 +68,34 @@ pub fn BlogDetailPage() -> impl IntoView {
 
                         <script>
                             "
-                                const initArticleDetail = () => {
+                                (() => {
+                                const initArticleDetail = (attempt = 0) => {
+                                    if (window.__articleDetailInitTimer) {
+                                        window.clearTimeout(window.__articleDetailInitTimer);
+                                        window.__articleDetailInitTimer = null;
+                                    }
+
                                     if (window.__articleTableOfContentsCleanup) {
                                         window.__articleTableOfContentsCleanup();
                                     }
 
                                     window.__articleTableOfContentsCleanup = null;
 
-                                    if (window.Prism) {
+                                    const prismElements = document.querySelectorAll('pre code, code[class*=\"language-\"]');
+                                    const sliderElements = document.querySelectorAll('[data-slider]');
+                                    const prismReady = prismElements.length === 0 || (
+                                        window.Prism && typeof window.Prism.highlightElement === 'function'
+                                    );
+                                    const splideReady = sliderElements.length === 0 || typeof window.Splide === 'function';
+
+                                    if ((!prismReady || !splideReady) && attempt < 60) {
+                                        window.__articleDetailInitTimer = window.setTimeout(function() {
+                                            initArticleDetail(attempt + 1);
+                                        }, 50);
+                                        return;
+                                    }
+
+                                    if (window.Prism && typeof window.Prism.highlightElement === 'function') {
                                         const languageAliases = {
                                             sh: 'bash',
                                             shell: 'bash',
@@ -108,7 +128,7 @@ pub fn BlogDetailPage() -> impl IntoView {
                                             window.Prism.plugins.autoloader.languages_path = 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/';
                                         }
 
-                                        document.querySelectorAll('pre code, code[class*=\"language-\"]').forEach(function(element) {
+                                        prismElements.forEach(function(element) {
                                             if (element.dataset.prismReady === 'true') {
                                                 return;
                                             }
@@ -142,8 +162,8 @@ pub fn BlogDetailPage() -> impl IntoView {
                                         });
                                     }
 
-                                    if (window.Splide) {
-                                        document.querySelectorAll('[data-slider]').forEach(function(element) {
+                                    if (typeof window.Splide === 'function') {
+                                        sliderElements.forEach(function(element) {
                                             if (element.dataset.sliderMounted === 'true') {
                                                 return;
                                             }
@@ -261,7 +281,8 @@ pub fn BlogDetailPage() -> impl IntoView {
                                     document.addEventListener('DOMContentLoaded', initArticleDetail, { once: true });
                                 } else {
                                     initArticleDetail();
-                                }"
+                                }
+                                })();"
                         </script>
                     }.into_any()
                 })

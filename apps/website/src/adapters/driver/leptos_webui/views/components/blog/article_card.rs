@@ -32,9 +32,7 @@ pub fn ArticleCard(
                     {date}
                 </span>
                 <h2 class="mt-2 line-clamp-2 text-[1.3rem] font-poppins font-semibold leading-[1.14] text-deepsea lg:text-[1.4rem]">
-                    <A href=slug.clone() attr:class="transition duration-150 ease-out group-hover:text-teal">
-                        {title}
-                    </A>
+                    {title}
                 </h2>
                 <div class="mt-3">
                     <A

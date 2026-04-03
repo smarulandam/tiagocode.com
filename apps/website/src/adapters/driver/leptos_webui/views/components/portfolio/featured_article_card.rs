@@ -29,9 +29,7 @@ pub fn FeaturedArticleCard(
                     {published_at}
                 </span>
                 <h3 class="mt-2 text-[1.45rem] font-poppins font-semibold leading-[1.12] text-deepsea md:text-[1.55rem]">
-                    <A href=link.clone() attr:class="transition duration-150 ease-out group-hover:text-teal">
-                        {title}
-                    </A>
+                    {title}
                 </h3>
                 <div class="mt-3">
                     <span class="inline-flex items-center rounded-full border border-teal/15 bg-teal/8 px-3.5 py-1.5 font-medium text-base leading-none text-teal">

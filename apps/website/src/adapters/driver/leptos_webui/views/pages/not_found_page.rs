@@ -20,10 +20,8 @@ pub fn NotFoundPage() -> impl IntoView {
     }
 
     view! {
-        <Suspense fallback=move || { view! { <div>"Loading..."</div> } }>
-            <div class="flex flex-col justify-center gap-6 lg:flex-row lg:gap-8 xl:gap-12">
-                <NotFoundError />
-            </div>
-        </Suspense>
+        <div class="flex flex-col justify-center gap-6 lg:flex-row lg:gap-8 xl:gap-12">
+            <NotFoundError />
+        </div>
     }
 }
