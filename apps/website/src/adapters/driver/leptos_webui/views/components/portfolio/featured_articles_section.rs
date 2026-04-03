@@ -1,4 +1,5 @@
 use leptos::prelude::*;
+use leptos_router::components::A;
 
 use super::FeaturedArticleCard;
 use crate::adapters::driver::leptos_webui::views::components::common::{
@@ -49,14 +50,13 @@ pub fn FeaturedArticlesSection(
                             })
                             .collect_view()}
                         <div class="flex justify-center pt-6">
-                            <a
+                            <A
                                 href="/en/articles"
-                                target="_self"
-                                aria-label="View all articles"
-                                class="inline-flex items-center justify-center border-b border-teal/35 px-1 pb-1 pt-4 text-base font-medium text-teal transition duration-[120ms] ease-out hover:border-teal hover:text-deepsea focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal/25 focus-visible:ring-offset-2"
+                                attr:aria-label="View all articles"
+                                attr:class="inline-flex items-center justify-center border-b border-teal/35 px-1 pb-1 pt-4 text-base font-medium text-teal transition duration-[120ms] ease-out hover:border-teal hover:text-deepsea focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal/25 focus-visible:ring-offset-2"
                             >
                                 "View All Articles"
-                            </a>
+                            </A>
                         </div>
                     </>
                 </Show>

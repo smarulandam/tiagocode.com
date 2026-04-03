@@ -1,4 +1,5 @@
 use leptos::prelude::*;
+use leptos_router::components::A;
 
 use crate::adapters::driver::leptos_webui::views::components::common::ImageView;
 use crate::application::domain::article::Category;
@@ -31,31 +32,29 @@ pub fn ArticleCard(
                     {date}
                 </span>
                 <h2 class="mt-2 line-clamp-2 text-[1.3rem] font-poppins font-semibold leading-[1.14] text-deepsea lg:text-[1.4rem]">
-                    <a href=slug.clone() target="_self" class="transition duration-150 ease-out group-hover:text-teal">
+                    <A href=slug.clone() attr:class="transition duration-150 ease-out group-hover:text-teal">
                         {title}
-                    </a>
+                    </A>
                 </h2>
                 <div class="mt-3">
-                    <a
+                    <A
                         href=category_href
-                        target="_self"
-                        class="inline-flex items-center rounded-full border border-teal/15 bg-teal/8 px-3.5 py-1.5 font-medium text-base leading-none text-teal transition duration-150 ease-out hover:border-teal/25 hover:bg-teal/12"
+                        attr:class="inline-flex items-center rounded-full border border-teal/15 bg-teal/8 px-3.5 py-1.5 font-medium text-base leading-none text-teal transition duration-150 ease-out hover:border-teal/25 hover:bg-teal/12"
                     >
                         {category_label}
-                    </a>
+                    </A>
                 </div>
                 <p class="mt-2.5 line-clamp-3 text-base leading-7 text-zeus/72">
                     {summary}
                 </p>
                 <div class="mt-auto pt-4">
-                    <a
+                    <A
                         href=slug
-                        target="_self"
-                        aria-label=cta_label
-                        class="inline-block self-start rounded-full border border-black border-dashed px-6 py-3 font-mono text-sm transition duration-[120ms] ease-out hover:bg-black hover:text-white dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-black"
+                        attr:aria-label=cta_label
+                        attr:class="inline-block self-start rounded-full border border-black border-dashed px-6 py-3 font-mono text-sm transition duration-[120ms] ease-out hover:bg-black hover:text-white dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-black"
                     >
                         "Read article"
-                    </a>
+                    </A>
                 </div>
             </div>
         </article>

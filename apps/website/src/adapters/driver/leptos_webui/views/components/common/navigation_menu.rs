@@ -1,4 +1,5 @@
 use leptos::prelude::*;
+use leptos_router::components::A;
 
 use crate::application::domain::common::Image;
 use crate::application::domain::layout::MenuItem as LayoutMenuItem;
@@ -40,18 +41,45 @@ fn NavigationMenuItem(
     icon: Option<Image>,
     #[prop(default = false)] is_external: bool,
 ) -> impl IntoView {
-    let target = if is_external { "_blank" } else { "_self" };
+    let is_router_link = !is_external && url.starts_with('/');
 
     view! {
         <li class=class.clone()>
             {match icon.clone() {
-                Some(icon) => view! {
-                    <a target=target href=url.to_string() title=title.to_string() class=anchor_class.clone()>
+                Some(icon) if is_router_link => view! {
+                    <A href=url.clone() attr:title=title.clone() attr:class=anchor_class.clone()>
+                        <img src=icon.url().to_string() alt=icon.alt().to_string() class="h-8" />
+                    </A>
+                }.into_any(),
+                Some(icon) if is_external => view! {
+                    <a target="_blank" href=url.to_string() title=title.to_string() class=anchor_class.clone()>
                         <img src=icon.url().to_string() alt=icon.alt().to_string() class="h-8" />
                     </a>
                 }.into_any(),
+                Some(icon) => view! {
+                    <a href=url.to_string() title=title.to_string() class=anchor_class.clone()>
+                        <img src=icon.url().to_string() alt=icon.alt().to_string() class="h-8" />
+                    </a>
+                }.into_any(),
+                None if is_router_link => {
+                    let link_title = title.clone();
+                    let link_label = title.clone();
+                    let link_class = format!("{} hover:text-asparagus w-full", anchor_class.clone());
+
+                    view! {
+                        <A href=url.clone() attr:title=link_title attr:class=link_class>
+                            <span class="h-8">{link_label}</span>
+                        </A>
+                    }.into_any()
+                },
+                None if is_external => view! {
+                    <a target="_blank" href=url.to_string() title=title.to_string() class=format!("{} hover:text-asparagus w-full", anchor_class.clone())>
+                        <span class="h-8">{title.to_string()}</span>
+                    </a>
+                }.into_any()
+                ,
                 None => view! {
-                    <a target=target href=url.to_string() title=title.to_string() class=format!("{} hover:text-asparagus w-full", anchor_class.clone())>
+                    <a href=url.to_string() title=title.to_string() class=format!("{} hover:text-asparagus w-full", anchor_class.clone())>
                         <span class="h-8">{title.to_string()}</span>
                     </a>
                 }.into_any()

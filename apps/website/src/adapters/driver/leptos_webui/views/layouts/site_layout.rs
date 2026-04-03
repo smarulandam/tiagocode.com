@@ -1,11 +1,12 @@
 use leptos::either::Either;
 use leptos::prelude::*;
+use leptos_router::components::Outlet;
 
 use crate::adapters::driver::leptos_webui::controllers::layout_controller;
 use crate::adapters::driver::leptos_webui::views::components::common::Navbar;
 
 #[component]
-pub fn SiteLayout(children: Children) -> impl IntoView {
+pub fn SiteLayout() -> impl IntoView {
     let layout = OnceResource::new(layout_controller());
 
     view! {
@@ -13,7 +14,7 @@ pub fn SiteLayout(children: Children) -> impl IntoView {
             <header class="fixed w-full z-20 top-0 start-0 bg-white border-b border-gray-200 shadow-smoke-shadow hover:shadow-smoke-shadow-hover transition ease-out duration-[160ms]" id="header">
                 {move || {
                     layout
-                    .get_untracked()
+                    .get()
                     .map(|data| {
                         match data {
                             Err(_) => Either::Left(view! { <span></span> }),
@@ -31,7 +32,7 @@ pub fn SiteLayout(children: Children) -> impl IntoView {
             </header>
             <main class="bg-smoke">
                 <div class="container max-w-[1320px] mx-auto px-5 xl:px-0 pt-[110px] lg:pt-[128px] min-h-[100vh]">
-                    {children()}
+                    <Outlet/>
                 </div>
             </main>
             <footer class="bg-smoke text-center py-8 text-sm text-gray-500">

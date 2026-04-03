@@ -1,4 +1,5 @@
 use leptos::prelude::*;
+use leptos_router::components::A;
 
 use crate::adapters::driver::leptos_webui::views::components::common::ImageView;
 use crate::application::domain::common::Image;
@@ -28,9 +29,9 @@ pub fn FeaturedArticleCard(
                     {published_at}
                 </span>
                 <h3 class="mt-2 text-[1.45rem] font-poppins font-semibold leading-[1.12] text-deepsea md:text-[1.55rem]">
-                    <a href=link.clone() target="_self" class="transition duration-150 ease-out group-hover:text-teal">
+                    <A href=link.clone() attr:class="transition duration-150 ease-out group-hover:text-teal">
                         {title}
-                    </a>
+                    </A>
                 </h3>
                 <div class="mt-3">
                     <span class="inline-flex items-center rounded-full border border-teal/15 bg-teal/8 px-3.5 py-1.5 font-medium text-base leading-none text-teal">
@@ -40,14 +41,13 @@ pub fn FeaturedArticleCard(
                 <p class="mt-2.5 line-clamp-3 text-base leading-7 text-zeus/72 md:line-clamp-2">
                     {summary}
                 </p>
-                <a
+                <A
                     href=link
-                    target="_self"
-                    aria-label=cta_label
-                    class="mt-3 inline-block self-start rounded-full border border-black border-dashed px-6 py-3 font-mono text-sm transition duration-[120ms] ease-out hover:bg-black hover:text-white dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-black lg:mt-4"
+                    attr:aria-label=cta_label
+                    attr:class="mt-3 inline-block self-start rounded-full border border-black border-dashed px-6 py-3 font-mono text-sm transition duration-[120ms] ease-out hover:bg-black hover:text-white dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-black lg:mt-4"
                 >
                     "Read article"
-                </a>
+                </A>
             </div>
         </article>
     }

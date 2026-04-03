@@ -1,10 +1,13 @@
 use leptos::prelude::*;
+use leptos_router::components::A;
 
 use crate::application::domain::article::Article;
 
 #[component]
 pub fn ArticleHeader(article: Article) -> impl IntoView {
-    let category = article.category();
+    let category_href = article.category().slug().to_string();
+    let category_title = article.category().title().to_string();
+    let category_emoji = article.category().emoji().to_string();
 
     view! {
         <div class="mx-auto w-full max-w-[760px]">
@@ -34,14 +37,13 @@ pub fn ArticleHeader(article: Article) -> impl IntoView {
                 </div>
 
                 <div class="flex flex-col items-start gap-2 sm:items-end">
-                    <a
-                        href=category.slug().to_string()
-                        target="_self"
-                        class="inline-flex items-center rounded-full border border-teal/15 bg-teal/8 px-3.5 py-1.5 text-base font-medium leading-none text-teal transition duration-[120ms] ease-out hover:border-teal/25 hover:bg-teal/12"
+                    <A
+                        href=category_href
+                        attr:class="inline-flex items-center rounded-full border border-teal/15 bg-teal/8 px-3.5 py-1.5 text-base font-medium leading-none text-teal transition duration-[120ms] ease-out hover:border-teal/25 hover:bg-teal/12"
                     >
-                        {category.title().to_string()}
-                        <span class="ml-2">{category.emoji().to_string()}</span>
-                    </a>
+                        {category_title}
+                        <span class="ml-2">{category_emoji}</span>
+                    </A>
                     <time class="text-base font-medium leading-6 text-teal/82 sm:text-right">
                         "Published on · "
                         <span>{article.created_at().to_string_with_format("%b %d, %Y")}</span>

@@ -6,7 +6,6 @@ use crate::adapters::driver::leptos_webui::views::components::blog::ArticleListS
 use crate::adapters::driver::leptos_webui::views::components::common::{
     SeoMetaTags, UnexpectedError,
 };
-use crate::adapters::driver::leptos_webui::views::layouts::SiteLayout;
 
 #[component]
 pub fn BlogListPage() -> impl IntoView {
@@ -17,29 +16,27 @@ pub fn BlogListPage() -> impl IntoView {
     );
 
     view! {
-        <SiteLayout>
-            <Suspense fallback=move || { view! { <div class="bg-smoke"></div> } }>
-                {move || {
-                    page_data
-                    .get_untracked()
-                    .map(|data| {
-                        if let Err(_) = data {
-                            return view! { <UnexpectedError /> }.into_any();
-                        }
+        <Suspense fallback=move || { view! { <div class="bg-smoke"></div> } }>
+            {move || {
+                page_data
+                .get()
+                .map(|data| {
+                    if let Err(_) = data {
+                        return view! { <UnexpectedError /> }.into_any();
+                    }
 
-                        let (page, categories, articles) = data.unwrap();
+                    let (page, categories, articles) = data.unwrap();
 
-                        view! {
-                            <SeoMetaTags metatags=page.metatags().clone() />
-                            <div class="flex flex-col justify-center gap-6 lg:flex-row lg:gap-8 xl:gap-12">
-                                <div class="mb-12 flex w-full flex-col gap-6">
-                                    <ArticleListSection articles=articles categories=categories />
-                                </div>
+                    view! {
+                        <SeoMetaTags metatags=page.metatags().clone() />
+                        <div class="flex flex-col justify-center gap-6 lg:flex-row lg:gap-8 xl:gap-12">
+                            <div class="mb-12 flex w-full flex-col gap-6">
+                                <ArticleListSection articles=articles categories=categories />
                             </div>
-                        }.into_any()
-                    })
-                }}
-            </Suspense>
-        </SiteLayout>
+                        </div>
+                    }.into_any()
+                })
+            }}
+        </Suspense>
     }
 }

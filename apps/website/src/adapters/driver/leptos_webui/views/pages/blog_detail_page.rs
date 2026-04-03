@@ -7,7 +7,6 @@ use crate::adapters::driver::leptos_webui::views::components::blog::ArticleConte
 use crate::adapters::driver::leptos_webui::views::components::blog::ArticleHeader;
 use crate::adapters::driver::leptos_webui::views::components::common::SeoMetaTags;
 use crate::adapters::driver::leptos_webui::views::components::common::UnexpectedError;
-use crate::adapters::driver::leptos_webui::views::layouts::SiteLayout;
 use crate::application::domain::article::Article;
 
 #[component]
@@ -19,57 +18,56 @@ pub fn BlogDetailPage() -> impl IntoView {
     );
 
     view! {
-        <SiteLayout>
-            <Suspense fallback=move || { view! { <div>"Loading..."</div> } }>
-                {move || {
-                    page_data
-                    .get_untracked()
-                    .map(|data| {
-                        if let Err(_) = data {
-                            return view! { <UnexpectedError /> }.into_any();
-                        }
+        <Suspense fallback=move || { view! { <div>"Loading..."</div> } }>
+            {move || {
+                page_data
+                .get()
+                .map(|data| {
+                    if let Err(_) = data {
+                        return view! { <UnexpectedError /> }.into_any();
+                    }
 
-                        let article: Article = data.unwrap();
-                        let table_of_contents_items = article.content_table().clone();
+                    let article: Article = data.unwrap();
+                    let table_of_contents_items = article.content_table().clone();
 
-                        view! {
-                            <SeoMetaTags metatags=article.metatags().clone() />
-                            <link rel="stylesheet" href="/assets/plugins/prismjs/prism-tomorrow.min.css" />
-                            <link rel="stylesheet" href="/assets/plugins/prismjs/prism-toolbar.min.css" />
-                            {article.has_slider().then(|| {
-                                view! {
-                                    <link rel="stylesheet" href="/assets/plugins/splidejs/css/splide.min.css" />
-                                    <script src="/assets/plugins/splidejs/js/splide.min.js"></script>
-                                }
-                            })}
+                    view! {
+                        <SeoMetaTags metatags=article.metatags().clone() />
+                        <link rel="stylesheet" href="/assets/plugins/prismjs/prism-tomorrow.min.css" />
+                        <link rel="stylesheet" href="/assets/plugins/prismjs/prism-toolbar.min.css" />
+                        {article.has_slider().then(|| {
+                            view! {
+                                <link rel="stylesheet" href="/assets/plugins/splidejs/css/splide.min.css" />
+                                <script src="/assets/plugins/splidejs/js/splide.min.js"></script>
+                            }
+                        })}
 
-                            <div class="pb-12">
-                                <div class="article-shell -mx-5 w-auto rounded-none bg-white px-5 py-7 shadow-smoke-shadow transition ease-out duration-[160ms] md:px-8 md:py-10 lg:px-10 lg:py-12 xl:mx-auto xl:w-full xl:rounded-lg xl:px-12">
-                                    <div class="flex flex-col lg:grid lg:grid-cols-[minmax(0,1fr)_280px] lg:gap-x-10 xl:grid-cols-[minmax(0,1fr)_300px] xl:gap-x-12">
-                                        <div class="lg:col-start-1 lg:row-start-1">
-                                            <ArticleHeader article=article.clone() />
-                                        </div>
-                                        <div class="min-w-0 lg:col-start-1 lg:row-start-2">
-                                            <ArticleContentRenderer content=article.content().clone() />
-                                        </div>
-                                        <div class="lg:col-start-2 lg:row-start-2">
-                                            <ArticleContentTable items=table_of_contents_items />
-                                        </div>
+                        <div class="pb-12">
+                            <div class="article-shell -mx-5 w-auto rounded-none bg-white px-5 py-7 shadow-smoke-shadow transition ease-out duration-[160ms] md:px-8 md:py-10 lg:px-10 lg:py-12 xl:mx-auto xl:w-full xl:rounded-lg xl:px-12">
+                                <div class="flex flex-col lg:grid lg:grid-cols-[minmax(0,1fr)_280px] lg:gap-x-10 xl:grid-cols-[minmax(0,1fr)_300px] xl:gap-x-12">
+                                    <div class="lg:col-start-1 lg:row-start-1">
+                                        <ArticleHeader article=article.clone() />
+                                    </div>
+                                    <div class="min-w-0 lg:col-start-1 lg:row-start-2">
+                                        <ArticleContentRenderer content=article.content().clone() />
+                                    </div>
+                                    <div class="lg:col-start-2 lg:row-start-2">
+                                        <ArticleContentTable items=table_of_contents_items />
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                            <script>
-                                "window.Prism = window.Prism || {};
-                                window.Prism.manual = true;"
-                            </script>
-                            <script src="/assets/plugins/prismjs/prism-core.min.js"></script>
-                            <script src="/assets/plugins/prismjs/prism-toolbar.min.js"></script>
-                            <script src="/assets/plugins/prismjs/prism-copy-to-clipboard.min.js"></script>
-                            <script src="/assets/plugins/prismjs/prism-autoloader.min.js"></script>
+                        <script>
+                            "window.Prism = window.Prism || {};
+                            window.Prism.manual = true;"
+                        </script>
+                        <script src="/assets/plugins/prismjs/prism-core.min.js"></script>
+                        <script src="/assets/plugins/prismjs/prism-toolbar.min.js"></script>
+                        <script src="/assets/plugins/prismjs/prism-copy-to-clipboard.min.js"></script>
+                        <script src="/assets/plugins/prismjs/prism-autoloader.min.js"></script>
 
-                            <script>
-                                "
+                        <script>
+                            "
                                 const initArticleDetail = () => {
                                     if (window.__articleTableOfContentsCleanup) {
                                         window.__articleTableOfContentsCleanup();
@@ -264,11 +262,10 @@ pub fn BlogDetailPage() -> impl IntoView {
                                 } else {
                                     initArticleDetail();
                                 }"
-                            </script>
-                        }.into_any()
-                    })
-                }}
-            </Suspense>
-        </SiteLayout>
+                        </script>
+                    }.into_any()
+                })
+            }}
+        </Suspense>
     }
 }

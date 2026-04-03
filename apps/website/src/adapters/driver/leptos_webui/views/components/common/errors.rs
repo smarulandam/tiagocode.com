@@ -1,4 +1,5 @@
 use leptos::prelude::*;
+use leptos_router::components::A;
 
 #[component]
 pub fn UnexpectedError() -> impl IntoView {
@@ -15,9 +16,12 @@ pub fn UnexpectedError() -> impl IntoView {
             <h2 class="text-2xl font-bold tracking-wide mt-4">"Oops! Something went wrong"</h2>
             <p class="mt-2 text-gray-600">"An unexpected error occurred. Please try again later or go back to the homepage."</p>
             <div class="flex gap-3 mt-4">
-                <button class="px-5 py-2 bg-gray-300 text-gray-800 font-medium rounded-full shadow-md hover:bg-gray-400 transition duration-200" onclick="window.location.href='/'">
-                    Go Home
-                </button>
+                <A
+                    href="/"
+                    attr:class="px-5 py-2 bg-gray-300 text-gray-800 font-medium rounded-full shadow-md hover:bg-gray-400 transition duration-200"
+                >
+                    "Go Home"
+                </A>
             </div>
         </div>
     }
@@ -38,9 +42,12 @@ pub fn NotFoundError() -> impl IntoView {
             <h2 class="text-2xl font-bold tracking-wide mt-4">"Oops! Page Not Found"</h2>
             <p class="mt-2 text-gray-600">"The page you're looking for doesn't exist or has been moved."</p>
             <div class="flex gap-3 mt-4">
-                <button class="mt-4 px-5 py-2 bg-gray-800 text-white font-medium rounded-full shadow-md hover:bg-gray-700 transition duration-200" onclick="window.location.href='/'">
-                    Go Home
-                </button>
+                <A
+                    href="/"
+                    attr:class="mt-4 px-5 py-2 bg-gray-800 text-white font-medium rounded-full shadow-md hover:bg-gray-700 transition duration-200"
+                >
+                    "Go Home"
+                </A>
             </div>
         </div>
     }
