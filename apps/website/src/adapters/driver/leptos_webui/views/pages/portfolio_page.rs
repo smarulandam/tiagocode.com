@@ -12,7 +12,7 @@ pub fn PortfolioPage() -> impl IntoView {
     let language = use_params_map()
         .get_untracked()
         .get("lang")
-        .unwrap_or_else(|| "en".into());
+        .unwrap_or("en".into());
 
     let page_data = OnceResource::new(portfolio_detail_controller(language));
 

@@ -1,6 +1,7 @@
 mod background_animation;
 mod errors;
 mod image_view;
+mod language_switcher;
 mod logo;
 mod navbar;
 mod navigation_menu;

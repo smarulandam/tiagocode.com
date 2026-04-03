@@ -11,7 +11,7 @@ pub fn SiteLayout() -> impl IntoView {
     let language = use_params_map()
         .get_untracked()
         .get("lang")
-        .unwrap_or_else(|| "en".into());
+        .unwrap_or("en".into());
     let layout = OnceResource::new(layout_controller(language));
 
     view! {

@@ -1,5 +1,7 @@
 use leptos::prelude::*;
 
+use super::language_switcher::LanguageSwitcher;
+
 use crate::adapters::driver::leptos_webui::views::components::common::Logo;
 use crate::adapters::driver::leptos_webui::views::components::common::NavigationMenu;
 use crate::application::domain::layout::MenuTree;
@@ -12,23 +14,26 @@ pub fn Navbar(main_menu: MenuTree, social_menu: MenuTree) -> impl IntoView {
         <nav>
             <div class="flex flex-wrap items-center justify-between max-w-[1320px] mx-auto py-4 px-5 xl:px-0">
                 <Logo />
-                <div class="flex items-center">
-                    <div class="md:order-2">
+                <div class="flex items-center gap-1.5 md:gap-2">
+                    <div class="order-1 md:order-3">
                         <NavigationMenu
                             items=social_menu.items().clone()
-                            item_class="block py-0 px-3 -mr-3"
+                            item_class="block py-0 px-2 md:px-3"
                             container_class="flex items-center font-medium"
                         />
                     </div>
-                    <div class="md:order-1 hidden md:block">
+                    <div class="hidden md:block md:order-1">
                         <NavigationMenu
                             items=main_menu.items().clone()
                             item_class="block py-0 px-3 uppercase"
-                            container_class="flex items-center font-medium mr-4"
+                            container_class="flex items-center font-medium"
                         />
                     </div>
+                    <div class="order-2">
+                        <LanguageSwitcher />
+                    </div>
                 </div>
-                <div class="block md:hidden">
+                <div class="order-3 block md:hidden">
                     <button
                         type="button"
                         class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-white p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-hidden focus:ring-2 focus:ring-gray-200"
@@ -56,7 +61,7 @@ pub fn Navbar(main_menu: MenuTree, social_menu: MenuTree) -> impl IntoView {
                 </div>
                 <div
                     id="mobile-menu"
-                    class="w-full md:hidden md:w-auto"
+                    class="order-4 w-full md:hidden md:w-auto"
                     class:hidden=move || !open_mobile_menu.get()
                 >
                     <NavigationMenu

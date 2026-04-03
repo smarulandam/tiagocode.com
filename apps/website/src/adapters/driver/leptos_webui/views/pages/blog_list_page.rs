@@ -13,7 +13,7 @@ pub fn BlogListPage() -> impl IntoView {
     let language = use_params_map()
         .get_untracked()
         .get("lang")
-        .unwrap_or_else(|| "en".into());
+        .unwrap_or("en".into());
 
     let page_data = Resource::new(
         move || (language.clone(), route.pathname.read().to_string()),
