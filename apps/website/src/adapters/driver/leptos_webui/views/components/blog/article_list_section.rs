@@ -1,4 +1,5 @@
 use leptos::prelude::*;
+use leptos_router::hooks::use_params_map;
 
 use super::ArticleCard;
 use crate::adapters::driver::leptos_webui::views::components::common::{
@@ -9,6 +10,17 @@ use crate::application::domain::article::{Article, Category};
 #[component]
 pub fn ArticleListSection(categories: Vec<Category>, articles: Vec<Article>) -> impl IntoView {
     let are_articles_empty = articles.is_empty();
+    let language = use_params_map()
+        .get_untracked()
+        .get("lang")
+        .unwrap_or_else(|| "en".into());
+
+        
+    let articles_link = if language == "es" {
+        "/es/articulos"
+    } else {
+        "/articles"
+    };
 
     view! {
         <SectionContainer>
@@ -16,7 +28,7 @@ pub fn ArticleListSection(categories: Vec<Category>, articles: Vec<Article>) -> 
                 <SectionEyebrow text="My Tech Articles".to_string() />
                 <PrimarySectionTitle text="Blog".to_string() />
                 <div class="py-6">
-                    <Pill link="/articles".into() text="All".into() />
+                    <Pill link=articles_link.into() text="All".into() />
                     {categories
                         .into_iter()
                         .map(|category| {

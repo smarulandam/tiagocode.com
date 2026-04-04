@@ -78,8 +78,45 @@ fn external_url_mapper(item: &NavigationItem) -> String {
     if item.external().clone() {
         item.absolute().to_string()
     } else {
-        item.relative().to_string()
+        normalize_internal_url(item.relative())
     }
+}
+
+fn normalize_internal_url(url: &str) -> String {
+    if !url.starts_with('/') {
+        return url.to_string();
+    }
+
+    let suffix_index = url.find(['?', '#']).unwrap_or(url.len());
+    let (path, suffix) = url.split_at(suffix_index);
+    let mut segments = path
+        .split('/')
+        .filter(|segment| !segment.is_empty())
+        .collect::<Vec<_>>();
+
+    if segments.len() >= 2
+        && segments[0] == segments[1]
+        && is_language_segment(segments[0])
+    {
+        segments.remove(1);
+    }
+
+    if segments.first() == Some(&"en") {
+        segments.remove(0);
+    }
+
+    let mut normalized = if segments.is_empty() {
+        "/".to_string()
+    } else {
+        format!("/{}", segments.join("/"))
+    };
+
+    normalized.push_str(suffix);
+    normalized
+}
+
+fn is_language_segment(segment: &str) -> bool {
+    segment.len() == 2 && segment.chars().all(|char| char.is_ascii_lowercase())
 }
 
 fn external_image_mapper(image: &NavigationImageMetadata) -> Image {
@@ -93,4 +130,43 @@ fn external_image_mapper(image: &NavigationImageMetadata) -> Image {
         .height(image.height().clone())
         .build()
         .unwrap()
+}
+
+#[cfg(test)]
+mod tests {
+    use super::normalize_internal_url;
+
+    #[test]
+    fn normalize_internal_url_collapses_duplicated_language_root() {
+        assert_eq!(normalize_internal_url("/es/es"), "/es");
+        assert_eq!(normalize_internal_url("/en/en"), "/");
+    }
+
+    #[test]
+    fn normalize_internal_url_collapses_duplicated_language_prefix() {
+        assert_eq!(normalize_internal_url("/es/es/articulos"), "/es/articulos");
+        assert_eq!(normalize_internal_url("/en/en/articles/test"), "/articles/test");
+    }
+
+    #[test]
+    fn normalize_internal_url_preserves_query_and_hash() {
+        assert_eq!(normalize_internal_url("/es/es?menu=1"), "/es?menu=1");
+        assert_eq!(normalize_internal_url("/es/es/articulos#top"), "/es/articulos#top");
+        assert_eq!(normalize_internal_url("/en?menu=1"), "/?menu=1");
+        assert_eq!(normalize_internal_url("/en/articles#top"), "/articles#top");
+    }
+
+    #[test]
+    fn normalize_internal_url_remaps_default_language_prefix() {
+        assert_eq!(normalize_internal_url("/en"), "/");
+        assert_eq!(normalize_internal_url("/en/articles"), "/articles");
+    }
+
+    #[test]
+    fn normalize_internal_url_leaves_valid_urls_untouched() {
+        assert_eq!(normalize_internal_url("/es"), "/es");
+        assert_eq!(normalize_internal_url("/es/articulos"), "/es/articulos");
+        assert_eq!(normalize_internal_url("/articles"), "/articles");
+        assert_eq!(normalize_internal_url("https://example.com"), "https://example.com");
+    }
 }
