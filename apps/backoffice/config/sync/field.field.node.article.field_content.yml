@@ -8,6 +8,7 @@ dependencies:
     - paragraphs.paragraphs_type.content_media
     - paragraphs.paragraphs_type.content_slider
     - paragraphs.paragraphs_type.content_text
+    - paragraphs.paragraphs_type.content_timeline
   module:
     - entity_reference_revisions
 id: node.article.field_content
@@ -27,6 +28,7 @@ settings:
       content_media: content_media
       content_text: content_text
       content_slider: content_slider
+      content_timeline: content_timeline
     negate: 0
     target_bundles_drag_drop:
       content_hover_card:
@@ -43,7 +45,7 @@ settings:
         enabled: true
       content_timeline:
         weight: 15
-        enabled: false
+        enabled: true
       content_timeline_item:
         weight: 16
         enabled: false

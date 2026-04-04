@@ -56,6 +56,7 @@
         "drupal/openapi_ui": "^1.0@RC",
         "drupal/openapi_ui_swagger": "^1.1",
         "drupal/paragraphs": "^1.18",
+        "drupal/paragraphs_ee": "^10.0",
         "drupal/pathauto": "^1.13",
         "drupal/perimeter": "^3.0",
         "drupal/recaptcha": "^3.4",

@@ -1,0 +1,10 @@
+uuid: 94cf7b4d-5eaa-4918-b6ef-d8946a6ef626
+langcode: en
+status: true
+dependencies: {  }
+id: content
+label: Content
+description:
+  value: '<p>Generic components for creating dynamic articles with text, media, and sliders</p>'
+  format: basic_html
+weight: 0

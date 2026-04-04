@@ -1,0 +1,10 @@
+uuid: 94ef3ab1-dad2-44bf-9d88-02f8cf21ea8c
+langcode: en
+status: true
+dependencies: {  }
+id: portfolio
+label: Portfolio
+description:
+  value: '<p>Components of the portfolio page</p>'
+  format: basic_html
+weight: 0
