@@ -15,7 +15,12 @@ echo "$GITHUB_PAT" | docker login ghcr.io -u "smarulandam" --password-stdin
 docker-compose \
   -f compose.yml \
   -f compose.production.yml \
-  up -d --build --pull always --force-recreate
+  pull --policy always --ignore-buildable
+
+docker-compose \
+  -f compose.yml \
+  -f compose.production.yml \
+  up -d --build
 
 docker-compose \
   -f compose.yml \

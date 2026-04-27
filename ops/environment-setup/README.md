@@ -39,6 +39,28 @@ This repository provides everything necessary to effortlessly establish a fully 
 
 5. Start the container `make start`.
 
+## Database export and import
+
+Export a production Drupal database with Drush without ownership or ACL data:
+
+```bash
+drush sql:dump --extra-dump="--no-owner --no-acl" --result-file=database_production.sql
+```
+
+Or compressed:
+
+```bash
+drush sql:dump --extra-dump="--no-owner --no-acl" --gzip --result-file=database_production.sql.gz
+```
+
+Import a SQL dump into the local PostgreSQL container:
+
+```bash
+docker compose exec -T postgres sh -lc 'psql -U "$POSTGRES_USER" -d "$POSTGRES_DB"' < ../path/to/database_production.sql
+```
+
+The `--no-owner` and `--no-acl` flags avoid role, ownership, and grant issues when moving a dump between environments.
+
 ## Important
 
 Currently, this environment setup supports only development configurations; production support will be added in the future.
